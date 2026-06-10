@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOIT 관리자 페이지</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+
+<div class="admin-container">
+
+    <!-- 사이드바 -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            MOIT ADMIN
+        </div>
+
+        <ul class="menu">
+            <li class="active"><i class="fa-solid fa-users"></i> 회원 관리</li>
+            <li><i class="fa-solid fa-user-shield"></i> 관리자 관리</li>
+            <li><i class="fa-solid fa-location-dot"></i> 지역 관리</li>
+            <li><i class="fa-solid fa-layer-group"></i> 카테고리 관리</li>
+            <li><i class="fa-solid fa-bullhorn"></i> 공지사항</li>
+            <li><i class="fa-solid fa-calendar-days"></i> 행사 관리</li>
+            <li><i class="fa-solid fa-image"></i> 광고 관리</li>
+        </ul>
+
+    </aside>
+
+    <!-- 메인 -->
+    <main class="main">
+
+        <!-- 상단 -->
+        <header class="topbar">
+
+            <div class="search-box">
+                <input type="text" placeholder="검색어를 입력하세요">
+            </div>
+
+            <div class="admin-info">
+                <img src="https://i.pravatar.cc/40">
+                <span>관리자</span>
+            </div>
+
+        </header>
+
+        <!-- 탭 -->
+        <section class="tabs">
+
+            <button class="tab active">회원 관리</button>
+            <button class="tab">관리자 관리</button>
+            <button class="tab">지역 관리</button>
+            <button class="tab">카테고리 관리</button>
+            <button class="tab">공지사항</button>
+            <button class="tab">행사 관리</button>
+            <button class="tab">광고 관리</button>
+
+        </section>
+
+        <!-- 통계 -->
+        <section class="cards">
+
+            <div class="card">
+                <h3>전체 회원</h3>
+                <p>1,248명</p>
+            </div>
+
+            <div class="card">
+                <h3>활동 회원</h3>
+                <p>1,064명</p>
+            </div>
+
+            <div class="card">
+                <h3>경고 회원</h3>
+                <p>86명</p>
+            </div>
+
+            <div class="card">
+                <h3>정지 회원</h3>
+                <p>98명</p>
+            </div>
+
+        </section>
+
+        <!-- 검색 -->
+        <section class="search-area">
+
+            <input type="text" placeholder="회원명 검색">
+            <select>
+                <option>전체 상태</option>
+                <option>활동</option>
+                <option>경고</option>
+                <option>정지</option>
+            </select>
+
+            <button>검색</button>
+
+        </section>
+
+        <!-- 버튼 -->
+        <section class="actions">
+
+            <button class="primary">회원 등록</button>
+            <button>수정</button>
+            <button>삭제</button>
+            <button>비밀번호 초기화</button>
+
+        </section>
+
+        <!-- 테이블 -->
+        <section class="table-box">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>상태</th>
+                        <th>가입일</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td>user01</td>
+                        <td>김보라</td>
+                        <td>bora@test.com</td>
+                        <td><span class="green">활동</span></td>
+                        <td>2026-06-10</td>
+                        <td>
+                            <button class="small blue">수정</button>
+                            <button class="small red">삭제</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>user02</td>
+                        <td>이욱진</td>
+                        <td>wook@test.com</td>
+                        <td><span class="yellow">경고</span></td>
+                        <td>2026-06-09</td>
+                        <td>
+                            <button class="small blue">수정</button>
+                            <button class="small red">삭제</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>3</td>
+                        <td>user03</td>
+                        <td>박일두</td>
+                        <td>ildu@test.com</td>
+                        <td><span class="red-text">정지</span></td>
+                        <td>2026-06-08</td>
+                        <td>
+                            <button class="small blue">수정</button>
+                            <button class="small red">삭제</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
