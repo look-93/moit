@@ -3,6 +3,6 @@ package com.moit.controller;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class NoticesController {
+public class NoticeController {
 
 }
