@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moit.dao.ReportsMapper">
+
+
+	<!-- ===== MEETUP user ===== -->
+	<!-- ===== MEETUP user ===== -->
+	<!-- 모임 신고 작성 -->
+	<insert id="insertUserMeetup" parameterType="MeetupReportDto">
+		insert into reports (report_id, member_id, reason, created_by, updated_by)
+		values ( #{reportId}, #{memberId}, #{reason}, #{createdBy}, #{updatedBy} )
+	</insert>
+
+	<!-- 전체 모임 신고 내역 조회 -->
+	<select id="selectUserMeetupAll" parameterType="MeetupReportDto">
+		select id,
+		meetup_id, member_id, reason, status
+		from meetup_reports
+		where member_id
+		= #{memberId} and delete_yn = 'N'
+	</select>
+
+	<!-- 사용자 본인이 작성한 모임 신고 내역 상세 조회 -->
+	<select id="selectUserMeetupDetail"
+		parameterType="MeetupReportDto" resultType="MeetupReportDto">
+		select id, meetup_id,
+		member_id, reason, status
+		from meetup_reports
+		where id = #{id} and
+		member_id = #{memberId} and delete_yn = 'N'
+	</select>
+
+	<!-- 사용자 본인이 작성한 모임 신고 내역 수정 -->
+	<update id="updateUserMeetup" parameterType="MeetupReportDto">
+		update
+		meetup_reports
+		set reason = #{reason}, updated_by = #{updatedBy}
+		where
+		id = #{id} and member_id = #{memberId} and delete_yn = 'N'
+	</update>
+
+	<!-- 사용자 본인이 작성한 모임 신고 내역 삭제 -->
+	<update id="deleteUserMeetup" parameterType="MeetupReportDto">
+		update
+		meetup_reports
+		set delete_yn = 'Y', updated_by = #{updatedBy}
+		where id =
+		#{id} and member_id = #{memberId} and delete_yn = 'N'
+	</update>
+
+
+	<!-- ===== MEETUP admin ===== -->
+	<!-- ===== MEETUP admin ===== -->
+	<!-- 전체 모임 신고 목록 조회 -->
+	<select id="selectAdminMeetupAll" resultType="MeetupReportDto">
+		select *
+		from
+		meetup_reports
+		order by id desc
+	</select>
+
+	<!-- 전체 모임 신고 목록 상세 조회 -->
+	<select id="selectAdminMeetupDetail"
+		resultType="MeetupReportDto" parameterType="int">
+		select *
+		from meetup_reports
+		where id = #{id}
+		order by id desc
+	</select>
+
+	<!-- 모임 신고 상태 변경 - PENDING(처리대기) or APPROVED(신고완료) -->
+	<update id="updateAdminMeetup" parameterType="MeetupReportDto">
+		update
+		meetup_reports
+		set status = #{status], updated_by = #{updatedBy}
+		where
+		id = #{id} and delete_yn = 'N'
+	</update>
+
+	<!-- 모임 신고 삭제 -->
+	<update id="deleteAdminMeetup" parameterType="MeetupReportDto">
+		update
+		meetup_reports
+		set delete_yn = 'Y', updated_by = #{updatedBy}
+		where id =
+		#{id} and delete_yn = 'N'
+	</update>
+
+
+	<!-- ===== REVIEW user ===== -->
+	<!-- ===== REVIEW user ===== -->
+	<!-- 후기 신고 작성 -->
+	<insert id="insertUserReview" parameterType="ReviewReportDto">
+		insert into review_reports (review_id, member_id, reason, created_by,
+		updated_by)
+		values ( #{reviewId}, #{memberId}, #{reason}, #{createdBy}, #{updatedBy} );
+	</insert>
+
+	<!-- 전체 후기 신고 내역 조회 -->
+	<select id="selectUserReviewAll" resultType="ReviewReportDto"
+		parameterType="ReviewReportDto">
+		select id, review_id, member_id, reason, status
+		from review_reports
+		where review_id = #{reviewId} and delete_yn = 'N'
+	</select>
+
+	<!-- 사용자 본인이 작성한 후기 신고 내역 상세 조회 -->
+	<select id="selectUserReviewDetail" resultType="ReviewReportDto"
+		parameterType="ReviewReportDto">
+		select id, review_id, member_id, reason, status
+		from review_reports
+		where id = #{id} and review_id = #{reviewId} and delete_yn = 'N'
+	</select>
+
+	<!-- 사용자 본인이 작성한 후기 신고 내역 수정 -->
+	<update id="updateUserReview" parameterType="ReviewReportDto">
+		update review_reports
+		set reason = #{reason}, updated_by = #{updatedBy}
+		where id = #{id} and member_id = #{memberId} and delete_yn = 'N'
+	</update>
+
+	<!-- 사용자 본인이 작성한 후기 신고 내역 삭제 -->
+	<update id="deleteUserReview" parameterType="ReviewReportDto">
+		update review_reports
+		set delete_yn = 'Y', updated_by = #{updatedBy}
+		where id = #{id} and member_id = #{memberId} and delete_yn = 'N'
+	</update>
+
+
+	<!-- ===== REVIEW admin ===== -->
+	<!-- ===== REVIEW admin ===== -->
+	<!-- 전체 후기 신고 목록 조회 -->
+	<select id="selectAdminReviewAll" resultType="ReviewReportDto">
+		select *
+		from review_reports
+		order by id desc
+	</select>
+
+	<!-- 전체 후기 신고 목록 상세 조회 -->
+	<select id="selectAdminReviewDetail"
+		resultType="ReviewReportDto" parameterType="int">
+		select *
+		from review_reports
+		where id = #{id}
+		order by id desc
+	</select>
+
+	<!-- 후기 신고 상태 변경 - PENDING(처리대기) or APPROVED(신고완료) -->
+	<update id="updateAdminReview" parameterType="ReviewReportDto">
+		update review_reports
+		set status = #{status}, updated_by = #{updatedBy}
+		where id = #{id} and delete_yn = 'N'
+	</update>
+
+	<!-- 후기 신고 삭제 -->
+	<update id="deleteAdminReview" parameterType="ReviewReportDto">
+		update review_reports
+		set delete_yn = 'Y', updated_by = #{updatedBy}
+		where id = #{id} and delete_yn = 'N'
+	</update>
+	
+	
+	
+	<!-- 사유별 신고 건수 집계 -->
+	<select id="" parameterType="" resultType="">
+		SELECT reason_code, COUNT(*) AS report_count
+		FROM reports
+		GROUP BY reason_code;
+	</select>
+	
+	
+	<!-- 회원별 누적 신고 횟수 -->
+	<select id="TotalReports" parameterType="" resultType="">
+		SELECT member_id, COUNT(*) AS total_reports
+		FROM reports
+		GROUP BY member_id;
+	</select>
+	
+		
+	<!-- 대상별 신고 현황 (모임/후기) -->
+	<select id="UserReportCount" parameterType="" resultType="">
+		SELECT target_type, target_id, COUNT(*) AS report_count
+		FROM reports
+		GROUP BY target_type, target_id;
+	</select>
+	
+	 
+</mapper>
