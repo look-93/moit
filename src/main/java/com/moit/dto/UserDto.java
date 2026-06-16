@@ -4,13 +4,16 @@ import lombok.Data;
 
 @Data
 public class UserDto {
-	private int uno;
-	private String  nickname;
-	private String  bpass;
-	private String  email;
+	private int member_id;
+	private String  login_id;
 	private String  mobile;
-	private String  udate;
-	private String  bip;
+	private String  nickname;
+	private String  email;
+	private String  password;
+	private String  profile_url;
+	
+	private int member_type_id;
+	private int status_id;
 }
 
 

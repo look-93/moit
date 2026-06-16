@@ -26,15 +26,10 @@ public class UserServiceImpl  implements UserService{
 	public int insert(UserDto dto) {
 		AuthDto adto = new AuthDto();
 		adto.setEmail(dto.getEmail());
-		adto.setAuth("ROLE_MAMBER");
+		adto.setAuth("ROLE_MEMBER");
 		dao.insertAuth(adto);
 		
-		try {
-			dto.setBip(InetAddress.getLocalHost().getHostAddress());
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		dto.setBpass(pwencoder.encode(dto.getBpass()));
+		dto.setPassword(pwencoder.encode(dto.getPassword()));
 		
 		return dao.insert(dto);
 	}

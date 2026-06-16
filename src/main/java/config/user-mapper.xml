@@ -3,20 +3,20 @@
 <mapper namespace="com.moit.dao.UserMapper"> 
   
 	<insert id="insert" parameterType="UserDto">
-		insert into users(nickname, bpass, email, mobile, bip)
-		value(#{nickname}, #{bpass}, #{email}, #{mobile}, #{bip})
+		insert into members(login_id,mobile,nickname,email,password) 
+    	values (#{login_id},#{mobile},#{nickname},#{email},#{password})
 	</insert>
 	
 	<select id="findByEmail" parameterType="string" resultType="UserDto">
-		select * from users where email=#{email}	
+		select * from members where email=#{email}	
 	</select>
 
 	<select id="findByNickname" parameterType="string" resultType="UserDto">
-		select * from users where nickname=#{nickname}	
+		select * from members where nickname=#{nickname}	
 	</select>
 	
 	<select id="findByEmailUserInfo" resultType="UserDto">
-		select * from users where email=#{email}	
+		select * from members where email=#{email}	
 	</select>
 
 	<insert id="insertAuth" parameterType="AuthDto">
