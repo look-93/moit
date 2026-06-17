@@ -22,7 +22,7 @@
 				href="/moit/admin/category/list.do">카테고리관리</a> <a
 				href="/moit/admin/notice/list.do">공지사항</a> <a
 				href="/moit/admin/event/list.do">행사관리</a> <a
-				href="/moit/admin/advertisement/list.do">광고관리</a>
+				href="${pageContext.request.contextPath}/meetup/admin/ad.do">광고관리</a>
 		</div>
 
 	</div>
