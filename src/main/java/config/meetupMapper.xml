@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moit.dao.MeetupMapper"> 
+  
+  <!-- 모집조회 -->
+  <select id="meetupList" resultType="MeetupDto">
+  	select * from meetups
+  </select>
+  
+</mapper>
+
+
+
+<!-- mapper 1 service 2 controller 2 -->
