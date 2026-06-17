@@ -6,6 +6,8 @@
 	<typeAliases> 
 		<typeAlias type="com.moit.dto.AuthDto"      alias="AuthDto" />
 		<typeAlias type="com.moit.dto.AuthUserDto"  alias="AuthUserDto" />
-		<typeAlias type="com.moit.dto.UserDto"     alias="UserDto" />
+		<typeAlias type="com.moit.dto.UserDto"      alias="UserDto" />
+		<typeAlias type="com.moit.dto.QuestionDto"  alias="QuestionDto" />
+		<typeAlias type="com.moit.dto.AnswerDto"    alias="AnswerDto" />
 	</typeAliases>
 </configuration>

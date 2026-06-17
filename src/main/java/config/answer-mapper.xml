@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moit.dao.AnswerMapper"> 
+  
+	<select id="findByQuestionId" resultType="AnswerDTO">
+        SELECT * FROM answers  WHERE question_id = #{questionId}
+    </select>
+
+    <insert id="insertAnswer">
+        INSERT INTO answers
+        (question_id, member_id, content, is_public, delete_yn)
+        VALUES
+        (#{questionId}, #{memberId}, #{content}, #{isPublic}, #{deleteYn})
+    </insert>
+
+	
+</mapper>
+

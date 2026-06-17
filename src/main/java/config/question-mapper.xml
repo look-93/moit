@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moit.dao.QuestionMapper"> 
+  
+	<select id="findAll" resultType="QuestionDTO">
+        SELECT * FROM questions ORDER BY question_id DESC
+    </select>
+
+    <select id="findById" resultType="QuestionDTO">
+        SELECT * FROM questions WHERE question_id = #{questionId}
+    </select>
+
+    <insert id="insertQuestion">
+        INSERT INTO questions
+        (parent_id, member_id, category, content, status, is_public, delete_yn)
+        VALUES
+        (#{parentId}, #{memberId}, #{category}, #{content}, 'PENDING', #{isPublic}, #{deleteYn})
+    </insert>
+
+    <!-- 답변 달리면 상태 변경 -->
+    <update id="updateStatusAnswered">
+        UPDATE questions
+        SET status = 'ANSWERED'
+        WHERE question_id = #{questionId}
+    </update>
+	
+</mapper>
+
