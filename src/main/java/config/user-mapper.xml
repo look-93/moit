@@ -4,8 +4,12 @@
   
 	<insert id="insert" parameterType="UserDto">
 		insert into members(login_id,mobile,nickname,email,password) 
-    	values (#{login_id},#{mobile},#{nickname},#{email},#{password})
+    	values (#{loginId},#{mobile},#{nickname},#{email},#{password})
 	</insert>
+	
+	<select id="findLogin" resultType="int" parameterType="UserDto"> 
+		select count(*) from members where email=#{email} and password=#{password}
+	</select>
 	
 	<select id="findByEmail" parameterType="string" resultType="UserDto">
 		select * from members where email=#{email}	
@@ -15,37 +19,48 @@
 		select * from members where nickname=#{nickname}	
 	</select>
 	
-	<select id="findByEmailUserInfo" resultType="UserDto">
+	<select id="findByEmailUserInfo" parameterType="String" resultType="UserDto">
 		select * from members where email=#{email}	
 	</select>
 
-	<insert id="insertAuth" parameterType="AuthDto">
+    <!-- authorities -->
+    <!-- authorities -->
+<!-- 	<insert id="insertAuth" parameterType="AuthDto">
 		insert into authorities (email, auth)
 		value(#{email}, #{auth})
-	</insert>
+	</insert> -->
 
-	<select     resultMap="authListMap"   id="readAuth"  parameterType="string">
-	   select    u.email,  u.bpass,  a.auth
-	   from      users u    left   join authorities a    on u.email   = a.email  
-	   where     u.email =#{email} 
+	<select     resultType="AuthUserDto"   id="readAuth"  parameterType="string">
+	   	select m.email, m.password, mt.type_name 
+	    from members m join member_type mt
+	    on m.member_type_id = mt.member_type_id
+	    where m.email = #{email}
 	</select>
-	<resultMap  id="authListMap"          type="AuthUserDto">
+	
+<!-- 	<resultMap  id="authListMap"          type="AuthUserDto">
 	     <result  property="email"         column="email"  />
 	     <result  property="bpass"         column="bpass"  />
 	     <collection  property="authList"  resultMap="authMap"  />
-	</resultMap>
-	<resultMap  id="authMap"       type="AuthDto" > 
-	     <result  property="auth"      column="auth"   />
+	</resultMap> -->
+	<resultMap  id="authUserMap"       type="AuthUserDto" > 
+	     <result  property="email"      column="email"   />
+	     <result  property="password"      column="password"   />
+	     <result  property="typeName"      column="type_name"   />
 	</resultMap>  
 </mapper>
 
 
 <!-- public class UserDto {
-	private int uno;
-	private String  nickname;
-	private String  bpass;
-	private String  email;
+	private int memberId;
+	private String  loginId;
 	private String  mobile;
-	private String  udate;
-	private String  bip;
+	private String  nickname;
+	private String  email;
+	private String  password;
+	private String  profileUrl;
+	
+	private int memberTypeId;
+	private int statusId;
+	
+	private String deleteYn;
 } -->

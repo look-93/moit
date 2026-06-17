@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class AuthUserDto {
 	private String email;
-	private String bpass;
-	private List<AuthDto> authList;
+	private String password;
+	private String typeName;
 }

@@ -6,14 +6,15 @@ import com.moit.dto.UserDto;
 @Mapper
 public interface UserMapper { 
 
-	public     AuthUserDto    readAuth(String email);
-	
-	public  int          insertAuth(AuthDto  dto); 
-	public int      	 insert(UserDto dto);  
-
-	public UserDto   findByEmail( String email);
-	public UserDto  findByEmailUserInfo(   String email);
+	//public  int          insertAuth(AuthDto  dto); 
+	public int      insert(UserDto dto);
+	public int      findLogin(UserDto dto);
+	public UserDto  findByEmail( String email);	
 	public UserDto  findByNickname(   String nickname);
+	
+	/* security */
+	public     AuthUserDto    readAuth(String email);
+	public UserDto  findByEmailUserInfo(   String email);
 }
 
 

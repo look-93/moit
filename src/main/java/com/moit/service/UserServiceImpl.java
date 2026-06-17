@@ -27,7 +27,7 @@ public class UserServiceImpl  implements UserService{
 		AuthDto adto = new AuthDto();
 		adto.setEmail(dto.getEmail());
 		adto.setAuth("ROLE_MEMBER");
-		dao.insertAuth(adto);
+		//dao.insertAuth(adto);
 		
 		dto.setPassword(pwencoder.encode(dto.getPassword()));
 		

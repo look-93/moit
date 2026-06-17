@@ -1,35 +1,48 @@
 package com.moit.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data
 public class UserDto {
-	private int member_id;
-	private String  login_id;
+	private int memberId;
+	private String  loginId;
 	private String  mobile;
 	private String  nickname;
 	private String  email;
 	private String  password;
-	private String  profile_url;
+	private String  profileUrl;
 	
-	private int member_type_id;
-	private int status_id;
+	private int memberTypeId;
+	private int statusId;
+	
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+	private String deleteYn;
 }
 
 
 /*
-mysql> desc users;
-+----------+--------------+------+-----+-------------------+-------------------+
-| Field    | Type         | Null | Key | Default           | Extra             |
-+----------+--------------+------+-----+-------------------+-------------------+
-| uno      | int          | NO   | PRI | NULL              | auto_increment    |
-| nickname | varchar(20)  | NO   |     | NULL              |                   |
-| bpass    | varchar(50)  | NO   |     | NULL              |                   |
-| email    | varchar(100) | NO   |     | NULL              |                   |
-| mobile   | varchar(50)  | NO   |     | NULL              |                   |
-| udate    | timestamp    | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
-| bip      | varchar(50)  | NO   |     | NULL              |                   |
-+----------+--------------+------+-----+-------------------+-------------------+
-7 rows in set (0.00 sec)
+mysql> desc members;
++----------------+--------------+------+-----+-------------------+-----------------------------------------------+
+| Field          | Type         | Null | Key | Default           | Extra                                         |
++----------------+--------------+------+-----+-------------------+-----------------------------------------------+
+| member_id      | int          | NO   | PRI | NULL              | auto_increment                                |
+| login_id       | varchar(50)  | NO   | UNI | NULL              |                                               |
+| mobile         | varchar(20)  | NO   | UNI | NULL              |                                               |
+| nickname       | varchar(50)  | NO   | UNI | NULL              |                                               |
+| email          | varchar(100) | NO   | UNI | NULL              |                                               |
+| password       | varchar(255) | NO   |     | NULL              |                                               |
+| profile_url    | varchar(255) | YES  |     | NULL              |                                               |
+| member_type_id | int          | NO   | MUL | 1                 |                                               |
+| status_id      | int          | NO   | MUL | 1                 |                                               |
+| created_at     | datetime     | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| created_by     | int          | NO   | MUL | NULL              |                                               |
+| updated_at     | datetime     | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
+| updated_by     | int          | NO   | MUL | NULL              |                                               |
+| delete_yn      | char(1)      | NO   |     | N                 |                                               |
++----------------+--------------+------+-----+-------------------+-----------------------------------------------+
+14 rows in set (0.00 sec)
 
 */

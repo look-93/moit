@@ -8,12 +8,15 @@ public interface UserService {
 
 	public     AuthUserDto    readAuth( String email );
 	
+	
+	public int      	 insert(UserDto dto);  // 회원가입 + 권한추가
+	public UserDto   findByEmail( String email); // 이메일 중복검사
+	public UserDto  findByNickname(   String nickname); // 닉네임 중복검사
 	public  int          insertAuth(AuthDto  dto); 
-	public int      	 insert(UserDto dto);  
-
-	public UserDto   findByEmail( String email);
+	
+	/* security login */
 	public UserDto  findByEmailUserInfo(   String email);
-	public UserDto  findByNickname(   String nickname);
+	
 	
 }
 

@@ -1,6 +1,7 @@
 package com.moit.security;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -26,11 +27,9 @@ public class CustomUser extends User{
 
 	//2. username, password에 맞게 셋팅
     public CustomUser(AuthUserDto  dto) {
-    	super(  dto.getEmail() , dto.getBpass() 
-    						   , dto.getAuthList()
-    						        .stream()
-    						        .map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
-    						        .collect(Collectors.toList()));
+    	super(  dto.getEmail() , dto.getPassword() 
+    						   , Collections.singletonList(new SimpleGrantedAuthority(dto.getTypeName()))
+    						        );
     	this.dto = dto;
     } 
     
