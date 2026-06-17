@@ -4,19 +4,21 @@ import lombok.Data;
 
 @Data
 public class MeetupDto {
-	private int meetup_id;
-	private int member_id;
+	private int meetupId;
+	private int memberId;
 	private String title;
 	private String content;
-	private int max_participants;
-	private int min_participants;
-	private int sigungu_id;
-	private int category_id;
+	private int maxParticipants;
+	private int minParticipants;
+	private int sigunguId;
+	private int categoryId;
 	private String address;
-	private String meetup_datetime;
-	private String delete_yn;
-	private String created_at;
-	private String updated_at;
+	private String meetupAt;
+	private String deleteYn;
+	private String createdAt;
+	private String updatedAt;
 	
-	private int meetup_cnt;
+	private int meetupNo;
+	private int totalParticipants; //총 모집 신청인원
+	private int imagePath;
 }

@@ -2,10 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moit.dao.MeetupMapper"> 
   
-  <!-- 모집조회 -->
-  <select id="meetupList" resultType="MeetupDto">
-  	select * from meetups
-  </select>
+	<!-- 모집 조회 -->
+	<select id="meetupList" resultType="MeetupDto">
+		SELECT A.*,
+		       ROW_NUMBER() OVER(ORDER BY A.created_at DESC) AS meetup_no,
+		       (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = A.meetup_id) AS total_participants <!-- 총 신청인원 -->
+		FROM meetups AS A;
+	</select> 	
+	
+  	<!-- admin 모집 검색조건조회(모집중, 모집마감, 쉬소/모집명,모집자명)+paging -->
+ 	<select id="serchByAdmin" resultType="MeetupDto" parameterType="java.util.HashMap">
+		SELECT A.*,
+		       ROW_NUMBER() OVER(ORDER BY A.created_at DESC) AS meetup_no,
+		      (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = a.meetup_id AND status = 'APPROVED') AS total_participants
+		  FROM meetups AS A
+		 WHERE A.status = #{status}
+		   AND A.title LIKE %#{title}%
+		   AND A.member_id = #{memberId};
+		 LIMIT #{start}, ${end};
+ 	</select>
+ 	
+   	<!-- user 모집 검색조건조회(지역+일자)+paging -->
+ 	<select id="serchByUser" resultType="MeetupDto" parameterType="java.util.HashMap">
+	SELECT A.*,
+		   C.image_path
+	  FROM meetups AS A
+      LEFT OUTER JOIN sigungus AS B ON B.sigungu_id = A.sigungu_id
+      LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id
+      LEFT OUTER JOIN meetup_images  AS D ON D.meetup_id  = A.meetup_id 
+      LEFT OUTER JOIN images  AS E ON E.image_id  = D.image_id       
+	 WHERE A.sigungu_id = #{sigunguId}
+	 ORDER BY
+	<choose> <!--  -->
+		<when test="sortBy == 'OLD'"> 
+			A.CREATED_AT ASC
+		</when>
+		<when test="sortBy == 'POPULAR'">
+			(SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = A.meetup_id AND status = 'APPROVED') DESC
+		</when>
+		<otherwise>
+			A.CREATED_AT DESC
+		</otherwise>
+	</choose>
+		 LIMIT #{start}, ${end};
+ 	</select>			
+  	
+  	<!-- 모집 상세조회 -->
+ 	<select id="meetupDetail" resultType="MeetupDto"> 
+ 		SELECT A.*, C.image_path 
+ 		  FROM meetups AS A
+		  JOIN meetup_images  AS B ON B.meetup_id  = A.meetup_id 
+          JOIN images  AS C ON C.image_id  = B.image_id 
+		 WHERE A.meetup_id = ${meetup_id};
+ 	</select> 
+ 
+ 	<insert id="insertApplication">
+		INSERT INTO meetup_applications (meetup_id, member_id, status)
+		 VAEUE (#{meetup_id}, #{member_id}, #{status}) 	
+ 	</insert>
+ 
+ 	
+	<!-- paging -->
+	<select id="meetupList10" resultType="MeetupDto" parameterType="java.util.HashMap">
+		SELECT A.*,
+		       ROW_NUMBER() OVER(ORDER BY A.created_at DESC) AS meetup_no,
+		       (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = A.meetup_id AND status = 'APPROVED') AS total_participants
+		FROM MEETUPS AS A	
+		LIMIT #{start}, ${end};
+	</select>
   
 </mapper>
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -165,8 +166,7 @@ body {
 								<option>상태</option>
 								<option>모집중</option>
 								<option>모집마감</option>
-								<option>행사취소</option>
-								<option>삭제처리</option>
+								<option>취소</option>
 							</select>
 						</div>
 						<div class="col-md-2">
@@ -212,7 +212,16 @@ body {
 
 							<c:forEach var="meetupList" items="${meetupList}" varStatus="status">
 								<tr>
-									<td>${meetupList.meetup_id}</td>								
+									<td>${meetupList.meetupNo}</td>
+									<td>${meetupList.meetupId}</td> <!-- 바꾸기!!!! member명으로 수정하기 -->	
+									<td>${meetupList.title}</td>	
+									<td>${meetupList.meetupAt}</td>
+									<td>${meetupList.maxParticipants}</td>	
+									<td>${meetupList.minParticipants}</td>	
+									<td>${meetupList.totalParticipants}</td>	
+								<td>
+									<button class="btn btn-danger btn-sm">삭제</button>
+								</td>					
 								</tr>
 							
 							
