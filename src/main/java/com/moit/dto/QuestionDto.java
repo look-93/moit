@@ -12,6 +12,7 @@ public class QuestionDto {
     private int memberId;
 
     private String category;   // MEETUP, ADMIN
+    private String title;
     private String content;
 
     private String status;     // PENDING, ANSWERED
