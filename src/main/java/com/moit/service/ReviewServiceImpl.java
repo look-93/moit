@@ -1,0 +1,73 @@
+package com.moit.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.moit.dao.ReviewMapper;
+import com.moit.dto.ReviewDto;
+
+
+@Service
+public class ReviewServiceImpl  implements ReviewService {
+	
+	@Autowired private ReviewMapper reviewmapper;
+	
+
+	@Override
+	public int insertUserReview(ReviewDto dto) {	
+		return reviewmapper.insertUserReview(dto);
+	}
+
+	@Override
+	public List<ReviewDto> selectUserReview(int meetupId) {	
+		return reviewmapper.selectUserReview(meetupId);
+	}
+
+	@Override
+	public List<ReviewDto> selectReviewPopular() {	
+		return reviewmapper.selectReviewPopular();
+	}
+
+	@Override
+	public int updateUserReview(ReviewDto dto) {		
+		return reviewmapper.updateUserReview(dto);
+	}
+
+	@Override
+	public int deleteUserReview(ReviewDto dto) {	
+		return reviewmapper.deleteUserReview(dto);
+	}
+
+	@Override
+	public List<ReviewDto> adminSelectReviewList() {		
+		return reviewmapper.adminSelectReviewList() ;
+	}
+
+	@Override
+	public List<ReviewDto> adminSearchReviewByContent(String keyword) {	
+		return reviewmapper.adminSearchReviewByContent(keyword);
+	}
+
+	@Override
+	public List<ReviewDto> adminSearchReviewByWriter(int memberId) {	
+		return reviewmapper.adminSearchReviewByWriter(memberId);
+	}
+
+	@Override
+	public int adminHideReview(int id) {	
+		return reviewmapper.adminHideReview(id);
+	}
+
+	@Override
+	public int adminDeleteReview(int id) {	
+		return reviewmapper.adminDeleteReview(id);
+	}
+
+	@Override
+	public int updateUserReviewHide(ReviewDto dto) {
+		return reviewmapper.updateUserReviewHide(dto);
+	}
+
+}
