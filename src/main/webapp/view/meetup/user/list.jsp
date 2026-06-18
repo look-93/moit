@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- <%@ include file="../../inc/userHeader.jsp"%> --%>
 <style>
 
@@ -379,168 +379,92 @@ nav{
                     </a>
 
                 </div>
+			<form action="${pageContext.request.contextPath}/meetup/user/list.do" method="get">		
+	            <div class="filter-box">
+					<!-- 검색 -->
+	                <input type="text" name="searchText" placeholder="모임명 검색">
+					<!-- 시도 -->
+	                <select id="sido" name="sido">
+	                    <option value="">전체 지역</option>	                    
+	                    <c:forEach var="sido" items="${sidoList}" varStatus="status">
+	                    	<option value="${sido.sidoId}">${sido.name}</option>	                    
+	                    </c:forEach>
 
-            <div class="filter-box">
-
-                <input
-                type="text"
-                placeholder="모임명 검색">
-
-                <select>
-                    <option>전체 지역</option>
-                    <option>서울</option>
-                    <option>인천</option>
-                    <option>경기</option>
-                </select>
-
-                <select>
-                    <option>최신순</option>
-                    <option>인기순</option>
-                    <option>마감임박순</option>
-                </select>
-
-                <button>검색</button>
-
-            </div>
+	                </select>
+	
+	                <select id="orderType" name="orderType">
+	                    <option value="createAt">최신순</option>
+	                    <option value="like">인기순</option>
+	                    <option value="meetupAt">마감임박순</option>
+	                </select>
+	
+	                <button>검색</button>
+	
+	            </div>
+            </form>
 
             <div class="card-grid">
 
-                <!-- CARD 1 -->
-
-                <div class="card">
-
-                    <div class="card-img"></div>
-
-                    <div class="card-body">
-
-                        <span class="badge">
-                            모집중
-                        </span>
-
-                        <h4>러닝 크루 모집</h4>
-
-                        <p>🏃 운동/스포츠</p>
-                        <p>📍 서울</p>
-                        <p>👥 8 / 10명</p>
-
-                        <div class="card-footer">
-                            <span>2026.06.15</span>
-                            <span class="like">❤️ 34</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
                 <!-- CARD -->
+				
+				<c:forEach var="serchList" items="${serchList}" varStatus="status">
+	                <div class="card">
+	
+	                    <div class="card-img"></div>
+	
+	                    <div class="card-body">
+	
+	                        <span class="badge">
+	                        	<c:choose>
+	                        		<c:when test="${serchList.status eq 'RECRUITING'}" >
+	                        			모집중
+	                        		</c:when>
+	                        		<c:when test="${serchList.status eq 'CLOSED'}" >
+	                        			모집마감
+	                        		</c:when>	                        	
+	                        	</c:choose>
+	                        
+	                            
+	                        </span>
+	
+	                        <h4>${serchList.title}</h4>
+	
+	                        <p>🏃 운동/스포츠</p>  <!-- 수정 카테고리추가 -->
+	                        <p>${serchList.sigunguName}</p>
+	                        <p>👥 ${serchList.participant} / ${serchList.maxParticipants}명</p>
+	
+	                        <div class="card-footer">
+	                            <span>${serchList.fomatMeetupAt}</span>
+	                            <span class="like">❤️ 34</span> <!-- 수정 좋아요 -->
+	                        </div>
+	
+	                    </div>
+	
+	                </div>
 
-                <div class="card">
-
-                    <div class="card-img"></div>
-
-                    <div class="card-body">
-
-                        <span class="badge">
-                            모집중
-                        </span>
-
-                        <h4>독서 스터디</h4>
-
-                        <p>📚 스터디</p>
-                        <p>📍 인천</p>
-                        <p>👥 5 / 8명</p>
-
-                        <div class="card-footer">
-                            <span>2026.06.14</span>
-                            <span class="like">❤️ 21</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-img"></div>
-
-                    <div class="card-body">
-
-                        <span class="badge badge-close">
-                            마감
-                        </span>
-
-                        <h4>보드게임 모임</h4>
-
-                        <p>🎲 게임</p>
-                        <p>📍 경기</p>
-                        <p>👥 10 / 10명</p>
-
-                        <div class="card-footer">
-                            <span>2026.06.10</span>
-                            <span class="like">❤️ 48</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-img"></div>
-
-                    <div class="card-body">
-
-                        <span class="badge">
-                            모집중
-                        </span>
-
-                        <h4>주말 등산 모임</h4>
-
-                        <p>⛰️ 운동</p>
-                        <p>📍 서울</p>
-                        <p>👥 12 / 15명</p>
-
-                        <div class="card-footer">
-                            <span>2026.06.12</span>
-                            <span class="like">❤️ 62</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="card">
-                    <div class="card-img"></div>
-                    <div class="card-body">
-                        <span class="badge">모집중</span>
-                        <h4>영화 같이 볼 사람</h4>
-                        <p>🎬 문화</p>
-                        <p>📍 부천</p>
-                        <p>👥 7 / 10명</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-img"></div>
-                    <div class="card-body">
-                        <span class="badge">모집중</span>
-                        <h4>카페 투어 모임</h4>
-                        <p>☕ 문화</p>
-                        <p/모집글목록.html>📍 서울</p>
-                        <p>👥 4 / 8명</p>
-                    </div>
-                </div>
-
+				</c:forEach>
             </div>
-
+				
             <div class="pagination">
 
-                <a href="#">‹</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">›</a>
+				<!-- 이전 -->
+				<c:if test="${paging.start > paging.bottomlist}">
+					<a class="page-link" href="?pstartno= ${paging.start-1}"> < </a>
+					
+				</c:if>
+
+				<!-- 1,2,3,4,5,6 -->
+				<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
+			        <a href="?pstartno=${i}"
+			           class="${i == paging.current ? 'active' : ''}">
+			            ${i}
+			        </a>
+				</c:forEach>
+
+			    <!-- 다음 -->
+			    <c:if test="${paging.pagetotal > paging.end}">
+			        <a href="?pstartno=${paging.end+1}">›</a>
+			    </c:if>
 
             </div>
 
@@ -549,4 +473,8 @@ nav{
     </div>
 
 </div>
+<!-- <script>
+
+console.log("${sidoList}")
+</script> -->
 <%-- <%@ include file="../../inc/userFooter.jsp"%> --%>

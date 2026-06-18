@@ -3,7 +3,7 @@
 <mapper namespace="com.moit.dao.MeetupMapper"> 	
 	
   	<!-- admin 모집 검색조건조회(모집중, 모집마감, 취소/모집명,모집자명)+paging -->
- 	<select id="serchByAdmin" resultType="MeetupDto" parameterType="java.util.HashMap">
+ 	<select id="serchByAdmin" resultType="MeetupDto" parameterType="MeetupSerchDto">
 		SELECT A.*,
 		      (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = a.meetup_id AND status = 'APPROVED' AND A.delete_yn = 'n') AS total_participants
 		  FROM meetups AS A
@@ -11,23 +11,21 @@
            AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		<if test="status != null and status != ''">
            AND A.status = #{status}
-        </if>
-       
+        </if>       
         <if test="searchType == 'title' and searchText != ''">
            AND A.title LIKE CONCAT('%', #{searchText}, '%')
         </if>
 <!--         <if test="searchType == 'name' and searchText != ''">
            AND A.member_name LIKE CONCAT('%', #{searchText}, '%')
-        </if> -->
+        </if>  member join 후 사용-->
         
-		   <!-- AND A.member_id = #{memberId} -->
 		 ORDER BY A.created_at DESC
-		 LIMIT #{start}, ${end}
-		 
- 	</select>
- 	<select id="selectMeetupTotalCnt" resultType="int" parameterType="java.util.HashMap">
+		 LIMIT #{start}, ${end}		 
+ 	</select> 	
+ 	<select id="selectMeetupTotalCnt" resultType="int" parameterType="MeetupSerchDto">
 		SELECT COUNT(*) 
-		  FROM meetups AS A
+		  FROM meetups  AS A
+
 		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
            AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		<if test="status != null and status != ''">
@@ -43,38 +41,84 @@
 		 ORDER BY A.created_at DESC
  	</select>
  	
-   	<!-- user 모집 검색조건조회(지역+일자)+paging -->
- 	<select id="serchByUser" resultType="MeetupDto" parameterType="java.util.HashMap">
+   	<!-- user 모집 검색조건조회(지역/최신순,인기순,마감임박순)+paging -->
+ 	<select id="serchByUser" resultType="MeetupDto" parameterType="MeetupSerchDto">
 	SELECT A.*,
-		   C.image_path
+		   E.image_path,
+		   C.name as sido_name,
+		   B.name as sigungu_name,
+		   (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = A.meetup_id) AS participant,
+		   DATE_FORMAT(meetup_At, '%Y.%m.%d') as fomatMeetupAt
+		   <!-- 좋아요 수 -->
 	  FROM meetups AS A
       LEFT OUTER JOIN sigungus AS B ON B.sigungu_id = A.sigungu_id
       LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id
       LEFT OUTER JOIN meetup_images  AS D ON D.meetup_id  = A.meetup_id 
       LEFT OUTER JOIN images  AS E ON E.image_id  = D.image_id       
-	 WHERE A.sigungu_id = #{sigunguId}
+	 WHERE 1=1 
+	 <if test="sidoId != null and sidoId != 0">
+          AND C.sido_id = #{sidoId}
+     </if>  
 	 ORDER BY
 	<choose> <!--  -->
-		<when test="sortBy == 'OLD'"> 
-			A.CREATED_AT ASC
+		<when test="orderType == 'createAt' and orderType != ''"> 
+			A.created_at ASC
 		</when>
-		<when test="sortBy == 'POPULAR'">
-			(SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = A.meetup_id AND status = 'APPROVED') DESC
+		<when test="orderType == 'list' and orderType != ''">
+			(SELECT COUNT(*) 
+			   FROM meetups AS A
+			   LEFT OUTER JOIN meetup_likes  AS B ON B.meetup_id = A.meetup_id  
+			  GROUP BY A.meetup_id) DESC
 		</when>
+		<when test="orderType == 'meetupAt' and orderType != ''">
+			A.meetup_At DESC
+		</when>		
 		<otherwise>
-			A.CREATED_AT DESC
+			A.created_at DESC
 		</otherwise>
 	</choose>
-		 LIMIT #{start}, ${end};
- 	</select>			
+		 LIMIT #{start}, ${end}
+ 	</select>	
+ 	
+  	<select id="selectUserMeetupTotalCnt" resultType="int" parameterType="MeetupSerchDto">
+		SELECT COUNT(*)
+		  FROM meetups AS A
+	      LEFT OUTER JOIN sigungus AS B ON B.sigungu_id = A.sigungu_id
+	      LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id
+	      LEFT OUTER JOIN meetup_images  AS D ON D.meetup_id  = A.meetup_id 
+	      LEFT OUTER JOIN images  AS E ON E.image_id  = D.image_id       
+		 WHERE 1=1 
+		 <if test="sidoId != null and sidoId != 0">
+	          AND C.sido_id = #{sidoId}
+	     </if>  
+		 ORDER BY
+		<choose> <!--  -->
+			<when test="orderType == 'createAt' and orderType != ''"> 
+				A.created_at ASC
+			</when>
+			<when test="orderType == 'list' and orderType != ''">
+				(SELECT COUNT(*) 
+				   FROM meetups AS A
+				   LEFT OUTER JOIN meetup_likes  AS B ON B.meetup_id = A.meetup_id  
+				  GROUP BY A.meetup_id) DESC
+			</when>
+			<when test="orderType == 'meetupAt' and orderType != ''">
+				A.meetup_At DESC
+			</when>		
+			<otherwise>
+				A.created_at DESC
+			</otherwise>
+		</choose>	
+ 	</select>	
+ 			
   	
-  	<!-- 모집 상세조회, 수정 -->
+  	<!-- 모집 상세조회 -->
  	<select id="meetupDetail" resultType="MeetupDto"> 
  		SELECT A.*, C.image_path 
  		  FROM meetups AS A
 		  JOIN meetup_images  AS B ON B.meetup_id  = A.meetup_id 
           JOIN images  AS C ON C.image_id  = B.image_id 
-		 WHERE A.meetup_id = ${meetup_id};
+		 WHERE A.meetup_id = ${meetup_id}
  	</select> 
  	
  	<!-- 모집 신청 -->
@@ -93,17 +137,20 @@
  		   	   address 		 	 = ${address},
  		   	   meetup_datetime 	 = ${meetup_datetime},
  		   	   status			 = ${status} 		   	   
- 		 WHERE meetup_id = ${meetup_id};
+ 		 WHERE meetup_id = ${meetup_id}
  	</update>
  	
  	<!-- 논리삭제 -->
   	<update id="deleteByMeetup" parameterType="int">
  		UPDATE meetups
  		   SET delete_yn = 'Y' 		   	   
- 		 WHERE meetup_id = ${meetup_id};
+ 		 WHERE meetup_id = ${meetup_id}
  	</update>	
  	
- 	
+ 	<!-- 시도 조회 -->
+ 	<select id="findAllSido" resultType="SidoDto">
+ 		select * from sidos
+ 	</select>
  	
   
 </mapper>

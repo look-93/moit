@@ -18,9 +18,14 @@ public class MeetupDto {
 	private String createdAt;
 	private String updatedAt;
 	private String status;
+
 	
 	private int meetupNo;
-	private int totalParticipants; //총 모집 신청인원
-	private int imagePath;	
+	private int totalParticipants; 	//총 모집 신청인원
+	private String imagePath;			
+	private String sidoName;		//시도명
+	private String sigunguName;		//시군구명 
+	private int participant; 		//참여자
+	private String fomatMeetupAt;
 	
 }

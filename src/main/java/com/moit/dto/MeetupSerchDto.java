@@ -10,5 +10,6 @@ public class MeetupSerchDto {
     private String status;
     private int start;
     private int end;
-   	
+   	private int sidoId;
+   	private String orderType;
 }

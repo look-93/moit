@@ -12,5 +12,7 @@
 			alias="AuthUserDto" />
 		<typeAlias type="com.moit.dto.UserDto" alias="UserDto" />
 		<typeAlias type="com.moit.dto.MeetupDto" alias="MeetupDto" />
+		<typeAlias type="com.moit.dto.MeetupSerchDto" alias="MeetupSerchDto" />
+		<typeAlias type="com.moit.dto.common.SidoDto" alias="SidoDto" />
 	</typeAliases>
 </configuration>

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -175,7 +174,7 @@ body {
 							<div class="col-md-2">
 								<select id="searchType" name="searchType" class="form-select">
 									<option value="name">작성자이름</option>
-									<option value="title">모집명</option>
+									<option value="title1">모집명</option>
 								</select>
 							</div>
 	<!-- 						<div class="col-md-2">
