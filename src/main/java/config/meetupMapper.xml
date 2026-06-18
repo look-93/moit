@@ -13,18 +13,34 @@
            AND A.status = #{status}
         </if>
        
-        <if test="title != null and title != ''">
-           AND A.title LIKE CONCAT('%', #{title}, '%')
+        <if test="searchType == 'title' and searchText != ''">
+           AND A.title LIKE CONCAT('%', #{searchText}, '%')
         </if>
+<!--         <if test="searchType == 'name' and searchText != ''">
+           AND A.member_name LIKE CONCAT('%', #{searchText}, '%')
+        </if> -->
+        
 		   <!-- AND A.member_id = #{memberId} -->
 		 ORDER BY A.created_at DESC
 		 LIMIT #{start}, ${end}
 		 
  	</select>
- 	<select id="selectMeetupTotalCnt" resultType="int">
+ 	<select id="selectMeetupTotalCnt" resultType="int" parameterType="java.util.HashMap">
 		SELECT COUNT(*) 
 		  FROM meetups AS A
-		 WHERE status != 'DELETED'
+		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
+           AND A.status != 'DELETED' <!-- 삭제 제외 -->
+		<if test="status != null and status != ''">
+           AND A.status = #{status}
+        </if>       
+       
+        <if test="searchType == 'title' and searchText != ''">
+           AND A.title LIKE CONCAT('%', #{searchText}, '%')
+        </if>
+        <!--         <if test="searchType == 'name' and searchText != ''">
+           AND A.member_name LIKE CONCAT('%', #{searchText}, '%')
+        </if> -->
+		 ORDER BY A.created_at DESC
  	</select>
  	
    	<!-- user 모집 검색조건조회(지역+일자)+paging -->

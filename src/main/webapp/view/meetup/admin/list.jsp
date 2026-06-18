@@ -165,11 +165,17 @@ body {
 							</div>
 	
 							<div class="col-md-2">
-								<select name="searchType" class="form-select">
-									<option>상태</option>
-									<option>모집중</option>
-									<option>모집마감</option>
-									<option>취소</option>
+								<select id="status" name="status" class="form-select">
+									<option value="">상태</option>
+									<option value="RECRUITING">모집중</option>
+									<option value="CLOSED">모집마감</option>
+									<option value="CANCELED">취소</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<select id="searchType" name="searchType" class="form-select">
+									<option value="name">작성자이름</option>
+									<option value="title">모집명</option>
 								</select>
 							</div>
 	<!-- 						<div class="col-md-2">
@@ -193,7 +199,16 @@ body {
 				<div class="table-box">
 
 					<table class="table table-hover">
-
+					    <colgroup>
+					        <col style="width:5%">
+					        <col style="width:10%">
+					        <col style="width:30%">
+					        <col style="width:15%">
+					        <col style="width:10%">
+					        <col style="width:10%">
+					        <col style="width:10%">
+					        <col style="width:10%">
+					    </colgroup>
 						<thead class="table-light">
 							<tr>
 								<th>번호</th>
@@ -263,7 +278,13 @@ body {
 		</div>
 
 	</div>
-
-
 </body>
+<script>
+window.onload = function() {
+    const status = document.getElementById("status");
+    status.value = '${param.status}';
+    console.log('${param.status}');
+}
+
+</script>
 </html>

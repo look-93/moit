@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.moit.dto.MeetupDto;
+import com.moit.dto.MeetupSerchDto;
 
 @Mapper
 public interface MeetupMapper {
@@ -13,8 +14,8 @@ public interface MeetupMapper {
 	public List<MeetupDto> meetupList10(HashMap<String, Integer> map);
 	
 	//검색조건+paging
-	public List<MeetupDto> serchByAdmin(HashMap<String, Object> map);
-	public int selectMeetupTotalCnt();
+	public List<MeetupDto> serchByAdmin(MeetupSerchDto meetupSerchDto);
+	public int selectMeetupTotalCnt(MeetupSerchDto meetupSerchDto);
 	
 	//삭제
 	public int deleteByMeetup(int meetupId);

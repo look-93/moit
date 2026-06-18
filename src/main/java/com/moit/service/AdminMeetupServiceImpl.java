@@ -19,32 +19,15 @@ public class AdminMeetupServiceImpl implements AdminMeetupService{
 	
 
 	@Override
-	public List<MeetupDto> serchByAdmin(int pstartno, MeetupSerchDto meetupSerchDto) {
-		HashMap<String, Object> map = new HashMap<>();	
-		String convertedStatus = "";
-		String searchType = meetupSerchDto.getSearchType();
-		
-		map.put("start", (pstartno-1)*10);
-		map.put("end", 10);		
-		
-		map.put("title", meetupSerchDto.getSearchText());
-		if ("모집중".equals(searchType)) {
-	        convertedStatus = "RECRUITING";
-	    } else if ("모집마감".equals(searchType)) {
-	        convertedStatus = "CLOSED";
-	    } else if ("취소".equals(searchType)) {
-	        convertedStatus = "CANCELED";
-	    } else {
-	        // "상태" 이거나 null이거나 빈 문자열일 때 포함
-	        convertedStatus = ""; 
-	    }
-		map.put("status", convertedStatus);
-		return meetupMapper.serchByAdmin(map);
+	public List<MeetupDto> serchByAdmin(int pstartno,MeetupSerchDto meetupSerchDto) {	
+		meetupSerchDto.setEnd(10);
+		meetupSerchDto.setStart((pstartno-1)*10);
+		return meetupMapper.serchByAdmin(meetupSerchDto);
 	}
 
 	@Override
-	public int selectMeetupTotalCnt() {
-		return meetupMapper.selectMeetupTotalCnt();
+	public int selectMeetupTotalCnt(MeetupSerchDto meetupSerchDto) {
+		return meetupMapper.selectMeetupTotalCnt(meetupSerchDto);
 	}
 
 	@Override

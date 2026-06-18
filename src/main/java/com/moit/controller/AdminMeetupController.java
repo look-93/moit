@@ -26,8 +26,8 @@ public class AdminMeetupController {
 	@RequestMapping("/list.do")
 	public String serchByAdmin(Model model, MeetupSerchDto meetupSerchDto, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
 		model.addAttribute("menu", "meetup");
-		model.addAttribute("paging", new PagingUtil(adminMeetupService.selectMeetupTotalCnt(), pstartno));
-		model.addAttribute("serchList", adminMeetupService.serchByAdmin(pstartno, meetupSerchDto));
+		model.addAttribute("paging", new PagingUtil(adminMeetupService.selectMeetupTotalCnt(meetupSerchDto), pstartno));
+		model.addAttribute("serchList", adminMeetupService.serchByAdmin(pstartno,meetupSerchDto));
 		return "meetup/admin/list"; 
 	}
 	
