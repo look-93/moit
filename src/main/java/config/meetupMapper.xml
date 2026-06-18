@@ -55,7 +55,8 @@
       LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id
       LEFT OUTER JOIN meetup_images  AS D ON D.meetup_id  = A.meetup_id 
       LEFT OUTER JOIN images  AS E ON E.image_id  = D.image_id       
-	 WHERE 1=1 
+	 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
+       AND A.status != 'DELETED' <!-- 삭제 제외 -->
 	 <if test="sidoId != null and sidoId != 0">
           AND C.sido_id = #{sidoId}
      </if>  
@@ -87,7 +88,8 @@
 	      LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id
 	      LEFT OUTER JOIN meetup_images  AS D ON D.meetup_id  = A.meetup_id 
 	      LEFT OUTER JOIN images  AS E ON E.image_id  = D.image_id       
-		 WHERE 1=1 
+		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
+	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		 <if test="sidoId != null and sidoId != 0">
 	          AND C.sido_id = #{sidoId}
 	     </if>  

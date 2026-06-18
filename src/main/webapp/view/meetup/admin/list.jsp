@@ -99,7 +99,7 @@ body {
 		<div class="row">
 
 			<!-- 사이드바 -->
-			<%@include file="../../inc/adminSidebar.jsp"%>
+			<%@include file="../../inc/sidebar.jsp"%>
 
 			<!-- 메인 -->
 			<div class="col-md-10 p-4">
