@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -9,6 +8,7 @@
 <title>MOIT | 모집글 상세</title>
 
 <style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
 :root{
     --c1:#B6FFFA;
@@ -16,12 +16,12 @@
     --c3:#80B3FF;
     --c4:#687EFF;
 
-    --bg:#f7faff;
+    --bg:#f8fafc;
     --white:#fff;
-    --text:#222;
-    --gray:#777;
+    --text:#1e293b;
+    --gray:#64748b;
 
-    --shadow:0 5px 15px rgba(0,0,0,.07);
+    --shadow: 0 4px 20px -2px rgba(104, 126, 255, 0.06);
     --radius:20px;
 }
 
@@ -33,107 +33,198 @@
 
 body{
     background:var(--bg);
-    font-family:sans-serif;
+    font-family: 'Pretendard', sans-serif;
+    color: var(--text);
 }
 
-/* container */
 .container{
-    width:1300px;
+    width:1200px;
     max-width:95%;
     margin:auto;
 }
 
-/* ================= HEADER (요청 버전) ================= */
+/* ================= HEADER (로고+메뉴 좌측 밀집 버전) ================= */
 
 header{
     background:white;
     height:80px;
     box-shadow:var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .header-inner{
     height:100%;
     display:flex;
-    justify-content:space-between;
+    justify-content:space-between; /* 좌측 그룹과 우측 그룹을 양 끝으로 배치 */
     align-items:center;
 }
 
-.logo{
-    font-size:30px;
-    font-weight:bold;
-    color:var(--c4);
+/* 💡 [NEW] 로고와 메뉴를 한 공간에 묶어 왼쪽에 밀착시킵니다 */
+.left-group {
+    display: flex;
+    align-items: center;
+    gap: 45px; /* 로고와 '홈' 메뉴 사이의 간격 */
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+	color: #4a7dff;
+	padding: 25px;
+	text-align: center;
+	border-bottom: 1px solid #eee;
+	text-decoration: none;
 }
 
 nav{
     display:flex;
-    gap:30px;
+    gap:30px; /* 홈과 모집찾기 사이의 간격 */
 }
 
 nav a{
     text-decoration:none;
-    color:#333;
+    color:#475569;
+    font-weight: 600;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.2s ease;
 }
 
-.search-top{
-    width:250px;
-    padding:12px;
-    border-radius:30px;
-    border:1px solid #ddd;
+nav a:hover, nav a.active {
+    color: var(--c4);
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--c4);
+    border-radius: 2px;
+    transition: width 0.2s ease;
+}
+
+nav a:hover::after, nav a.active::after {
+    width: 100%;
+}
+
+/* 💡 [NEW] 우측 유저박스와 슬로건을 감싸는 그룹 */
+.right-group {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* 슬로건과 알림 아이콘 사이의 간격 */
+}
+
+/* 예쁜 슬로건 텍스트 바 */
+.header-slogan {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--c4);
+    background: rgba(104, 126, 255, 0.08);
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+}
+
+.header-slogan::before {
+    content: '✨';
 }
 
 .user-box{
     display:flex;
     align-items:center;
-    gap:20px;
+    gap:24px;
 }
 
 .alarm{
     font-size:22px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.alarm:hover {
+    transform: scale(1.1);
+}
+
+.alarm::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 6px;
+    height: 6px;
+    background-color: #ef4444;
+    border-radius: 50%;
 }
 
 .profile{
     display:flex;
     align-items:center;
     gap:12px;
-    padding:8px 15px;
+    padding: 6px 16px 6px 6px;
     border-radius:30px;
-    border:1px solid #eee;
-    background:white;
+    border: 1px solid #f1f5f9;
+    background:#f8fafc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile:hover {
+    background: #f1f5f9;
+    border-color: #e2e8f0;
 }
 
 .profile-img{
-    width:40px;
-    height:40px;
+    width:38px;
+    height:38px;
     border-radius:50%;
-    background:var(--c4);
+    background: linear-gradient(135deg, var(--c3) 0%, var(--c4) 100%);
     color:white;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-weight:bold;
+    font-weight:700;
+    box-shadow: 0 2px 6px rgba(104, 126, 255, 0.25);
 }
 
 .profile-info{
     display:flex;
     flex-direction:column;
+    line-height: 1.4;
 }
 
-.profile-info strong{font-size:14px;}
-.profile-info span{font-size:12px;color:var(--gray);}
+.profile-info strong{
+    font-size:14px;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.profile-info span{
+    font-size:11px;
+    color:var(--gray);
+    font-weight: 500;
+}
 
 /* ==================
 FOOTER
 ================== */
-
 footer{
-    margin-top:50px;
-    background:white;
-    padding:30px;
-    text-align:center;
+    margin-top: 50px;
+    background: white;
+    padding: 30px;
+    text-align: center;
+    color: var(--gray);
+    border-top: 1px solid #edf2f7;
 }
-
-}
-
 </style>
 </head>
 
@@ -142,25 +233,32 @@ footer{
 <header>
 <div class="container header-inner">
 
-    <div class="logo">MOIT</div>
+    <div class="left-group">
+       	<a href="${pageContext.request.contextPath}/" class="logo">
+       		MOIT
+   		</a>
+		<nav>
+		    <a href="${pageContext.request.contextPath}/meetup/user/list.do"
+		       class="<c:if test='${menu eq "meetup"}'>active</c:if>">모집찾기</a>
+		       
+		    <a href="/inquiry/list" class="inquiry-btn">💬 관리자 1:1 문의 </a>
+		     
+		</nav>
+    </div>
 
-    <nav>
-        <a href="#">홈</a>
-        <a href="#">모집찾기</a>
-        <a href="#">커뮤니티</a>
-        <a href="#">공지사항</a>
-    </nav>
-
-    <input class="search-top" placeholder="검색">
-
-    <div class="user-box">
-        <div class="alarm">🔔</div>
-
-        <div class="profile">
-            <div class="profile-img">J</div>
-            <div class="profile-info">
-                <strong>예진님</strong>
-                <span>일반회원</span>
+    <div class="right-group">
+        <div class="header-slogan">
+            <span>우리들의 취향 맞춤 소모임 플랫폼</span>
+        </div>
+        
+        <div class="user-box">
+            <div class="alarm">🔔</div>
+            <div class="profile">
+                <div class="profile-img">J</div>
+                <div class="profile-info">
+                    <strong>예진님</strong>
+                    <span>일반회원</span>
+                </div>
             </div>
         </div>
     </div>

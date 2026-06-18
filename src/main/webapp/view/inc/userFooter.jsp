@@ -3,7 +3,7 @@
 
 
 	<footer>
-	    © 2026 MOIT
+	    <p>© 2026 MOIT. All Rights Reserved.</p>
 	</footer>
 
 </body>
