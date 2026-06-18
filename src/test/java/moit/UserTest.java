@@ -28,8 +28,8 @@ public class UserTest {
 	@Autowired   QuestionMapper     question;
 
 	@Test
-	public void 전체질문조회() {
-
+	public void test2() {
+		
 	    List<QuestionDto> list = question.findAll();
 
 	    for (QuestionDto q : list) {

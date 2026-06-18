@@ -18,8 +18,8 @@ public class QuestionDto {
     private String isPublic;
     private String deleteYn;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private java.sql.Timestamp createdAt;
+    private java.sql.Timestamp updatedAt;
 
     // JOIN¿ë (¼±ÅÃ)
     private String memberName;
