@@ -17,8 +17,8 @@ public class UserDto {
 	private int memberTypeId;
 	private int statusId;
 	
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private String createdAt;
+	private String updatedAt;
 	private String deleteYn;
 }
 
@@ -38,9 +38,7 @@ mysql> desc members;
 | member_type_id | int          | NO   | MUL | 1                 |                                               |
 | status_id      | int          | NO   | MUL | 1                 |                                               |
 | created_at     | datetime     | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
-| created_by     | int          | NO   | MUL | NULL              |                                               |
 | updated_at     | datetime     | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
-| updated_by     | int          | NO   | MUL | NULL              |                                               |
 | delete_yn      | char(1)      | NO   |     | N                 |                                               |
 +----------------+--------------+------+-----+-------------------+-----------------------------------------------+
 14 rows in set (0.00 sec)

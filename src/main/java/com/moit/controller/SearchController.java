@@ -22,33 +22,32 @@ public class SearchController {
 	@ResponseBody
 	@RequestMapping(value="/duplicateNickname", method=RequestMethod.GET)
 	public Map<String, Object> duplicateNickname( @RequestParam("nickname") String nickname){
-		
-		Map<String, Object> result = new HashMap<>();
-		
-		//db에서 이메일 존재여부 확인
-		UserDto find = service.findByNickname(nickname);
-		if(find != null) {
-			result.put("exists", true);
-		}else {
-			result.put("exists", false);
-		}
+				Map<String, Object> result = new HashMap<>();
+//		
+//		//db에서 이메일 존재여부 확인
+//		UserDto find = service.findByNickname(nickname);
+//		if(find != null) {
+//			result.put("exists", true);
+//		}else {
+//			result.put("exists", false);
+//		}
 		return result;
 	}	
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/duplicateEmail", method=RequestMethod.GET)
-	public Map<String, Object> duplicateEmail( @RequestParam("email") String email){
+	@RequestMapping(value="/duplicateLoginId", method=RequestMethod.GET)
+	public Map<String, Object> duplicateEmail( @RequestParam("loginId") String loginId){
 		
 		Map<String, Object> result = new HashMap<>();
 		
 		//db에서 이메일 존재여부 확인
-		UserDto find = service.findByEmail(email);
-		if(find != null) {
-			result.put("exists", true);
-		}else {
-			result.put("exists", false);
-		}
+//		UserDto find = service.findByLoginId(loginId);
+//		if(find != null) {
+//			result.put("exists", true);
+//		}else {
+//			result.put("exists", false);
+//		}
 		return result;
 	}		
 

@@ -18,41 +18,41 @@ public class UserServiceImpl  implements UserService{
  
 	@Autowired  UserMapper dao;
 	@Autowired  @Qualifier("passwordEncoder") PasswordEncoder  pwencoder;
-	//import org.springframework.security.crypto.password.PasswordEncoder;
-	
+//	//import org.springframework.security.crypto.password.PasswordEncoder;
+//	
 	@Override public AuthUserDto readAuth(String email) { return dao.readAuth(email); }
-
-	@Override
-	public int insert(UserDto dto) {
-		AuthDto adto = new AuthDto();
-		adto.setEmail(dto.getEmail());
-		adto.setAuth("ROLE_MEMBER");
-		//dao.insertAuth(adto);
-		
-		dto.setPassword(pwencoder.encode(dto.getPassword()));
-		
-		return dao.insert(dto);
-	}
-
-	@Override
-	public UserDto findByEmail(String email) {
-		return dao.findByEmail(email);
-	}
-
-	@Override
-	public UserDto findByEmailUserInfo(String email) {
-		return dao.findByEmailUserInfo(email);
-	}
-
-	@Override
-	public UserDto findByNickname(String nickname) {
-		return dao.findByNickname(nickname);
-	}
-
-	@Override
-	public int insertAuth(AuthDto dto) {
-		return 0;
-	}
+//
+//	@Override
+//	public int insert(UserDto dto) {
+//		AuthDto adto = new AuthDto();
+//		adto.setLoginId(dto.getLoginId());
+//		adto.setAuth("ROLE_MEMBER");
+//		//dao.insertAuth(adto);
+//		
+//		dto.setPassword(pwencoder.encode(dto.getPassword()));
+//		
+//		return dao.insert(dto);
+//	}
+//
+//	@Override
+//	public UserDto findByLoginId(String loginId) {
+//		return dao.findByLoginId(loginId);
+//	}
+//
+//	@Override
+//	public UserDto findByEmailUserInfo(String email) {
+//		return dao.findByEmailUserInfo(email);
+//	}
+//
+//	@Override
+//	public UserDto findByNickname(String nickname) {
+//		return dao.findByNickname(nickname);
+//	}
+//
+//	@Override
+//	public int insertAuth(AuthDto dto) {
+//		return 0;
+//	}
 
 	
 	

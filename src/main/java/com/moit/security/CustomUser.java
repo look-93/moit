@@ -27,7 +27,7 @@ public class CustomUser extends User{
 
 	//2. username, password에 맞게 셋팅
     public CustomUser(AuthUserDto  dto) {
-    	super(  dto.getEmail() , dto.getPassword() 
+    	super(  dto.getLoginId() , dto.getPassword() 
     						   , Collections.singletonList(new SimpleGrantedAuthority(dto.getTypeName()))
     						        );
     	this.dto = dto;

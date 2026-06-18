@@ -33,10 +33,10 @@ public class UserController {
 	@RequestMapping( value="/users/join" , method=RequestMethod.POST  )
 	public String join_post(UserDto dto, RedirectAttributes rttr) {  
 		
-		boolean result = service.insert(dto) == 1;
-		
-		rttr.addAttribute("result", result);
-		
+//		boolean result = service.insert(dto) == 1;
+//		
+//		rttr.addAttribute("result", result);
+//		
 		return "redirect:/users/login"; 
 	}
 	
@@ -45,7 +45,7 @@ public class UserController {
 
 	@RequestMapping(value="/users/mypage", method = RequestMethod.GET)
 	public String mypage(Model model, Principal principal) {
-		model.addAttribute("dto",service.findByEmailUserInfo(principal.getName()));
+//		model.addAttribute("dto",service.findByEmailUserInfo(principal.getName()));
 		return "users/mypage";
 	}			
 }
