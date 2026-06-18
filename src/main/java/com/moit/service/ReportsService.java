@@ -1,32 +1,37 @@
-package com.moit.dao;
+package com.moit.service;
 
 import java.util.HashMap;
 import java.util.List;
 
 import com.moit.dto.ReportsDto;
 
-@Mapper
-public interface ReportsMapper {
-
-	// ===== user =====
-	// ===== user =====
-	// 유저 - 신고 작성 /     서비스에서  - target_type  (MEETUP , REVIEW )
-	public int insertUserReport(ReportsDto dto);
+public interface ReportsService {
 	
-	// 유저 - 사용자 본인이 작성한 신고 내역 수정
-	public int updateUserReport(ReportsDto dto);
-
-	// 유저 - 사용자 본인이 작성한 신고 내역 삭제 -> update delete_yn = y
-	public int deleteUserReport(ReportsDto dto);
-
-	// 유저 - 사용자 본인이 작성한 신고 목록 조회 ( delete_yn = 'N' )
+	/*
+	// ===== user =====
+	// 내 신고내역 ( delete_yn = 'N' 만 보이도록 )
 	public List<ReportsDto> selectUserReport( HashMap<String, Object> map );
-
+	
 	// select id="selectUserCnt" resultType="int"
 	public int selectUserCnt(int memberId);
 	
-	// 유저 - 사용자 본인이 작성한 신고 내역 상세 조회
+	// 내 신고 상세
 	public ReportsDto selectUserReportDetail(ReportsDto dto);
+	
+	// 신고 작성
+	public int insertUserReport(ReportsDto dto);
+	
+	// 신고 내역 수정폼
+	
+	// 신고 내역 수정
+	public int updateUserReport(ReportsDto dto);
+
+	// 신고 내역 삭제 -> update delete_yn = y
+	public int deleteUserReport(ReportsDto dto);
+
+	
+
+	
 
 	
 	// ===== admin =====
@@ -69,6 +74,5 @@ public interface ReportsMapper {
 	
 	// 대상별 신고 현황 (모임/후기)
 	public List<ReportsDto> selectTargetReportCount();
-	
-	
+	*/
 }

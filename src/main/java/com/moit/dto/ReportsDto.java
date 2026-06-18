@@ -3,7 +3,7 @@ package com.moit.dto;
 import lombok.Data;
 
 @Data
-public class ReportDto {
+public class ReportsDto {
 	private int reportId;		//신고고유id
 	private String targetType;	//신고대상유형 (모임, 후기) 'MEETUP', 'REVIEW'
 	private int targetId;		//신고대상id (모임id or 후기id)
@@ -15,5 +15,5 @@ public class ReportDto {
 	private String createdAt;	//생성일시
 	private String updatedAt;	//수정일시
 	
-	
+//	private int reportCount;	// 신고 건수
 }
