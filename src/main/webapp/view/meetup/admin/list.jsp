@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -152,43 +153,41 @@ body {
                 <button class="tab-btn">신청자목록</button> -->
 				</div>
 
+				
 				<!-- 검색 -->
-				<div class="table-box mb-4">
-
-					<div class="row">
-
-						<div class="col-md-4">
-							<input type="text" class="form-control" placeholder="모집명 검색">
+				<form action="${pageContext.request.contextPath}/meetup/admin/list.do" method="get" >
+					<div class="table-box mb-4">
+	
+						<div class="row">
+	
+							<div class="col-md-4">
+								<input type="text" name="searchText" class="form-control" placeholder="모집명 검색">
+							</div>
+	
+							<div class="col-md-2">
+								<select name="searchType" class="form-select">
+									<option>상태</option>
+									<option>모집중</option>
+									<option>모집마감</option>
+									<option>취소</option>
+								</select>
+							</div>
+	<!-- 						<div class="col-md-2">
+								<select class="form-select">
+									<option>이름</option>
+									<option>모집명</option>
+									<option>모집자명</option>
+								</select>
+							</div> -->
+	
+							<div class="col-md-2">
+								<button type="submit" class="btn btn-primary">검색</button>
+							</div>
+	
 						</div>
-
-						<div class="col-md-2">
-							<select class="form-select">
-								<option>상태</option>
-								<option>모집중</option>
-								<option>모집마감</option>
-								<option>취소</option>
-							</select>
-						</div>
-						<div class="col-md-2">
-							<select class="form-select">
-								<option>이름</option>
-								<option>모집명</option>
-								<option>모집자명</option>
-							</select>
-						</div>
-
-						<div class="col-md-2">
-							<button class="btn btn-primary">검색</button>
-						</div>
-
+	
 					</div>
-
-				</div>
-
-				<!-- 버튼 -->
-				<!--             <div class="mb-3">
-                <button class="btn btn-danger">삭제</button>
-            </div> -->
+				</form>
 
 				<!-- 행사목록 -->
 				<div class="table-box">
@@ -207,100 +206,55 @@ body {
 								<th>관리</th>
 							</tr>
 						</thead>
-
+						
 						<tbody>
 
-							<c:forEach var="meetupList" items="${meetupList}" varStatus="status">
+							<c:forEach var="serchList" items="${serchList}"
+								varStatus="status">
 								<tr>
-									<td>${meetupList.meetupNo}</td>
-									<td>${meetupList.meetupId}</td> <!-- 바꾸기!!!! member명으로 수정하기 -->	
-									<td>${meetupList.title}</td>	
-									<td>${meetupList.meetupAt}</td>
-									<td>${meetupList.maxParticipants}</td>	
-									<td>${meetupList.minParticipants}</td>	
-									<td>${meetupList.totalParticipants}</td>	
-								<td>
-									<button class="btn btn-danger btn-sm">삭제</button>
-								</td>					
+									<td>${paging.listtotal - paging.pstartno - status.index}</td>
+									<td>${serchList.memberId}</td> <!-- 모집자명으로 수정! -->
+									<td>${serchList.title}</td>
+									<td>${serchList.meetupAt}</td>
+									<td>${serchList.minParticipants }</td>
+									<td>${serchList.maxParticipants  }</td>
+									<td>${serchList.totalParticipants }</td>
+									
+									<td>
+										<form action="${pageContext.request.contextPath}/meetup/admin/delete.do/?meetupId=${serchList.meetupId}" method="post">
+											<input  type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" /> <!-- 보안 -->
+											<button class="btn btn-danger btn-sm">삭제</button>
+										</form>
+									</td>
 								</tr>
-							
-							
+
+
 							</c:forEach>
 
 						</tbody>
 
 					</table>
+					
+					<ul class="pagination justify-content-center">
+						<!-- 이전 -->
+						<c:if test="${paging.start > paging.bottomlist}">
+							<li class="page-item"><a class="page-link" href="?pstartno= ${paging.start-1}"> < </a>
+							</li>
+						</c:if>
 
-					<nav>
-						<ul class="pagination justify-content-center">
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-						</ul>
-					</nav>
+						<!-- 1,2,3,4,5,6 -->
+						<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
+							<li class="page-item <c:if test="${i==paging.current}"> active </c:if>">
+								<a href="?pstartno=${i}" class="page-link">${i}</a>
+							</li>
+						</c:forEach>
 
-				</div>
-
-			</div>
-
-		</div>
-
-	</div>
-
-	<!-- 신청자목록 모달 -->
-	<div class="modal fade" id="applicantModal">
-
-		<div class="modal-dialog modal-xl">
-
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<h5>행사 신청자 목록</h5>
-					<button class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-
-				<div class="modal-body">
-
-					<table class="table">
-
-						<thead>
-							<tr>
-								<th>회원명</th>
-								<th>신청일</th>
-								<th>첨부파일</th>
-								<th>상태</th>
-								<th>처리</th>
-							</tr>
-						</thead>
-
-						<tbody>
-
-							<tr>
-								<td>홍길동</td>
-								<td>2026-06-12</td>
-								<td>
-									<button class="btn btn-sm btn-secondary">다운로드</button>
-								</td>
-								<td>대기</td>
-								<td>
-									<button class="btn btn-success btn-sm">승인</button>
-									<button class="btn btn-danger btn-sm">거절</button>
-								</td>
-							</tr>
-
-							<tr>
-								<td>김철수</td>
-								<td>2026-06-11</td>
-								<td>
-									<button class="btn btn-sm btn-secondary">다운로드</button>
-								</td>
-								<td>승인</td>
-								<td>-</td>
-							</tr>
-
-						</tbody>
-
-					</table>
+						<!-- 다음 -->
+						<c:if test="${paging.pagetotal > paging.end}">
+							<li class="page-item"><a class="page-link" href="?pstartno= ${paging.end+1}"> > </a>
+							</li>
+						</c:if>
+					</ul>					
 
 				</div>
 
@@ -309,6 +263,7 @@ body {
 		</div>
 
 	</div>
+
 
 </body>
 </html>

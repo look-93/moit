@@ -3,6 +3,7 @@ package moit;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,10 @@ public class MeetupTest {
 	@Autowired   SqlSession         sqlSession;
 	@Autowired   AdminMeetupService adminMeetupService;
 	
-	@Test
+	
+	@Ignore//@Test
 	public void test1() {
-		System.out.println(adminMeetupService.meetupList());
+		System.out.println(adminMeetupService.deleteByMeetup(1));
 	}
+	
 }

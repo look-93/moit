@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.moit.dao.MeetupMapper"> 
-  
-	<!-- 모집 조회 -->
-	<select id="meetupList" resultType="MeetupDto">
-		SELECT A.*,
-		       ROW_NUMBER() OVER(ORDER BY A.created_at DESC) AS meetup_no,
-		       (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = A.meetup_id) AS total_participants <!-- 총 신청인원 -->
-		FROM meetups AS A;
-	</select> 	
+<mapper namespace="com.moit.dao.MeetupMapper"> 	
 	
-  	<!-- admin 모집 검색조건조회(모집중, 모집마감, 쉬소/모집명,모집자명)+paging -->
+  	<!-- admin 모집 검색조건조회(모집중, 모집마감, 취소/모집명,모집자명)+paging -->
  	<select id="serchByAdmin" resultType="MeetupDto" parameterType="java.util.HashMap">
 		SELECT A.*,
-		       ROW_NUMBER() OVER(ORDER BY A.created_at DESC) AS meetup_no,
-		      (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = a.meetup_id AND status = 'APPROVED') AS total_participants
+		      (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = a.meetup_id AND status = 'APPROVED' AND A.delete_yn = 'n') AS total_participants
 		  FROM meetups AS A
-		 WHERE A.status = #{status}
-		   AND A.title LIKE %#{title}%
-		   AND A.member_id = #{memberId};
-		 LIMIT #{start}, ${end};
+		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
+           AND A.status != 'DELETED' <!-- 삭제 제외 -->
+		<if test="status != null and status != ''">
+           AND A.status = #{status}
+        </if>
+       
+        <if test="title != null and title != ''">
+           AND A.title LIKE CONCAT('%', #{title}, '%')
+        </if>
+		   <!-- AND A.member_id = #{memberId} -->
+		 ORDER BY A.created_at DESC
+		 LIMIT #{start}, ${end}
+		 
+ 	</select>
+ 	<select id="selectMeetupTotalCnt" resultType="int">
+		SELECT COUNT(*) 
+		  FROM meetups AS A
+		 WHERE status != 'DELETED'
  	</select>
  	
    	<!-- user 모집 검색조건조회(지역+일자)+paging -->
@@ -47,7 +52,7 @@
 		 LIMIT #{start}, ${end};
  	</select>			
   	
-  	<!-- 모집 상세조회 -->
+  	<!-- 모집 상세조회, 수정 -->
  	<select id="meetupDetail" resultType="MeetupDto"> 
  		SELECT A.*, C.image_path 
  		  FROM meetups AS A
@@ -55,21 +60,35 @@
           JOIN images  AS C ON C.image_id  = B.image_id 
 		 WHERE A.meetup_id = ${meetup_id};
  	</select> 
- 
+ 	
+ 	<!-- 모집 신청 -->
  	<insert id="insertApplication">
 		INSERT INTO meetup_applications (meetup_id, member_id, status)
 		 VAEUE (#{meetup_id}, #{member_id}, #{status}) 	
  	</insert>
- 
  	
-	<!-- paging -->
-	<select id="meetupList10" resultType="MeetupDto" parameterType="java.util.HashMap">
-		SELECT A.*,
-		       ROW_NUMBER() OVER(ORDER BY A.created_at DESC) AS meetup_no,
-		       (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = A.meetup_id AND status = 'APPROVED') AS total_participants
-		FROM MEETUPS AS A	
-		LIMIT #{start}, ${end};
-	</select>
+ 	<!-- 수정 -->
+ 	<update id="updateByMeetup" parameterType="MeetupDto">
+ 		UPDATE meetups
+ 		   SET title 			 = ${title},
+ 		   	   content 			 = ${content},
+ 		   	   max_participants  = ${max_participants},
+ 		   	   min_participants  = ${min_participants},
+ 		   	   address 		 	 = ${address},
+ 		   	   meetup_datetime 	 = ${meetup_datetime},
+ 		   	   status			 = ${status} 		   	   
+ 		 WHERE meetup_id = ${meetup_id};
+ 	</update>
+ 	
+ 	<!-- 논리삭제 -->
+  	<update id="deleteByMeetup" parameterType="int">
+ 		UPDATE meetups
+ 		   SET delete_yn = 'Y' 		   	   
+ 		 WHERE meetup_id = ${meetup_id};
+ 	</update>	
+ 	
+ 	
+ 	
   
 </mapper>
 

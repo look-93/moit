@@ -17,8 +17,10 @@ public class MeetupDto {
 	private String deleteYn;
 	private String createdAt;
 	private String updatedAt;
+	private String status;
 	
 	private int meetupNo;
 	private int totalParticipants; //총 모집 신청인원
-	private int imagePath;
+	private int imagePath;	
+	
 }
