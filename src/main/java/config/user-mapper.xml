@@ -11,10 +11,10 @@
     </insert>
 
     <select id="readAuth" parameterType="string" resultType="AuthUserDto">
-        SELECT m.login_id, m.password, mt.type_name
+        SELECT m.login_id, m.password, mt.type_name, m.nickname,m.profile_url
         FROM members m
         JOIN member_type mt ON m.member_type_id = mt.member_type_id
-        WHERE m.login_id = #{loginId} AND m.delete_yn = 'N'
+        WHERE m.login_id = #{loginId} AND m.delete_yn = 'N' AND status_id=1 AND mt.type_name = #{typeName}
     </select>
 
     <select id="findMember" parameterType="map" resultType="UserDto">
@@ -92,7 +92,7 @@
         </where>
     </select>
 
-    <delete id="deleteMemberPhysical" parameterType="string">
+    <delete id="deleteMember" parameterType="string">
         DELETE FROM members WHERE login_id = #{loginId}
     </delete>
 

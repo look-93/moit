@@ -9,24 +9,28 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    // 1. È¸¿ø°¡ÀÔ (ÀÏ¹İ, Á¦ÈŞ¾÷Ã¼, °ü¸®ÀÚ °øÅë »ç¿ë °¡´É)
-    int insert(UserDto userDto);
+    // 1. íšŒì›ê°€ì… (ì¼ë°˜, ì œíœ´ì—…ì²´, ê´€ë¦¬ì ê³µí†µ ì‚¬ìš© ê°€ëŠ¥)
+    int insert(UserDto dto);
 
-    // 2. ·Î±×ÀÎ ÀÎÁõ Á¤º¸ Á¶È¸
-    AuthUserDto readAuth(String loginId);
+    // 2. ë¡œê·¸ì¸ ì¸ì¦ ì •ë³´ ì¡°íšŒ
+    AuthUserDto readAuth(Map<String,Object> map);
 
-    // 3. È¸¿ø ´Ü°Ç °Ë»ö (¾ÆÀÌµğ Áßº¹°Ë»ç, ´Ğ³×ÀÓ Áßº¹°Ë»ç ½Ã È°¿ë)
+    // 3. íšŒì› ë‹¨ê±´ ê²€ìƒ‰ (ì•„ì´ë”” ì¤‘ë³µê²€ì‚¬, ë‹‰ë„¤ì„ ì¤‘ë³µê²€ì‚¬ ì‹œ í™œìš©)
     UserDto findMember(Map<String, Object> paramMap);
 
-    // 4. È¸¿ø Á¤º¸ µ¿Àû ¼öÁ¤ (´Ğ³×ÀÓ/ºñ¹Ğ¹øÈ£/ÇÁ·ÎÇÊ º¯°æ ¹× Å»Åğ Ã³¸®, °ü¸®ÀÚ ½ÂÀÎ/±ÇÇÑº¯°æ °øÅë)
-    int updateMember(UserDto userDto);
+    // 4. íšŒì› ì •ë³´ ë™ì  ìˆ˜ì • (ë‹‰ë„¤ì„/ë¹„ë°€ë²ˆí˜¸/í”„ë¡œí•„ ë³€ê²½ ë° íƒˆí‡´ ì²˜ë¦¬, ê´€ë¦¬ì ìŠ¹ì¸/ê¶Œí•œë³€ê²½ ê³µí†µ)
+    int updateMember(UserDto dto);
 
-    // 5. È¸¿ø ¸®½ºÆ® ÆäÀÌÂ¡ Á¶È¸ (Á¶°Çº° µ¿Àû ¹ÙÀÎµù °¡´É)
+    // 5. íšŒì› ë¦¬ìŠ¤íŠ¸ í˜ì´ì§• ì¡°íšŒ (ì¡°ê±´ë³„ ë™ì  ë°”ì¸ë”© ê°€ëŠ¥)
     List<UserDto> select10(Map<String, Object> paramMap);
 
-    // 6. Á¶°Çº° ÀüÃ¼ È¸¿ø ¼ö Á¶È¸ (ÆäÀÌÂ¡ ºí·Ï °è»ê¿ë)
+    // 6. ì¡°ê±´ë³„ ì „ì²´ íšŒì› ìˆ˜ ì¡°íšŒ (í˜ì´ì§• ë¸”ë¡ ê³„ì‚°ìš©)
     int selectCnt(Map<String, Object> paramMap);
 
-    // 7. °ü¸®ÀÚ ±â´É - È¸¿ø ¹°¸® »èÁ¦
-    int deleteMemberPhysical(String loginId);
+    // 7. ê´€ë¦¬ì ê¸°ëŠ¥ - íšŒì› ë¬¼ë¦¬ ì‚­ì œ
+    int deleteMember(String loginId);
+    
+    /* security */
+    // ë¡œê·¸ì¸
+    UserDto findByLoginId(String loginId);
 }

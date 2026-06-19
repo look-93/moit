@@ -24,7 +24,7 @@ public class SearchController {
 	public Map<String, Object> duplicateNickname( @RequestParam("nickname") String nickname){
 				Map<String, Object> result = new HashMap<>();
 //		
-//		//db¿¡¼­ ÀÌ¸ŞÀÏ Á¸Àç¿©ºÎ È®ÀÎ
+//		//dbì—ì„œ ì´ë©”ì¼ ì¡´ì¬ì—¬ë¶€ í™•ì¸
 //		UserDto find = service.findByNickname(nickname);
 //		if(find != null) {
 //			result.put("exists", true);
@@ -41,7 +41,7 @@ public class SearchController {
 		
 		Map<String, Object> result = new HashMap<>();
 		
-		//db¿¡¼­ ÀÌ¸ŞÀÏ Á¸Àç¿©ºÎ È®ÀÎ
+		//dbì—ì„œ ì´ë©”ì¼ ì¡´ì¬ì—¬ë¶€ í™•ì¸
 //		UserDto find = service.findByLoginId(loginId);
 //		if(find != null) {
 //			result.put("exists", true);

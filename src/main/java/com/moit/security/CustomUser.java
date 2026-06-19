@@ -18,14 +18,14 @@ public class CustomUser extends User{
  
 	AuthUserDto  dto;
 	
-	//1.À¯Àú¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£¸¦ ¹Ş¾Æ¼­ ±ÇÇÑÀÌ ÀÖ´ÂÁö Ã¼Å©
+	//1.ìœ ì €ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ë¥¼ ë°›ì•„ì„œ ê¶Œí•œì´ ìˆëŠ”ì§€ ì²´í¬
 	public CustomUser(String username, 
 				      String password, 
 				      Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities); 
 	}
 
-	//2. username, password¿¡ ¸Â°Ô ¼ÂÆÃ
+	//2. username, passwordì— ë§ê²Œ ì…‹íŒ…
     public CustomUser(AuthUserDto  dto) {
     	super(  dto.getLoginId() , dto.getPassword() 
     						   , Collections.singletonList(new SimpleGrantedAuthority(dto.getTypeName()))

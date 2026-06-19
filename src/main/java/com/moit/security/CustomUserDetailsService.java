@@ -7,15 +7,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.moit.dao.UserMapper;
 import com.moit.dto.AuthUserDto;
+import com.moit.service.UserService;
  
 public class CustomUserDetailsService   implements UserDetailsService{
 
-	@Autowired  UserMapper mapper;
+	@Autowired  UserService service;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		AuthUserDto  dto = mapper.readAuth(username);  // email, bpass, auth(s)
+		AuthUserDto  dto = service.readAuth(null);  // loginId, bpass, auth(s)
 		
 		return  dto == null?  null : new CustomUser(dto);
 	}
