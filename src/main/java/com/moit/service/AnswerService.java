@@ -15,13 +15,13 @@ public class AnswerService {
     private final AnswerMapper answerMapper;
     private final QuestionMapper questionMapper;
     
-    // ´äº¯ µî·Ï + Áú¹® »óÅÂ ¾÷µ¥ÀÌÆ®
+ // ë‹µë³€ ë“±ë¡ + ë¬¸ì˜ ìƒíƒœ ì—…ë°ì´íŠ¸
     public void register(AnswerDto dto) {
 
-        // 1. ´äº¯ ÀúÀå
+        // 1. ë‹µë³€ ë“±ë¡
         answerMapper.insertAnswer(dto);
 
-        // 2. Áú¹® »óÅÂ º¯°æ
+        // 2. ë¬¸ì˜ ìƒíƒœë¥¼ ë‹µë³€ì™„ë£Œë¡œ ë³€ê²½
         questionMapper.updateStatusAnswered(dto.getQuestionId());
     }
 }

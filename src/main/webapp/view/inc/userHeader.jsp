@@ -241,7 +241,7 @@ footer{
 		    <a href="${pageContext.request.contextPath}/meetup/user/list.do"
 		       class="<c:if test='${menu eq "meetup"}'>active</c:if>">모집찾기</a>
 		       
-		    <a href="/inquiry/list" class="inquiry-btn">💬 관리자 1:1 문의 </a>
+		    <a href="${pageContext.request.contextPath}/view/meetup/admin/adquestion1.jsp" class="inquiry-btn">💬 관리자 1:1 문의 </a>
 		     
 		</nav>
     </div>

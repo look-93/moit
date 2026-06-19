@@ -20,58 +20,82 @@ public class QuestionService {
     private final QuestionMapper questionMapper;
     private final AnswerMapper answerMapper;
 
-    //ÀüÃ¼ Áú¹® ¸ñ·Ï Á¶È¸
-    public List<QuestionDto> getList() {
-    	Map<String, Integer> map = new HashMap<>();
-        map.put("start", 0);
-        map.put("end", 10);
-        
+    // ì „ì²´ ë¬¸ì˜ ëª©ë¡ ì¡°íšŒ (í˜ì´ì§•)
+    public List<QuestionDto> getList(
+            int start,
+            int end) {
+
+        Map<String, Integer> map = new HashMap<>();
+
+        map.put("start", start);
+        map.put("end", end);
+
         return questionMapper.findAll(map);
     }
 
-    //Áú¹® »ó¼¼ Á¶È¸ + ´äº¯ Æ÷ÇÔ
+ // ë¬¸ì˜ ìƒì„¸ ì¡°íšŒ + ë‹µë³€ ì •ë³´ ì¡°íšŒ
     public QuestionDto getDetail(int id) {
-    	//Áú¹® Á¤º¸ Á¶È¸
+    	// ë¬¸ì˜ ì •ë³´ ì¡°íšŒ
         QuestionDto question = questionMapper.findById(id);
-        //ÇØ´ç Áú¹®ÀÇ ´äº¯ Á¶È¸
+     // í•´ë‹¹ ë¬¸ì˜ì˜ ë‹µë³€ ì¡°íšŒ
         AnswerDto answer = answerMapper.findByQuestionId(id);
         
         question.setAnswer(answer);
         return question;
     }
     
-    //Áú¹® µî·Ï
+    // ë¬¸ì˜ ë“±ë¡
     public void register(QuestionDto dto) {
         questionMapper.insertQuestion(dto);
     }
     
-    //Áú¹® ¼öÁ¤
+    // ë¬¸ì˜ ìˆ˜ì •
     public void updateQuestion(QuestionDto dto) {
         questionMapper.updateQuestion(dto);
     }
 
-    //Áú¹® »èÁ¦
+    // ë¬¸ì˜ ì‚­ì œ
     public void deleteQuestion(int questionId) {
         questionMapper.deleteQuestion(questionId);
     }
     
-    //ÀüÃ¼ ¹®ÀÇ ¼ö Á¶È¸
+    // ì „ì²´ ë¬¸ì˜ ìˆ˜ ì¡°íšŒ
     public int getAllCnt() {
         return questionMapper.findAllCnt();
     }
 
-    //´äº¯ ´ë±â ¹®ÀÇ ¼ö Á¶È¸
+    // ë‹µë³€ ëŒ€ê¸° ë¬¸ì˜ ìˆ˜ ì¡°íšŒ
     public int getPendingCnt() {
         return questionMapper.findPendingCnt();
     }
 
-    //´äº¯ ¿Ï·á ¹®ÀÇ ¼ö Á¶È¸
+    // ë‹µë³€ ì™„ë£Œ ë¬¸ì˜ ìˆ˜ ì¡°íšŒ
     public int getAnsweredCnt() {
         return questionMapper.findAnsweredCnt();
     }
 
-    //¿À´Ã µî·ÏµÈ ¹®ÀÇ ¼ö Á¶È¸
+    // ì˜¤ëŠ˜ ë“±ë¡ëœ ë¬¸ì˜ ìˆ˜ ì¡°íšŒ
     public int getTodayCnt() {
         return questionMapper.findTodayCnt();
+    }
+    
+    // ì‚¬ìš©ì ë¬¸ì˜ ëª©ë¡ í˜ì´ì§•
+    public List<QuestionDto> getMyQuestions(
+            int memberId,
+            int start,
+            int end) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("memberId", memberId);
+        map.put("start", start);
+        map.put("end", end);
+
+        return questionMapper.findMyQuestions(map);
+    }
+    
+    // ë‚´ ë¬¸ì˜ ì´ ê°œìˆ˜ ì¡°íšŒ
+    public int getMyQuestionCnt(int memberId) {
+        return questionMapper.findMyQuestionCnt(memberId);
     }
 }

@@ -20,7 +20,7 @@ public class QuestionDto {
     private java.sql.Timestamp createdAt;
     private java.sql.Timestamp updatedAt;
 
-    // JOIN¿ë (¼±ÅÃ)
+    // JOIN
     private String memberName;
     private AnswerDto answer;
 }

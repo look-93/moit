@@ -15,7 +15,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.moit.dao.AnswerMapper;
 import com.moit.dao.QuestionMapper;
+import com.moit.dto.AnswerDto;
 import com.moit.dto.QuestionDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,113 +30,174 @@ public class UserTest {
 	@Autowired   DataSource         ds;
 	@Autowired   SqlSession         sqlSession;
 	@Autowired   QuestionMapper     question;
+	@Autowired   AnswerMapper		answer;
 	
-	@Ignore @Test
+	
+	@Ignore @Test // ì§ˆë¬¸ë³„ ë‹µë³€ ì¡°íšŒ
+	public void findByQuestionId() {
+	    AnswerDto dto = answer.findByQuestionId(11);
+	    System.out.println(dto);
+	}
+	
+	@Ignore @Test // ë‹µë³€ ì‚­ì œ (ë…¼ë¦¬ ì‚­ì œ)
+	public void deleteAnswer() {
+	    answer.deleteAnswer(12);
+	    System.out.println("ë‹µë³€ ì‚­ì œ ì™„ë£Œ");
+	}
+	
+	@Ignore @Test // ë‹µë³€ ìˆ˜ì •
+	 public void updateAnswer() {
+	     AnswerDto dto = new AnswerDto();
+
+	     dto.setAnswerId(11);
+	     dto.setContent("ìˆ˜ì •ëœ ë‹µë³€ ë‚´ìš©");
+	     dto.setIsPublic("N");
+
+	     answer.updateAnswer(dto);
+
+	     System.out.println("ë‹µë³€ ìˆ˜ì • ì™„ë£Œ");
+	 }
+	
+	@Ignore @Test // ë‹µë³€ ë“±ë¡
+	public void insertAnswer() {
+	    AnswerDto dto = new AnswerDto();
+	    
+	    dto.setQuestionId(12);
+	    dto.setMemberId(2);
+	    dto.setContent("JUnit ë‹µë³€ ë“±ë¡ í…ŒìŠ¤íŠ¸");
+	    dto.setIsPublic("Y");
+	    
+	    answer.insertAnswer(dto);
+	    
+	    System.out.println("ë‹µë³€ ë“±ë¡ ì™„ë£Œ");
+	}
+	
+	/////////////////////////////////////////////////////////////////
+	
+	@Ignore @Test  // ì˜¤ëŠ˜ ë“±ë¡ ë¬¸ì˜ ìˆ˜
 	public void findTodayCnt() {
 	    int count = question.findTodayCnt();
-	    System.out.println( "¿À´Ã µî·Ï ¹®ÀÇ ¼ö : " + count );
+	    System.out.println( "ì˜¤ëŠ˜ ë“±ë¡ ë¬¸ì˜ ìˆ˜ : " + count );
 	}
 	
-	@Ignore @Test
+	@Ignore @Test  // ë‹µë³€ ì™„ë£Œ ìˆ˜
 	public void findAnsweredCnt() {
 	    int count = question.findAnsweredCnt();
-	    System.out.println( "´äº¯ ¿Ï·á ¼ö : " + count );
+	    System.out.println( "ë‹µë³€ ì™„ë£Œ ìˆ˜ : " + count );
 	}
 	
-	@Ignore @Test
+	@Ignore @Test  // ë‹µë³€ ëŒ€ê¸° ìˆ˜
 	public void findPendingCnt() {
 	    int count = question.findPendingCnt();
-	    System.out.println( "´äº¯ ´ë±â ¼ö : " + count );
+	    System.out.println( "ë‹µë³€ ëŒ€ê¸° ìˆ˜ : " + count );
 	}
 	
-	@Ignore @Test
+	@Ignore @Test  // ì „ì²´ ë¬¸ì˜ ìˆ˜
 	public void findAllCnt() {
 	    int count = question.findAllCnt();
-	    System.out.println( "ÀüÃ¼ ¹®ÀÇ ¼ö : " + count );
+	    System.out.println( "ì „ì²´ ë¬¸ì˜ ìˆ˜ : " + count );
 	}
 	
-	@Ignore @Test // µî·ÏÀÏ °Ë»ö
+	@Ignore @Test // ë“±ë¡ì¼ ê²€ìƒ‰
 	public void findBySearchDate() {
 	    QuestionDto dto = new QuestionDto();
 	    dto.setCreatedAt( java.sql.Timestamp.valueOf( "2026-06-18 00:00:00") );
 	    System.out.println( question.findBySearch(dto) );
 	}
 	
-	@Ignore @Test // ³»¿ë °Ë»ö
+	@Ignore @Test // ë‚´ìš© ê²€ìƒ‰
 	public void findBySearchContent() {
 	    QuestionDto dto = new QuestionDto();
-	    dto.setContent("³»¿ë");
+	    dto.setContent("ë‚´ìš©");
 	    System.out.println( question.findBySearch(dto) );
 	}
 	
-	@Ignore @Test // Á¦¸ñ °Ë»ö
+	@Ignore @Test // ì œëª© ê²€ìƒ‰
 	public void findBySearchTitle() {
 	    QuestionDto dto = new QuestionDto();
-	    dto.setTitle("Á¦¸ñ");
+	    dto.setTitle("ì œëª©");
 	    System.out.println( question.findBySearch(dto) );
 	}
 	
-	@Ignore @Test // ´äº¯ ´Ş¸± ½Ã »óÅÂ º¯°æ
+	@Ignore @Test // ë‹µë³€ ìƒíƒœ ë³€ê²½
 	public void updateStatusAnswered() {
 	    question.updateStatusAnswered(11);
 	    QuestionDto dto = question.findById(11);
-	    System.out.println("»óÅÂ : " + dto.getStatus());
+	    System.out.println("ìƒíƒœ : " + dto.getStatus());
 	}
 	
-	@Ignore @Test // ¹®ÀÇ »èÁ¦ (³í¸® »èÁ¦)
+	@Ignore @Test // ë¬¸ì˜ ì‚­ì œ (ë…¼ë¦¬ ì‚­ì œ)
 	public void deleteQuestion() {
 	    question.deleteQuestion(12);
-	    System.out.println("»èÁ¦ ¿Ï·á");
+	    System.out.println("ì‚­ì œ ì™„ë£Œ");
 	}
 	
-	@Ignore @Test // ¹®ÀÇ ¼öÁ¤
+	@Ignore @Test // ë¬¸ì˜ ìˆ˜ì •
 	public void updateQuestion() {
-
 	    QuestionDto dto = new QuestionDto();
 
 	    dto.setQuestionId(1);
-	    dto.setTitle("¼öÁ¤µÈ Á¦¸ñ");
-	    dto.setContent("¼öÁ¤µÈ ³»¿ë");
-	    dto.setIsPublic("N");
+	    dto.setTitle("ìˆ˜ì •ëœ ì œëª©");
+        dto.setContent("ìˆ˜ì •ëœ ë‚´ìš©");
+        dto.setIsPublic("N");
 
 	    question.updateQuestion(dto);
 
-	    System.out.println("¼öÁ¤ ¿Ï·á");
+	    System.out.println("ìˆ˜ì • ì™„ë£Œ");
 	}
 	
-	@Ignore @Test // ¹®ÀÇ µî·Ï
+	@Ignore @Test // ë¬¸ì˜ ë“±ë¡
 	public void insertQuestion() {
-
 	    QuestionDto dto = new QuestionDto();
 
 	    dto.setParentId(1);
-	    dto.setMemberId(1);
-	    dto.setCategory("ADMIN");
-	    dto.setTitle("JUnit µî·Ï Å×½ºÆ®");
-	    dto.setContent("¹®ÀÇ µî·Ï Å×½ºÆ®ÀÔ´Ï´Ù.");
-	    dto.setIsPublic("Y");
-	    dto.setDeleteYn("N");
+        dto.setMemberId(1);
+        dto.setCategory("ADMIN");
+        dto.setTitle("JUnit ë¬¸ì˜ ë“±ë¡");
+        dto.setContent("ë¬¸ì˜ ë“±ë¡ í…ŒìŠ¤íŠ¸ì…ë‹ˆë‹¤.");
+        dto.setIsPublic("Y");
+        dto.setDeleteYn("N");
 
 	    question.insertQuestion(dto);
 
-	    System.out.println("µî·Ï ¿Ï·á");
+	    System.out.println("ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
 	}
 	
-	@Ignore @Test // ÆäÀÌÂ¡
-	public void findAll() {
+	@Ignore @Test // ì‚¬ìš©ìì¸¡ ë¬¸ì˜ ëª©ë¡ í˜ì´ì§•
+	public void findMyQuestions() {
+	    Map<String, Object> map = new HashMap<>();
 
+	    map.put("memberId", 1); // ë¡œê·¸ì¸ ì‚¬ìš©ì
+	    map.put("start", 0);    // ì‹œì‘ ìœ„ì¹˜
+	    map.put("end", 10);     // í˜ì´ì§€ë‹¹ 10ê°œ
+
+	    List<QuestionDto> list = question.findMyQuestions(map);
+
+	    System.out.println("===== ë‚´ ë¬¸ì˜ ëª©ë¡ =====");
+
+	    for (QuestionDto dto : list) {
+	        System.out.println(
+	            dto.getQuestionId() + " / "
+	            + dto.getTitle() + " / "
+	            + dto.getStatus());}
+	}
+	
+	@Test // ê´€ë¦¬ìì¸¡ ë¬¸ì˜ ëª©ë¡ í˜ì´ì§•
+	public void findAll() {
 	    Map<String, Integer> map = new HashMap<>();
-	    map.put("start", 0);
+
+	    map.put("start", 0);   // 1í˜ì´ì§€
 	    map.put("end", 10);
 
 	    List<QuestionDto> list = question.findAll(map);
 
 	    for(QuestionDto q : list) {
-	        System.out.println(q);
+	        System.out.println(q.getQuestionId()+ " / "+ q.getTitle()+ " / "+ q.getStatus()
+	        );
 	    }
 	}
 	
-	@Ignore @Test // »ó¼¼º¸±â
+	@Ignore @Test // ìƒì„¸ë³´ê¸°
 	public void test1() {
 		System.out.println(question.findById(1));
 	}

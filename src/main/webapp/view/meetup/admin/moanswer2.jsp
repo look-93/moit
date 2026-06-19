@@ -172,7 +172,8 @@
 
         <div class="btn-area">
             <button type="button" class="btn btn-save">저장</button>
-            <button type="button" class="btn btn-cancel">취소</button>
+            <button type="button" class="btn btn-cancel"
+            	onclick="history.back()">취소</button>
         </div>
 
     </div>

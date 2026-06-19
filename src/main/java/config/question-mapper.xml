@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moit.dao.QuestionMapper">
 
-	<!-- 페이징 -->
+	<!-- 관리자측 페이징 -->
 	<select id="findAll" resultType="QuestionDto"
 		parameterType="java.util.HashMap">
 		SELECT * FROM questions ORDER BY question_id DESC limit #{start} , #{end}
@@ -15,6 +15,14 @@
 	    WHERE delete_yn = 'N'
 	</select>
 	
+	<!-- 내 문의 총 개수 -->
+	<select id="findMyQuestionCnt" parameterType="int" resultType="int">
+	    SELECT COUNT(*)
+	    FROM questions
+	    WHERE member_id = #{memberId}
+	      AND delete_yn = 'N'
+	</select>
+
 	<!-- 답변 대기 문의 수 -->
 	<select id="findPendingCnt" resultType="int">
 	    SELECT COUNT(*)
@@ -97,5 +105,14 @@
 		SET delete_yn = 'Y'
 		WHERE question_id = #{questionId}
 	</update>
+	
+	<!-- 사용자측 페이징 -->
+	<select id="findMyQuestions" resultType="QuestionDto" parameterType="int">
+		SELECT * from questions
+		WHERE member_id = #{memberId}
+		  AND delete_yn = 'N'
+		ORDER BY question_id DESC
+		LIMIT #{start}, #{end}
+	</select>
 </mapper>
 

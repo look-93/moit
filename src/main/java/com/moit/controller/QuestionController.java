@@ -1,18 +1,24 @@
 package com.moit.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.moit.dao.QuestionMapper;
 import com.moit.dto.AnswerDto;
 import com.moit.dto.QuestionDto;
 import com.moit.service.AnswerService;
 import com.moit.service.QuestionService;
 
 /**
- * Áú¹® È­¸é ¿äÃ» Ã³¸® Controller
- */
+ë¬¸ì˜ í™”ë©´ ìš”ì²­ ì²˜ë¦¬ Controller
+*/
 @Controller
 @RequestMapping("/questions")
 @RequiredArgsConstructor
@@ -21,59 +27,91 @@ public class QuestionController {
     private final QuestionService questionService;
     private final AnswerService answerService;
 
-    //Áú¹® ¸ñ·Ï È­¸é
+ // ë¬¸ì˜ ëª©ë¡ í™”ë©´
     @GetMapping
-    public String list(Model model) {
-    	// ¹®ÀÇ ¸ñ·Ï Á¶È¸
-        model.addAttribute("list", questionService.getList());
+    public String list( @RequestParam(defaultValue = "1") int page, Model model) {
+        int pageSize = 10;
+        int start = (page - 1) * pageSize;
+        List<QuestionDto> list = questionService.getList(start, pageSize);
+
+        int totalCnt = questionService.getAllCnt();
+        int totalPage = (int)Math.ceil((double)totalCnt / pageSize);
+
+        model.addAttribute("list", list);
+
+        model.addAttribute("page", page);
+        model.addAttribute("totalPage", totalPage);
         
-        // ÀüÃ¼ ¹®ÀÇ ¼ö
+        // ì „ì²´ ë¬¸ì˜ ìˆ˜
         model.addAttribute("allCnt", questionService.getAllCnt());
-
-        // ´äº¯ ´ë±â ¹®ÀÇ ¼ö
+        // ë‹µë³€ ëŒ€ê¸° ë¬¸ì˜ ìˆ˜
         model.addAttribute("pendingCnt", questionService.getPendingCnt());
-
-        // ´äº¯ ¿Ï·á ¹®ÀÇ ¼ö
+        // ë‹µë³€ ì™„ë£Œ ë¬¸ì˜ ìˆ˜
         model.addAttribute("answeredCnt", questionService.getAnsweredCnt());
-
-        // ¿À´Ã µî·ÏµÈ ¹®ÀÇ ¼ö
+        // ì˜¤ëŠ˜ ë“±ë¡ëœ ë¬¸ì˜ ìˆ˜
         model.addAttribute("todayCnt", questionService.getTodayCnt());
         return "question/list";
     }
 
-    //Áú¹® »ó¼¼ È­¸é + ´äº¯ Æ÷ÇÔ
+    // ë¬¸ì˜ ìƒì„¸ í™”ë©´ + ë‹µë³€ ì¡°íšŒ
     @GetMapping("/{id}")
     public String detail(@PathVariable int id, Model model) {
         model.addAttribute("data", questionService.getDetail(id));
         return "question/detail";
     }
 
-    //Áú¹® ¼öÁ¤ È­¸é ÀÌµ¿
+    // ë¬¸ì˜ ìˆ˜ì • í™”ë©´ ì´ë™
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable int id, Model model) {
         model.addAttribute("data", questionService.getDetail(id));
         return "question/edit";
     }
 
-    //Áú¹® ¼öÁ¤ Ã³¸®
+    // ë¬¸ì˜ ìˆ˜ì • ì²˜ë¦¬
     @PostMapping("/edit")
     public String edit(QuestionDto dto) {
         questionService.updateQuestion(dto);
         return "redirect:/questions/" + dto.getQuestionId();
     }
 
-    //Áú¹® »èÁ¦ Ã³¸®
+    // ë¬¸ì˜ ì‚­ì œ ì²˜ë¦¬
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable int id) {
         questionService.deleteQuestion(id);
         return "redirect:/questions";
     }
 
-    //´äº¯ µî·Ï (°ü¸®ÀÚ ±â´É)
+    // ë‹µë³€ ë“±ë¡ (ê´€ë¦¬ì ì „ìš©)
     @PostMapping("/answer")
     public String answerWrite(AnswerDto dto) {
-        // ´äº¯ ÀúÀå + Áú¹® »óÅÂ º¯°æ
+    	// ë‹µë³€ ë“±ë¡ + ë¬¸ì˜ ìƒíƒœ ë³€ê²½
         answerService.register(dto);
         return "redirect:/questions/" + dto.getQuestionId();
+    }
+    
+    // ì‚¬ìš©ìì¸¡ í˜ì´ì§•
+    @GetMapping("/myQuestion")
+    public String myQuestion(@RequestParam(defaultValue="1") int page,
+            HttpSession session,Model model) {
+        QuestionDto loginUser = (QuestionDto)session.getAttribute("loginUser");
+        
+        int memberId = loginUser.getMemberId();
+        int pageSize = 10;
+        int start = (page - 1) * pageSize;
+        List<QuestionDto> list =
+                questionService.getMyQuestions(
+                        memberId,
+                        start,
+                        pageSize);
+        int totalCnt =
+                questionService.getMyQuestionCnt(memberId);
+        int totalPage =
+                (int)Math.ceil((double)totalCnt / pageSize);
+
+        model.addAttribute("list", list);
+        model.addAttribute("page", page);
+        model.addAttribute("totalPage", totalPage);
+
+        return "question/myQuestionList";
     }
 }

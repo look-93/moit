@@ -182,11 +182,11 @@
     </div>
 
     <div class="btn-area">
-        <button type="submit" class="btn btn-save">
+        <button type="submit" class="btn btn-save" onclick="history.back()">
             저장
         </button>
 
-        <button type="button" class="btn btn-cancel">
+        <button type="button" class="btn btn-cancel" onclick="history.back()">
             취소
         </button>
     </div>

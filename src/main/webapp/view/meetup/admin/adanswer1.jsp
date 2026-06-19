@@ -216,11 +216,11 @@ textarea{
         </div>
 
         <div class="btn-area">
-            <button type="button" class="btn btn-submit">
+            <button type="button" class="btn btn-submit" onclick="history.back()">
                 등록하기
             </button>
 
-            <button type="button" class="btn btn-cancel">
+            <button type="button" class="btn btn-cancel" onclick="history.back()">
                 취소
             </button>
         </div>

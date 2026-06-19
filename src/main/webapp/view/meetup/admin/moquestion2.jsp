@@ -148,9 +148,12 @@
     <div class="breadcrumb">1:1 문의 &gt; 문의 상세보기</div>
 
     <div class="top-btn-area">
-        <button class="btn btn-answer">답변달기</button>
-        <button class="btn btn-edit">수정</button>
-        <button class="btn btn-delete">삭제</button>
+        <button class="btn btn-answer"
+        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer1.jsp'">답변달기</button>
+        <button class="btn btn-edit"
+        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moquestion3.jsp'">수정</button>
+        <button class="btn btn-delete"
+        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/list.jsp'">삭제</button>
     </div>
 
     <div class="card">
@@ -208,7 +211,8 @@
             <div class="card-title" style="margin-bottom:0;">답변 내용</div>
 
             <div class="answer-btns">
-                <button class="btn btn-answer-edit">답변수정</button>
+                <button class="btn btn-answer-edit"
+                onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer2.jsp'">답변수정</button>
                 <button class="btn btn-answer-delete">답변삭제</button>
             </div>
         </div>
@@ -231,7 +235,8 @@
 
     </div>
 
-    <div class="list-btn-area">
+    <div class="list-btn-area"
+        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/list.jsp'">
         <button class="btn btn-list">목록으로</button>
     </div>
 

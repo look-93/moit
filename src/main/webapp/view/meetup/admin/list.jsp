@@ -606,9 +606,10 @@ nav a{
         <h3>작성자</h3>
         <p>홍길동</p>
 
-        <button class="meetup-inquiry-btn">
-            💬 모임글 문의하기
-        </button>
+        <button class="meetup-inquiry-btn"
+        onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moquestion1.jsp'">
+	    💬 모임글 문의하기
+	</button>
     </div>
 
     <!-- ✅ 추천모임 복구 -->

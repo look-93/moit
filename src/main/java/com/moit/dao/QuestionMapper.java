@@ -8,39 +8,42 @@ import com.moit.dto.QuestionDto;
 @Mapper
 public interface QuestionMapper {
 
-    // ÀüÃ¼ Áú¹® ¸ñ·Ï
-	List<QuestionDto> findAll(Map<String, Integer> map);
+    // ì „ì²´ ë¬¸ì˜ ëª©ë¡ ì¡°íšŒ
+    List<QuestionDto> findAll(Map<String, Integer> map);
 
-    // Áú¹® »ó¼¼ Á¶È¸
+    // ë¬¸ì˜ ìƒì„¸ ì¡°íšŒ
     QuestionDto findById(int questionId);
 
-    // Áú¹® µî·Ï
+    // ë¬¸ì˜ ë“±ë¡
     void insertQuestion(QuestionDto dto);
-    
-    // ´äº¯ÀÌ µî·Ï ½Ã, »óÅÂ º¯°æ
+
+    // ë‹µë³€ ë“±ë¡ ì‹œ ë¬¸ì˜ ìƒíƒœ ë³€ê²½
     void updateStatusAnswered(int questionId);
-    
-    // ¹®ÀÇ ¼öÁ¤
+
+    // ë¬¸ì˜ ìˆ˜ì •
     void updateQuestion(QuestionDto dto);
 
-    // ¹®ÀÇ »èÁ¦
+    // ë¬¸ì˜ ì‚­ì œ
     void deleteQuestion(int questionId);
-    
-    // Á¦¸ñ, ³»¿ë, µî·ÏÀÏ·Î °Ë»ö
+
+    // ì œëª©, ë‚´ìš©, ë‹µë³€ì—¬ë¶€ ê²€ìƒ‰
     List<QuestionDto> findBySearch(QuestionDto dto);
-    
-    // ÀüÃ¼ ¹®ÀÇ ¼ö
+
+    // ì „ì²´ ë¬¸ì˜ ìˆ˜
     int findAllCnt();
 
-    // ´äº¯ ´ë±â ¼ö
+    // ë‹µë³€ ëŒ€ê¸° ìˆ˜
     int findPendingCnt();
 
-    // ´äº¯ ¿Ï·á ¼ö
+    // ë‹µë³€ ì™„ë£Œ ìˆ˜
     int findAnsweredCnt();
 
-    // ¿À´Ã µî·Ï ¼ö
+    // ì˜¤ëŠ˜ ë“±ë¡ ë¬¸ì˜ ìˆ˜
     int findTodayCnt();
     
+    // ì‚¬ìš©ì ë¬¸ì˜ ëª©ë¡ ì¡°íšŒ
+    List<QuestionDto> findMyQuestions(Map<String, Object> map);
     
-    
+    // ë‚´ ë¬¸ì˜ ì´ ê°œìˆ˜ ì¡°íšŒ
+    int findMyQuestionCnt(int memberId);
 }

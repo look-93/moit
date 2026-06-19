@@ -5,9 +5,15 @@ import com.moit.dto.AnswerDto;
 @Mapper
 public interface AnswerMapper {
 
-    // Áú¹®º° ´äº¯ Á¶È¸ (1:1 ±¸Á¶)
+	// ì§ˆë¬¸ì— ëŒ€í•œ ë‹µë³€ ì¡°íšŒ
     AnswerDto findByQuestionId(int questionId);
 
-    // ´äº¯ µî·Ï
+    // ë‹µë³€ ë“±ë¡
     void insertAnswer(AnswerDto dto);
+    
+    // ë‹µë³€ ìˆ˜ì •
+    void updateAnswer(AnswerDto dto);
+
+    // ë‹µë³€ ì‚­ì œ
+    void deleteAnswer(int answerId);
 }
