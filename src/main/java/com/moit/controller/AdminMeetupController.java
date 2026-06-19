@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.moit.dto.MeetupSerchDto;
+import com.moit.dto.MeetupSearchDto;
 import com.moit.service.AdminMeetupService;
 import com.moit.util.PagingUtil;
 
@@ -24,10 +24,10 @@ public class AdminMeetupController {
 	
 	
 	@RequestMapping("/list.do")
-	public String serchByAdmin(Model model, MeetupSerchDto meetupSerchDto, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
+	public String serchByAdmin(Model model, MeetupSearchDto meetupSerchDto, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
 		model.addAttribute("menu", "meetup");
 		model.addAttribute("paging", new PagingUtil(adminMeetupService.selectMeetupTotalCnt(meetupSerchDto), pstartno));
-		model.addAttribute("serchList", adminMeetupService.serchByAdmin(pstartno,meetupSerchDto));
+		model.addAttribute("serchList", adminMeetupService.searchByAdmin(pstartno,meetupSerchDto));
 		return "meetup/admin/list"; 
 	}
 	

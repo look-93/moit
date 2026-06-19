@@ -317,164 +317,153 @@ a {
 
 <div class="container">
 
-    <div class="page">
+	<div class="page">
 
-        <!-- LEFT -->
+		<!-- LEFT -->
 
-        <aside class="sidebar">
+		<aside class="sidebar">
 
-            <h3>카테고리</h3>
-
-            <div class="category">
-
-                <a href="#" class="active">전체</a>
-                <a href="#">운동/스포츠</a>
-                <a href="#">문화/예술</a>
-                <a href="#">스터디</a>
-                <a href="#">봉사활동</a>
-                <a href="#">게임</a>
-                <a href="#">여행</a>
-                <a href="#">음악</a>
-
-            </div>
-
-            <div class="sidebar-ad">
-
-                <div class="ad-tag">
-                    ADVERTISEMENT
-                </div>
-
-                <h3>
-                    신규 회원<br>
-                    특별 혜택
-                </h3>
-
-                <p>
-                    가입만 해도<br>
-                    할인 쿠폰 지급
-                </p>
-
-                <a href="#">
-                    지금 확인하기
-                </a>
-
-            </div>
-
-        </aside>
-
-        <!-- RIGHT -->
-
-        <section class="content">
-
-            <section class="content">
-
-                <div class="top-ad">
-
-                    <div class="top-ad-left">
-                        <h3>🔥 신규 제휴업체 오픈</h3>
-                        <p>
-                            가입 회원 대상 20% 할인 쿠폰 지급
-                        </p>
-                    </div>
-
-                    <a href="#" class="top-ad-btn">
-                        바로가기
-                    </a>
-
-                </div>
-			<form action="${pageContext.request.contextPath}/meetup/user/list.do" method="get">		
-	            <div class="filter-box">
-					<!-- 검색 -->
-	                <input type="text" name="searchText"  class="form-control" placeholder="모임명 검색">
-					<!-- 시도 -->
-	                <select id="sido" name="sido"  class="form-select">
-	                    <option value="">전체 지역</option>	                    
-	                    <c:forEach var="sido" items="${sidoList}" varStatus="status">
-	                    	<option value="${sido.sidoId}">${sido.name}</option>	                    
-	                    </c:forEach>
-
-	                </select>
-	
-	                <select id="orderType" name="orderType"  class="form-select">
-	                    <option value="createAt">최신순</option>
-	                    <option value="like">인기순</option>
-	                    <option value="meetupAt">마감임박순</option>
-	                </select>
-	
-	                <div class="col-md-2">
-						<button type="submit" class="btn btn-primary">검색</button>
-					</div>
-	
-	            </div>
-            </form>
-            
-
-            <div class="card-grid">
-            
+			<h3>카테고리</h3>
 			
-                <!-- CARD -->				
-				<c:forEach var="serchList" items="${serchList}" varStatus="status">
-					<a href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${serchList.meetupId}" action="get">
-		                <div class="card">		
-		                    <div class="card-img"></div>		
-		                    <div class="card-body">		
-		                        <span class="badge">
-		                        	<c:choose>
-		                        		<c:when test="${serchList.status eq 'RECRUITING'}" >
+			<div class="category">			
+				<a href="list.do" class="${empty param.categoryId ? 'active' : ''}">전체</a> 
+				<c:forEach var="category" items="${categoryList}">
+					<a href="?categoryId=${category.categoryId}" class="${param.categoryId == category.categoryId ? 'active' : ''}">
+						${category.categoryName}
+					</a>
+				</c:forEach> 
+			</div>
+
+			<div class="sidebar-ad">
+
+				<div class="ad-tag">ADVERTISEMENT</div>
+
+				<h3>
+					신규 회원<br> 특별 혜택
+				</h3>
+
+				<p>
+					가입만 해도<br> 할인 쿠폰 지급
+				</p>
+
+				<a href="#"> 지금 확인하기 </a>
+
+			</div>
+
+		</aside>
+
+		<!-- RIGHT -->
+
+		<section class="content">
+
+
+
+				<div class="top-ad">
+
+					<div class="top-ad-left">
+						<h3>🔥 신규 제휴업체 오픈</h3>
+						<p>가입 회원 대상 20% 할인 쿠폰 지급</p>
+					</div>
+
+					<a href="#" class="top-ad-btn"> 바로가기 </a>
+
+				</div>
+				<form action="${pageContext.request.contextPath}/meetup/user/list.do" method="get">
+					<div class="filter-box">
+						<!-- 검색 -->
+						<input type="hidden" name="categoryId" value="${param.categoryId}">
+						<input type="text" name="searchText" class="form-control" placeholder="모임명 검색">
+						<!-- 시도 -->
+						<select id="sidoId" name="sidoId" class="form-select">
+							<option value="0">전체 지역</option>
+							<c:forEach var="sido" items="${sidoList}" varStatus="status">
+								<option value="${sido.sidoId}">${sido.name}</option>
+							</c:forEach>
+
+						</select> 
+						<select id="orderType" name="orderType" class="form-select">
+							<option value="createAt">최신순</option>
+							<option value="like">인기순</option>
+							<option value="meetupAt">마감임박순</option>
+						</select>
+
+						<div class="col-md-2">
+							<button type="submit" class="btn btn-primary">검색</button>
+						</div>
+
+					</div>
+				</form>
+
+
+				<div class="card-grid">
+
+
+					<!-- CARD -->
+					<c:forEach var="meetupList" items="${serchList}" varStatus="status">
+						<a href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${meetupList.meetupId}" action="get">
+							<div class="card">
+								<div class="card-img"></div>
+								<div class="card-body">
+									<span class="badge"> <c:choose>
+											<c:when test="${meetupList.status eq 'RECRUITING'}">
 		                        			모집중
 		                        		</c:when>
-		                        		<c:when test="${serchList.status eq 'CLOSED'}" >
+											<c:when test="${meetupList.status eq 'CLOSED'}">
 		                        			모집마감
-		                        		</c:when>	                        	
-		                        	</c:choose>	                      
-		                        </span>
-		
-		                        <h4>${serchList.title}</h4>
-		
-		                        <p>🏃 운동/스포츠</p>  <!-- 수정 카테고리추가 -->
-		                        <p>${serchList.sigunguName}</p>
-		                        <p>👥 ${serchList.participant} / ${serchList.maxParticipants}명</p>
-		
-		                        <div class="card-footer">
-		                            <span>${serchList.fomatMeetupAt}</span>
-		                            <span class="like">❤️ 34</span> <!-- 수정 좋아요 -->
-		                        </div>		
-		                    </div>		
-		                </div>
-					</a>
-				</c:forEach>
-            </div>
-				
-            <div class="pagination">
+		                        		</c:when>
+										</c:choose>
+									</span>
 
-				<!-- 이전 -->
-				<c:if test="${paging.start > paging.bottomlist}">
-					<a class="page-link" href="?pstartno= ${paging.start-1}"> < </a>
-					
-				</c:if>
+									<h4>${meetupList.title}</h4>
 
-				<!-- 1,2,3,4,5,6 -->
-				<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
-			        <a href="?pstartno=${i}"
-			           class="${i == paging.current ? 'active' : ''}">
-			            ${i}
-			        </a>
-				</c:forEach>
+									<p>🏃 운동/스포츠</p>
+									<!-- 수정 카테고리추가 -->
+									<p>${meetupList.sigunguName}</p>
+									<p>👥 ${meetupList.participant} /
+										${meetupList.maxParticipants}명</p>
 
-			    <!-- 다음 -->
-			    <c:if test="${paging.pagetotal > paging.end}">
-			        <a href="?pstartno=${paging.end+1}">›</a>
-			    </c:if>
+									<div class="card-footer">
+										<span>${meetupList.fomatMeetupAt}</span> <span class="like">❤️
+											34</span>
+										<!-- 수정 좋아요 -->
+									</div>
+								</div>
+							</div>
+						</a>
+					</c:forEach>
+				</div>
 
-            </div>
+				<div class="pagination">
 
-        </section>
+					<!-- 이전 -->
+					<c:if test="${paging.start > paging.bottomlist}">
+						<a class="page-link" href="?pstartno=${paging.start-1}"> < </a>
 
-    </div>
+					</c:if>
+
+					<!-- 1,2,3,4,5,6 -->
+					<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
+						<a href="?pstartno=${i}"
+							class="${i == paging.current ? 'active' : ''}"> ${i} </a>
+					</c:forEach>
+
+					<!-- 다음 -->
+					<c:if test="${paging.pagetotal > paging.end}">
+						<a href="?pstartno=${paging.end+1}">›</a>
+					</c:if>
+
+				</div>
+			</section>
+
+	</div>
 
 </div>
-<!-- <script>
-
-console.log("${sidoList}")
-</script> -->
+<script>
+	window.onload = function() {
+	    const sidoId = document.getElementById("sidoId");
+	    const orderType = document.getElementById("orderType");
+	    sidoId.value = '${param.sidoId}';
+	    orderType.value = '${param.orderType}';
+	}
+</script>
 <%@ include file="../../inc/userFooter.jsp"%>

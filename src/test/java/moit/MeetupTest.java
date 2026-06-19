@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.moit.dao.MeetupMapper;
 import com.moit.service.AdminMeetupService;
+import com.moit.service.UserMeetupService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
@@ -20,15 +21,16 @@ import com.moit.service.AdminMeetupService;
 		"classpath:config/security-context.xml" 
 })
 public class MeetupTest {
-	@Autowired   ApplicationContext context;
-	@Autowired   DataSource         ds;
-	@Autowired   SqlSession         sqlSession;
-	@Autowired   AdminMeetupService adminMeetupService;
+	@Autowired ApplicationContext context;
+	@Autowired DataSource         ds;
+	@Autowired SqlSession         sqlSession;
+	@Autowired AdminMeetupService adminMeetupService;
+	@Autowired UserMeetupService userMeetupService;
 	
 	
-	@Ignore//@Test
+	@Test
 	public void test1() {
-		System.out.println(adminMeetupService.deleteByMeetup(1));
+		System.out.println(userMeetupService.findAllCategory());
 	}
 	
 }

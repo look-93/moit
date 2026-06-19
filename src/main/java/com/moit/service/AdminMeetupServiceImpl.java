@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.moit.dao.MeetupMapper;
 import com.moit.dto.MeetupDto;
-import com.moit.dto.MeetupSerchDto;
-
+import com.moit.dto.MeetupSearchDto;
 
 @Service
 public class AdminMeetupServiceImpl implements AdminMeetupService{
@@ -19,15 +18,15 @@ public class AdminMeetupServiceImpl implements AdminMeetupService{
 	
 
 	@Override
-	public List<MeetupDto> serchByAdmin(int pstartno,MeetupSerchDto meetupSerchDto) {	
-		meetupSerchDto.setEnd(10);
-		meetupSerchDto.setStart((pstartno-1)*10);
-		return meetupMapper.serchByAdmin(meetupSerchDto);
+	public List<MeetupDto> searchByAdmin(int pstartno,MeetupSearchDto meetupSearchDto) {	
+		meetupSearchDto.setEnd(10);
+		meetupSearchDto.setStart((pstartno-1)*10);
+		return meetupMapper.searchByAdmin(meetupSearchDto);
 	}
 
 	@Override
-	public int selectMeetupTotalCnt(MeetupSerchDto meetupSerchDto) {
-		return meetupMapper.selectMeetupTotalCnt(meetupSerchDto);
+	public int selectMeetupTotalCnt(MeetupSearchDto meetupSearchDto) {
+		return meetupMapper.selectMeetupTotalCnt(meetupSearchDto);
 	}
 
 	@Override

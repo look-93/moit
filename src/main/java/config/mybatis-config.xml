@@ -8,13 +8,15 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.moit.dto.AuthDto" alias="AuthDto" />
-		<typeAlias type="com.moit.dto.AuthUserDto"
-			alias="AuthUserDto" />
+		<typeAlias type="com.moit.dto.AuthUserDto" alias="AuthUserDto" />
 		<typeAlias type="com.moit.dto.UserDto" alias="UserDto" />
 		<typeAlias type="com.moit.dto.MeetupDto" alias="MeetupDto" />
-		<typeAlias type="com.moit.dto.MeetupSerchDto" alias="MeetupSerchDto" />
+		<typeAlias type="com.moit.dto.MeetupSearchDto" alias="MeetupSearchDto" />
 		<typeAlias type="com.moit.dto.MeetupImageDto" alias="MeetupImageDto" />
 		<typeAlias type="com.moit.dto.common.SidoDto" alias="SidoDto" />
-		
+		<typeAlias type="com.moit.dto.common.SigunguDto" alias="SigunguDto" />
+		<typeAlias type="com.moit.dto.common.CategoryDto" alias="CategoryDto" />
 	</typeAliases>
 </configuration>
+
+

@@ -282,7 +282,6 @@ body {
 window.onload = function() {
     const status = document.getElementById("status");
     status.value = '${param.status}';
-    console.log('${param.status}');
 }
 
 </script>
