@@ -415,100 +415,49 @@ tbody tr:last-child td{border-bottom:none}
   line-height:1.7;
   color:#1e293b;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-.delete-modal-box {
-	width: 420px;
-	margin: 0 auto;
-	border: none;
-	border-radius: 22px;
-	box-shadow: 0 30px 90px rgba(15, 23, 42, 0.25);
-}
-
-.delete-modal-body {
-	padding: 38px 34px 30px;
-	text-align: center;
-}
-
-.delete-modal-icon {
-	width: 58px;
-	height: 58px;
-	border-radius: 50%;
-	background: #fff1f1;
-	color: #e15151;
-	margin: 0 auto 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 34px;
-	font-weight: 900;
-}
-
-.delete-modal-title {
-	margin: 0 0 14px;
-	font-size: 24px;
-	font-weight: 900;
-	color: #0f172a;
-}
-
-.delete-modal-text {
-	margin: 0;
-	color: #64748b;
-	line-height: 1.7;
-	font-size: 15px;
-}
-
-.delete-modal-actions {
-	display: flex;
-	gap: 10px;
-	margin-top: 30px;
-}
-
-.delete-modal-actions .btn {
-	flex: 1;
-}
-
-.btn-red-fill {
-	background: #d55757;
-	border-color: #d55757;
-	color: #fff;
-}
 </style>
 </head>
+
 <body>
 	<div class="page">
-
+		
 		<section class="title-row">
 			<div class="title">
-				<h1>내 신고 상세</h1>
-				<p>내 신고내역에서 상세를 클릭했을 때 나오는 화면</p>
+				<h1>관리자 신고 상세</h1>
+				<p>관리자 신고목록에서 상세 보기를 클릭했을 때 나오는 화면</p>
 			</div>
-			<div class="url-chip">test 후 삭제바람 /report/detail?report_id=${dto.reportId}&amp;target_type=${dto.targetType}</div>
+			<div class="url-chip">/admin/report/detail?report_id=${reportId}</div>
 		</section>
 
 		<section class="card">
 			<div class="card-head">
 				<div class="card-title">
-					<span class="step">4-1</span>상세보기
+					<span class="step gray">5-1</span>관리자 신고 상세
 				</div>
 			</div>
 			<div class="inner">
-				<div class="detail-grid">
-					<div class="detail-row">
-						<div class="detail-label">신고번호</div>
-						<div class="detail-value">${dto.reportId}</div>
+				<div class="summary-grid">
+					<div class="summary-card">
+						<div class="summary-label">신고번호</div>
+						<div class="summary-value">${dto.reportId}</div>
 					</div>
+					<div class="summary-card">
+						<div class="summary-label">대상</div>
+						<div class="summary-value">${dto.targetId}</div>
+					</div>
+					<div class="summary-card">
+						<div class="summary-label">신고자</div>
+						<div class="summary-value">${dto.memberId}</div>
+					</div>
+					<div class="summary-card">
+						<div class="summary-label">현재 상태</div>
+						<div class="summary-value">
+							<span class="status pending">${dto.status}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="detail-grid">
 					<div class="detail-row">
 						<div class="detail-label">신고 대상</div>
 						<div class="detail-value">
@@ -528,63 +477,31 @@ tbody tr:last-child td{border-bottom:none}
 						<div class="detail-value">${dto.reasonDetail}</div>
 					</div>
 					<div class="detail-row">
-						<div class="detail-label">처리 상태</div>
-						<div class="detail-value">
-							<span class="status pending">${dto.status}</span>
-						</div>
-					</div>
-					<div class="detail-row">
 						<div class="detail-label">신고일</div>
 						<div class="detail-value">${dto.createdAt}</div>
 					</div>
 				</div>
 			</div>
-			
 			<div class="actions">
-				<a href="${pageContext.request.contextPath}/report/user/mylist.do" class="btn btn-white">목록</a>
-				<a href="${pageContext.request.contextPath}/meetup/user/#" class="btn btn-soft-blue">해당 글 보기</a>
-				<a href="${pageContext.request.contextPath}/report/user/update.do?reportId=${dto.reportId}" class="btn btn-blue">수정</a>
-				<button type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
+				<a href="${pageContext.request.contextPath}/report/admin/adminList.do" class="btn btn-white">목록</a>
+				<button type="button" class="btn btn-soft-blue" onclick="document.getElementById(#).style.display='flex'">해당 글 보기</button>
+				<button type="button" class="btn btn-blue">처리 완료</button>
+				<button type="button" class="btn btn-red">삭제</button>
 			</div>
 		</section>
 
-
-
-		<!-- 삭제 확인 모달 -->
-		<div class="modal fade" id="deleteModal" tabindex="-1"
-			aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content delete-modal-box">
-
-					<div class="modal-body delete-modal-body">
-
-						<div class="delete-modal-icon">!</div>
-
-						<h2 class="delete-modal-title">삭제하시겠습니까?</h2>
-
-						<p class="delete-modal-text">
-							선택한 신고 내역이 삭제 처리됩니다.<br> 삭제 후에는 목록에서 보이지 않습니다.
-						</p>
-
-						<form action="${pageContext.request.contextPath}/report/user/delete.do" method="post">
-
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<input type="hidden" name="reportId" value="${dto.reportId}" />
-
-							<div class="delete-modal-actions">
-								<button type="button" class="btn btn-white" data-bs-dismiss="modal">취소</button>
-								<button type="submit" class="btn btn-red-fill">삭제</button>
-							</div>
-
-						</form>
-
-					</div>
+		<div class="modal-bg" id="adminReviewModal">
+			<div class="modal-box">
+				<div class="modal-icon">💬</div>
+				<h2>해당 글 내용</h2>
+				<p>신고 대상 원문 내용을 확인하는 모달창입니다.</p>
+				<div class="review-content-box">reviewContent</div>
+				<div class="modal-actions">
+					<button type="button" class="btn btn-blue"
+						onclick="document.getElementById(#).style.display='none'">확인</button>
 				</div>
 			</div>
 		</div>
-
-
-
 
 	</div>
 </body>

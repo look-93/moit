@@ -23,26 +23,26 @@ import com.moit.dto.ReportsDto;
 		"classpath:config/root-context.xml"   , 
 		"classpath:config/security-context.xml" 
 })
-public class UserTest {
+public class UserTest2 {
 	@Autowired   ApplicationContext context;
 	@Autowired   DataSource         ds;
 	@Autowired   SqlSession         sqlSession;
 	
 	@Autowired ReportsMapper	mapper;
 	
+	// ===== admin =====
+	// ===== admin =====
 	@Ignore //@Test
 	public void testAdminUpdateStatus() { // 신고 상태 변경
 	    ReportsDto dto = new ReportsDto();
-	    dto.setReportId(8);        // 테스트할 reportId
+	    dto.setReportId(8);       // 테스트할 reportId
 	    dto.setStatus("APPROVED"); // 바꿀 상태
-	    int result = mapper.updateAdmin(dto);
-	    System.out.println("updateAdmin result = " + result);
+	    mapper.updateAdmin(dto);
 	}
 
 	@Ignore //@Test
 	public void testAdminDelete() { // 신고 강제 삭제
-	    int result = mapper.deleteAdmin(8); // reportId = 8 삭제
-	    System.out.println("deleteAdmin result = " + result);
+	    mapper.deleteAdmin(8); // reportId = 8 삭제
 	}
 
 	@Ignore //@Test
@@ -50,13 +50,14 @@ public class UserTest {
 	    HashMap<String, Object> map = new HashMap<>();
 	    map.put("start", 0);
 	    map.put("end", 10);
-	    map.put("status", "PENDING");   // 조건 예시
-	    map.put("targetType", "REVIEW"); // 조건 예시
+	    // 조건 예시
+	    map.put("status", "PENDING");
+	    map.put("targetType", "REVIEW");
 	    // map.put("memberId", 5);
 	    // map.put("reasonCode", "SPAM");
 	    // map.put("createdAt", "2026-06-19");
 	    List<ReportsDto> list = mapper.selectAdminReports(map);
-	    System.out.println("selectAdminReports result = " + list);
+	    System.out.println(list);
 	}
 
 	@Ignore //@Test
@@ -70,12 +71,11 @@ public class UserTest {
 	@Ignore //@Test
 	public void testAdminSelectDetail() { // 단건 조회 (reportId)
 	    HashMap<String, Object> map = new HashMap<>();
-	    map.put("reportId", 6);
+	    map.put("reportId", 8);
 	    List<ReportsDto> detail = mapper.selectAdminReports(map);
-	    System.out.println("selectAdminReports (detail) result = " + detail);
+	    System.out.println(detail);
 	}
 
-	
 	// ===== user =====
 	// ===== user =====
 	@Ignore //@Test

@@ -1,46 +1,164 @@
 package com.moit.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.moit.dto.UserDto;
+import com.moit.dto.ReportsDto;
 import com.moit.service.ReportsService;
+import com.moit.util.PagingUtil;
 
 @Controller
 public class ReportController { // test lcy
 	@Autowired ReportsService service;
 	
-//	// Ω≈∞Ì ¿€º∫ »≠∏È
-//	@RequestMapping( value="/report/user/write", method = RequestMethod.GET  )
-//	public String reportWriteForm() { return "report/user/write"; }
-//	// Ω≈∞Ì ¿€º∫ »≠∏È - µÓ∑œ
-//	@RequestMapping( value="/report/user/write", method = RequestMethod.POST  )
-//	public String reportWriteForm_post() { return "redirct:/report/user/write"; }
-//	
-//	// ≥ª Ω≈∞Ì≥ªø™ »≠∏È
-//	@RequestMapping( value="/report/user/mylist", method = RequestMethod.GET  )
-//	public String reportMylist() { return "report/user/mylist"; }
-//	
-//	// ≥ª Ω≈∞Ì ªÛºº »≠∏È
-//	@RequestMapping("/report/user/detail.do")
-//	public String reportDetail(int report
-//			
+	// ÎÇ¥ Ïã†Í≥†ÎÇ¥Ïó≠ ÌôîÎ©¥ mylist
+	@RequestMapping("/report/user/mylist.do")
+	public String reportMylist( @RequestParam(value="pstartno", defaultValue="1") int pstartno,
+								Model model ) {
+		
+		int memberId = 1; 
+		
+//		HashMap<String, Object> map = new HashMap<>();
+//		map.put("start", 0);
+//		map.put("end", 10);
+//		map.put("memberId", memberId); // Î°úÍ∑∏Ïù∏ ÌöåÏõê Î≤àÌò∏ test
+		
+//		model.addAttribute("paging", new PagingUtil( service.selectUserCnt(dto.getMemberId()), pstartno ));
+		model.addAttribute("paging", new PagingUtil( service.selectUserCnt(memberId), pstartno ));
+		model.addAttribute("list", service.selectUserReport(pstartno, memberId));
+
+		return "report/user/mylist";
+	}
+	
+	// Ïã†Í≥† ÏûëÏÑ± ÌôîÎ©¥ write
+	@RequestMapping( value="/report/user/write.do", method = RequestMethod.GET  )
+	public String reportWrite(	@RequestParam("targetType") String targetType,
+								@RequestParam("targetId") int targetId,
+								Model model) {
+		
+		ReportsDto dto = new ReportsDto();
+		dto.setTargetType(targetType);
+		dto.setTargetId(targetId);
+		
+		model.addAttribute("dto", dto);
+		
+		return "report/user/write";
+	}
+	// Ïã†Í≥† ÏûëÏÑ± Í∏∞Îä•
+	@RequestMapping( value="/report/user/write.do", method = RequestMethod.POST  )
+	public String reportWrite_post(ReportsDto dto, RedirectAttributes rttr) {
+		
+		dto.setMemberId(1); // Î°úÍ∑∏Ïù∏ ÌöåÏõê Î≤àÌò∏ test
+		
+		int result_TargetType = -1;
+		String result = "Ïã†Í≥†Îì±Î°ù Ïã§Ìå®";
+
+		if ( "MEETUP".equals(dto.getTargetType()) ) {
+			result_TargetType = service.insertUserReport(dto);
+		} else if ( "REVIEW".equals(dto.getTargetType()) ) {
+			result_TargetType = service.insertUserReport(dto);
+		}
+		
+		if (result_TargetType > 0) {
+			result = "Ïã†Í≥†Îì±Î°ù ÏôÑÎ£å";
+			rttr.addFlashAttribute("result", result);
 			
-//			Id, Model model) {
-//		model.addAttribute("dto", service.selectUserReportDetail(null));
-//		return "report/user/detail";
-//	}
+			return "redirect:/report/user/mylist.do";
+		}
+		
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/report/user/write.do?targetType=" + dto.getTargetType() + "&targetId=" + dto.getTargetId();
+	}
 	
-	// Ω≈∞Ì ºˆ¡§ »≠∏È
+	// ÎÇ¥ Ïã†Í≥† ÏÉÅÏÑ∏ ÌôîÎ©¥ detail
+	@RequestMapping("/report/user/detail.do")
+	public String reportDetail( int reportId, Model model) {
+		
+		ReportsDto dto = new ReportsDto();
+		dto.setReportId(reportId);
+		dto.setMemberId(1);
+		
+		model.addAttribute("dto", service.selectUserReportDetail(dto));
+		
+		return "report/user/detail";
+	}
 	
-	// ªË¡¶ »Æ¿Œ√¢
+	// Ïã†Í≥† ÏàòÏ†ï ÌôîÎ©¥ update
+	@RequestMapping( value="/report/user/update.do", method = RequestMethod.GET  )
+	public String reportUpdate(int reportId, Model model) {
+
+		ReportsDto dto = new ReportsDto();
+		dto.setReportId(reportId);
+		dto.setMemberId(1);
+		
+		model.addAttribute("dto", service.selectUserReportDetail(dto));
+		return "report/user/update";
+	}
 	
-	// ∞¸∏Æ¿⁄ Ω≈∞Ì∏Ò∑œ »≠∏È
+	// Ïã†Í≥† ÏàòÏ†ï Ï≤òÎ¶¨
+	@RequestMapping( value="/report/user/update.do", method = RequestMethod.POST )
+	public String reportUpdate_post(ReportsDto dto, RedirectAttributes rttr) {
+		
+		String result="Ïã†Í≥†ÏàòÏ†ï Ïã§Ìå®";
+		
+		if( service.updateUserReport(dto) > 0 ) {
+			result="Ïã†Í≥†ÏàòÏ†ï ÏôÑÎ£å";
+		}
+
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/report/user/detail.do?reportId=" + dto.getReportId();
+		
+	}
 	
-	// ∞¸∏Æ¿⁄ Ω≈∞Ì ªÛºº »≠∏È
+	// Ïã†Í≥† ÏÇ≠Ï†ú Ï≤òÎ¶¨ delete
+	@RequestMapping( value="/report/user/delete.do", method=RequestMethod.POST )
+	public String reportDelete_post(ReportsDto dto, RedirectAttributes rttr) {
+		
+		dto.setMemberId(1); 
+		
+		String result="Ïã†Í≥†ÏÇ≠Ï†ú Ïã§Ìå®";
+		
+		if( service.deleteUserReport(dto) > 0 ) {
+			result="Ïã†Í≥†ÏÇ≠Ï†ú ÏÑ±Í≥µ";
+		}
+		
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/report/user/mylist.do";
+	}
+	
+	
+	// Í¥ÄÎ¶¨Ïûê Î¶¨Ïä§Ìä∏ Î™©Î°ù
+	@RequestMapping("/report/admin/adminList.do")
+	public String adminList(@RequestParam(value="pstartno", defaultValue="1") int pstartno,
+							Model model) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("start", (pstartno-1)*10);
+		map.put("end", 10);
+	
+		model.addAttribute("paging", new PagingUtil( service.selectAdminReportsCnt(map), pstartno));
+		model.addAttribute("list", service.selectAdminReports(map));
+
+		return "report/admin/adminList";
+	}
+	
+	// Í¥ÄÎ¶¨Ïûê Î¶¨Ïä§Ìä∏ Î™©Î°ù ÏÉÅÏÑ∏Î≥¥Í∏∞
+	@RequestMapping("/report/admin/adminDetail.do")
+	public String adminDetail( @RequestParam("reportId") int reportId, Model model) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("reportId", reportId);
+		
+		model.addAttribute(map);
+		
+		return "report/admin/adminDetail";
+	}
+	
 }

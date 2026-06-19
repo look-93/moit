@@ -2,15 +2,23 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ include file="../../inc/userHeader.jsp" %>
-<!-- 	header		 -->
-<!-- 	header		 -->
+<jsp:include page="../../inc/userHeader.jsp" />
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+ <style>
+ 
+ .pagination {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 0 6px;
+  margin: 0;
+}
 
-
-<style>
+.pagination li {
+  list-style: none;
+}
+ 
 :root{
   --blue:#2f6df6;
   --blue-dark:#1f55d8;
@@ -417,179 +425,118 @@ tbody tr:last-child td{border-bottom:none}
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-.delete-modal-box {
-	width: 420px;
-	margin: 0 auto;
-	border: none;
-	border-radius: 22px;
-	box-shadow: 0 30px 90px rgba(15, 23, 42, 0.25);
-}
-
-.delete-modal-body {
-	padding: 38px 34px 30px;
-	text-align: center;
-}
-
-.delete-modal-icon {
-	width: 58px;
-	height: 58px;
-	border-radius: 50%;
-	background: #fff1f1;
-	color: #e15151;
-	margin: 0 auto 20px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 34px;
-	font-weight: 900;
-}
-
-.delete-modal-title {
-	margin: 0 0 14px;
-	font-size: 24px;
-	font-weight: 900;
-	color: #0f172a;
-}
-
-.delete-modal-text {
-	margin: 0;
-	color: #64748b;
-	line-height: 1.7;
-	font-size: 15px;
-}
-
-.delete-modal-actions {
-	display: flex;
-	gap: 10px;
-	margin-top: 30px;
-}
-
-.delete-modal-actions .btn {
-	flex: 1;
-}
-
-.btn-red-fill {
-	background: #d55757;
-	border-color: #d55757;
-	color: #fff;
-}
 </style>
-</head>
+
 <body>
 	<div class="page">
-
+		
 		<section class="title-row">
 			<div class="title">
-				<h1>내 신고 상세</h1>
-				<p>내 신고내역에서 상세를 클릭했을 때 나오는 화면</p>
+				<h1>관리자 신고목록</h1>
+				<p>관리자가 전체 신고 내역을 조회하고 상세 처리하는 화면</p>
+				
 			</div>
-			<div class="url-chip">test 후 삭제바람 /report/detail?report_id=${dto.reportId}&amp;target_type=${dto.targetType}</div>
+			<div class="url-chip">/report/admin/adminList</div>
 		</section>
 
 		<section class="card">
 			<div class="card-head">
 				<div class="card-title">
-					<span class="step">4-1</span>상세보기
+					<span class="step gray">5</span>관리자 신고목록
+				</div>
+				<div class="filters">
+					<button class="filter-btn active" onclick="filterRows('ALL')">전체</button>
+					<button class="filter-btn" onclick="filterRows('MEETUP')">MEETUP</button>
+					<button class="filter-btn" onclick="filterRows('REVIEW')">REVIEW</button>
 				</div>
 			</div>
-			<div class="inner">
-				<div class="detail-grid">
-					<div class="detail-row">
-						<div class="detail-label">신고번호</div>
-						<div class="detail-value">${dto.reportId}</div>
-					</div>
-					<div class="detail-row">
-						<div class="detail-label">신고 대상</div>
-						<div class="detail-value">
-							<span class="badge">${dto.targetType}</span>
-						</div>
-					</div>
-					<div class="detail-row">
-						<div class="detail-label">대상 ID</div>
-						<div class="detail-value">${dto.targetId}</div>
-					</div>
-					<div class="detail-row">
-						<div class="detail-label">신고 사유</div>
-						<div class="detail-value">${dto.reasonCode}</div>
-					</div>
-					<div class="detail-row">
-						<div class="detail-label">상세 내용</div>
-						<div class="detail-value">${dto.reasonDetail}</div>
-					</div>
-					<div class="detail-row">
-						<div class="detail-label">처리 상태</div>
-						<div class="detail-value">
-							<span class="status pending">${dto.status}</span>
-						</div>
-					</div>
-					<div class="detail-row">
-						<div class="detail-label">신고일</div>
-						<div class="detail-value">${dto.createdAt}</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="actions">
-				<a href="${pageContext.request.contextPath}/report/user/mylist.do" class="btn btn-white">목록</a>
-				<a href="${pageContext.request.contextPath}/meetup/user/#" class="btn btn-soft-blue">해당 글 보기</a>
-				<a href="${pageContext.request.contextPath}/report/user/update.do?reportId=${dto.reportId}" class="btn btn-blue">수정</a>
-				<button type="button" class="btn btn-red" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr>
+							<th>신고번호</th>
+							<th>대상</th>
+							<th>대상ID</th>
+							<th>신고자</th>
+							<th>사유</th>
+							<th>상태</th>
+							<th>신고일</th>
+							<th>상세</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<c:forEach var="dto" items="${list}">
+							<tr data-target="${dto.targetType}">
+								<td>${dto.reportId}</td>
+								<td>${dto.targetType}</td>
+								<td>${dto.targetId}</td>
+								<td>${dto.memberId}</td>
+								<td>${dto.reasonCode}</td>
+								<td><c:choose>
+										<c:when test="${dto.status == 'PENDING'}">
+											<span class="status pending">PENDING</span>
+										</c:when>
+										<c:otherwise>
+											<span class="status approved">${dto.status}</span>
+										</c:otherwise>
+									</c:choose></td>
+								<td>${dto.createdAt}</td>
+								<td><a class="link"
+									href="${pageContext.request.contextPath}/report/admin/adminDetail.do?reportId=${dto.reportId}">
+										보기 </a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+
+					<tfoot>
+						<tr>
+							<td colspan="8">
+								<ul class="pagination justify-content-center">
+									<!-- 이전 -->
+									<c:if test="${paging.start > paging.bottomlist}">
+										<li><a href="?pstartno=${paging.start - 1}"
+											class="page-btn">이전</a></li>
+									</c:if>
+
+									<!-- 페이지 번호 -->
+									<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
+										<li><a href="?pstartno=${i}"
+											class="page-btn <c:if test='${i == paging.current}'>active</c:if>">
+												${i} </a></li>
+									</c:forEach>
+
+									<!-- 다음 -->
+									<c:if test="${paging.end < paging.pagetotal}">
+										<li><a href="?pstartno=${paging.end + 1}"
+											class="page-btn">다음</a></li>
+									</c:if>
+								</ul>
+							</td>
+						</tr>
+					</tfoot>
+
+
+
+
+				</table>
 			</div>
 		</section>
 
-
-
-		<!-- 삭제 확인 모달 -->
-		<div class="modal fade" id="deleteModal" tabindex="-1"
-			aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content delete-modal-box">
-
-					<div class="modal-body delete-modal-body">
-
-						<div class="delete-modal-icon">!</div>
-
-						<h2 class="delete-modal-title">삭제하시겠습니까?</h2>
-
-						<p class="delete-modal-text">
-							선택한 신고 내역이 삭제 처리됩니다.<br> 삭제 후에는 목록에서 보이지 않습니다.
-						</p>
-
-						<form action="${pageContext.request.contextPath}/report/user/delete.do" method="post">
-
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<input type="hidden" name="reportId" value="${dto.reportId}" />
-
-							<div class="delete-modal-actions">
-								<button type="button" class="btn btn-white" data-bs-dismiss="modal">취소</button>
-								<button type="submit" class="btn btn-red-fill">삭제</button>
-							</div>
-
-						</form>
-
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-
+<script>
+function filterRows(type){
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('tbody tr').forEach(row => {
+    row.style.display = (type === 'ALL' || row.dataset.target === type) ? '' : 'none';
+  });
+}
+</script>
 
 	</div>
 </body>
-</html>
 
-<!-- 	footer		 -->
-<!-- 	footer		 -->
-<%@ include file="../../inc/userFooter.jsp" %>
+
+<!--	footer	-->
+<!--	footer	-->
+<jsp:include page="../../inc/userFooter.jsp" />

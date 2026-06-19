@@ -1,16 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Moit 신고하기</title>
-	<!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="./css/board.css" rel="stylesheet">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ include file="../../inc/userHeader.jsp" %>
+<!-- 	header		 -->
+<!-- 	header		 -->
+
+
 <style>
 * {
 	box-sizing: border-box;
@@ -317,39 +313,29 @@ textarea:focus {
 
 <body>
 	<main class="page">
-		<header class="topbar">
-			<div class="brand">
-				<div class="logo">Moit</div>
-				<nav class="nav">
-					<a href="#">홈</a> <a href="#">모임찾기</a> <a href="#">내 모임</a>
-				</nav>
-			</div>
-			<div class="icons">⌕ 🔔 👤</div>
-		</header>
-
+		
 		<section class="hero">
 			<div>
 				<h1>신고 작성</h1>
-				<p class="subtitle">신고 대상과 사유를 입력하여 신고를 등록하는 화면</p>
+				<p class="subtitle">신고 대상과 사유를 입력해주세요.</p>
 			</div>
-			<div class="url-chip">/report/write?target_type=MEETUP&amp;target_id=1</div>
 		</section>
 
 		<section class="layout">
-			<form class="card form-card" action="/report/write" method="post">
+			<form class="card form-card" action="${pageContext.request.contextPath}/report/user/write.do" method="post">
 				<div class="card-title">
 					<span class="step">3</span>
 					<h2>신고하기</h2>
 				</div>
 
-				<div class="target-row">
-					<span class="pill">target_type: MEETUP</span>
-					<span class="pill">target_id:1</span>
-					<span class="note">* REVIEW도 동일 구조로 사용</span>
-				</div>
-
-				<input type="hidden" name="targetType" value="MEETUP" />
-				<input type="hidden" name="targetId" value="1" />
+<!-- 			<div class="target-row">
+					<span class="pill">target_type: ${dto.targetType}</span>
+					<span class="pill">target_id: ${dto.targetId}</span>
+				</div>   -->
+				
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<input type="hidden" name="targetType" value="${dto.targetType}" />
+				<input type="hidden" name="targetId" value="${dto.targetId}" />
 
 				<div class="field">
 					<label class="label">신고 사유
@@ -392,13 +378,17 @@ textarea:focus {
 		</section>
 	</main>
 
-	<script>
-		const reasonDetail = document.getElementById('reasonDetail');
-		const detailCount = document.getElementById('detailCount');
+<script>
+	const reasonDetail = document.getElementById('reasonDetail');
+	const detailCount = document.getElementById('detailCount');
 
-		reasonDetail.addEventListener('input', function() {
-			detailCount.textContent = reasonDetail.value.length;
-		});
-	</script>
+	reasonDetail.addEventListener('input', function() {
+		detailCount.textContent = reasonDetail.value.length;
+	});
+</script>
 </body>
 </html>
+
+<!-- 	footer		 -->
+<!-- 	footer		 -->
+<%@ include file="../../inc/userFooter.jsp" %>
