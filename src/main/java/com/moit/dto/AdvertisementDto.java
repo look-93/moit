@@ -3,34 +3,44 @@ package com.moit.dto;
 import java.time.LocalDateTime;
 
 public class AdvertisementDto {
-	private int adId;                // ±¤°í¹øÈ£
+	private int adId;                    // ê´‘ê³  ID
 
-	private String title;            // ±¤°íÁ¦¸ñ
-	private String adName;           // ±¤°íÁÖ¸í
-	private String content;          // ±¤°í³»¿ë
+    private String title;                // ê´‘ê³  ì œëª©
+    private String content;              // ê´‘ê³  ë‚´ìš©
+    private String imageUrl;             // ì´ë¯¸ì§€ ê²½ë¡œ
+    private String landingUrl;           // í´ë¦­ ì‹œ ì´ë™ URL
 
-	private String landingUrl;       // Å¬¸¯ ½Ã ÀÌµ¿ÇÒ ¿ÜºÎ¸µÅ©
+    private String adType;              // BANNER / POPUP / VIDEO
+    private String position;            // ë…¸ì¶œ ìœ„ì¹˜
 
-	private String adType;           // BANNER / POPUP / VIDEO
+    // íƒ€ê²ŸíŒ… (ì„ íƒ ê¸°ëŠ¥)
+    private Integer targetAgeMin;
+    private Integer targetAgeMax;
+    private String targetGender;
+    private String deviceType;
+    private String adChannel;
 
-	private String position;         // ³ëÃâ À§Ä¡
+    // ê¸°ê°„
+    private String startDatetime;
+    private String endDatetime;
 
-	private LocalDateTime startDatetime; // ½ÃÀÛÀÏ
-	private LocalDateTime endDatetime;   // Á¾·áÀÏ
+    // ìƒíƒœ
+    private String status;
 
-	private String status;           // OPEN / PENDING / CLOSED
+    // í†µê³„
+    private int impressions;
+    private int clicks;
 
-	private int impressions;         // ³ëÃâ¼ö
-	private int clicks;              // Å¬¸¯¼ö
+    // ìš´ì˜
+    private int priority;
+    private Integer totalBudget;
 
-	private int priority;            // ¿ì¼±¼øÀ§
+    // ê´€ê³„
+    private int advertiserId;
+    private int authorId;
 
-	private int totalBudget;  // ¿¹»ê
-
-	private int authorId;            // µî·ÏÀÚ
-
-	private String deleteYn;         // »èÁ¦¿©ºÎ
-
-	private LocalDateTime createdAt; // µî·ÏÀÏ
-	private LocalDateTime updatedAt; // ¼öÁ¤ÀÏ
+    // ì‹œìŠ¤í…œ
+    private String deleteYn;
+    private String createdAt;
+    private String updatedAt;
 }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.moit.dao.AdvertisementMapper">
+
+	<!-- =========================
+        1. 광고 등록
+        INSERT INTO advertisements (...)
+    ========================== -->
+    <insert id="insert">
+        <!-- #{title}, #{content}, #{imageUrl} ... -->
+    </insert>
+
+
+    <!-- =========================
+        2. 광고 수정
+        UPDATE advertisements SET ...
+    ========================== -->
+    <update id="update">
+        <!-- ad_id 기준 수정 -->
+    </update>
+
+
+    <!-- =========================
+        3. 광고 삭제 (논리삭제)
+        delete_yn = 'Y'
+    ========================== -->
+    <update id="delete">
+        <!-- WHERE ad_id = #{adId} -->
+    </update>
+
+
+    <!-- =========================
+        4. 단일 광고 조회
+        SELECT * FROM advertisements WHERE ad_id = ?
+    ========================== -->
+    <select id="select">
+        <!-- resultType: AdvertisementDto -->
+    </select>
+
+
+    <!-- =========================
+        5. 전체 광고 조회
+        SELECT * FROM advertisements
+        ORDER BY ad_id DESC
+    ========================== -->
+    <select id="selectAll">
+    </select>
+
+
+    <!-- =========================
+        6. 활성 광고 조회 (핵심)
+        조건:
+        - delete_yn = 'N'
+        - status = 'OPEN'
+        - start <= now <= end
+        ORDER BY priority DESC
+    ========================== -->
+    <select id="selectActiveAds">
+    </select>
+
+
+    <!-- =========================
+        7. 위치별 광고 조회
+        position (MAIN_TOP / SIDEBAR)
+    ========================== -->
+    <select id="selectByPosition">
+    </select>
+
+
+    <!-- =========================
+        8. 메인 광고 노출
+        priority DESC + RAND() + LIMIT
+    ========================== -->
+    <select id="selectMainAds">
+    </select>
+
+
+    <!-- =========================
+        9. 클릭 수 증가
+        clicks = clicks + 1
+    ========================== -->
+    <update id="updateClicks">
+    </update>
+
+
+    <!-- =========================
+        10. 노출 수 증가
+        impressions = impressions + 1
+    ========================== -->
+    <update id="updateImpressions">
+    </update>
+
+
+    <!-- =========================
+        11. 상태 변경 (관리자 승인)
+        PENDING → OPEN / CLOSED
+    ========================== -->
+    <update id="updateStatus">
+    </update>
+
+
+    <!-- =========================
+        12. 페이징 조회
+        LIMIT / OFFSET
+    ========================== -->
+    <select id="selectPage">
+    </select>
+
+
+    <!-- =========================
+        13. 전체 개수
+        SELECT COUNT(*)
+    ========================== -->
+    <select id="selectCnt">
+    </select>
+
+</mapper>

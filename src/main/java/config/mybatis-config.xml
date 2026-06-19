@@ -8,8 +8,8 @@
    </settings>
    <typeAliases>
       <typeAlias type="com.moit.dto.AuthDto" alias="AuthDto" />
-      <typeAlias type="com.moit.dto.AuthUserDto"
-         alias="AuthUserDto" />
+      <typeAlias type="com.moit.dto.AuthUserDto" alias="AuthUserDto" />
       <typeAlias type="com.moit.dto.UserDto" alias="UserDto" />
+      <typeAlias type="com.moit.dto.AdvertisementDto" alias="AdvertisementDto" />
    </typeAliases>
 </configuration>
