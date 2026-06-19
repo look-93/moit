@@ -27,7 +27,7 @@ public interface QuestionMapper {
     void deleteQuestion(int questionId);
     
     // 제목, 내용, 등록일로 검색
-    QuestionDto findBySearch(QuestionDto dto);
+    List<QuestionDto> findBySearch(QuestionDto dto);
     
     // 전체 문의 수
     int findAllCnt();

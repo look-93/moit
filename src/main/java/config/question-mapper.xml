@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moit.dao.QuestionMapper">
 
+	<!-- 페이징 -->
 	<select id="findAll" resultType="QuestionDto"
 		parameterType="java.util.HashMap">
 		SELECT * FROM questions ORDER BY question_id DESC limit #{start} , #{end}
@@ -38,10 +39,12 @@
 	      AND delete_yn = 'N'
 	</select>
 
+	<!-- 상세보기 -->
 	<select id="findById" resultType="QuestionDto">
 		SELECT * FROM questions WHERE question_id = #{questionId}
 	</select>
 
+	<!-- 제목, 내용, 등록일 검색 -->
 	<select id="findBySearch" resultType="QuestionDto">
 		SELECT
 		question_id, parent_id, member_id, category, title, content, status,
@@ -56,13 +59,13 @@
 				AND content LIKE CONCAT('%', #{content}, '%')
 			</if>
 			<if test="createdAt != null">
-				AND created_at = #{createdAt} 
+				AND DATE(created_at) = DATE(#{createdAt}) 
 			</if>
 		</where>
 		ORDER BY created_at DESC
 	</select>
 
-
+	<!-- 문의글 작성 -->
 	<insert id="insertQuestion">
 		INSERT INTO questions
 		(parent_id, member_id, category, title, content, is_public, delete_yn)

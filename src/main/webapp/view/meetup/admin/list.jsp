@@ -1,315 +1,690 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOIT °ü¸®ÀÚ - Çà»ç°ü¸®</title>
-
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../../inc/userHeader.jsp" %>
 
 <style>
-body {
-	background: #f4f7fc;
+
+
+:root{
+    --c1:#B6FFFA;
+    --c2:#98E4FF;
+    --c3:#80B3FF;
+    --c4:#687EFF;
+
+    --bg:#f7faff;
+    --white:#fff;
+    --text:#222;
+    --gray:#777;
+
+    --shadow:0 5px 15px rgba(0,0,0,.07);
+    --radius:20px;
 }
 
-.sidebar {
-	min-height: 100vh;
-	background: #fff;
-	border-right: 1px solid #dee2e6;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.logo {
-	font-size: 24px;
-	font-weight: bold;
-	color: #4a7dff;
-	padding: 25px;
-	text-align: center;
-	border-bottom: 1px solid #eee;
+body{
+    background:var(--bg);
+    font-family:sans-serif;
 }
 
-.menu a {
-	display: block;
-	padding: 15px 20px;
-	color: #333;
-	text-decoration: none;
-	font-weight: 500;
+/* container */
+.container{
+    width:1300px;
+    max-width:95%;
+    margin:auto;
 }
 
-.menu a:hover {
-	background: #edf3ff;
+/* ================= HEADER (ìš”ì²­ ë²„ì „) ================= */
+
+header{
+    background:white;
+    height:80px;
+    box-shadow:var(--shadow);
 }
 
-.menu .active {
-	background: #4a7dff;
-	color: white;
+.header-inner{
+    height:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.topbar {
-	background: white;
-	border-radius: 15px;
-	padding: 20px;
-	margin-bottom: 20px;
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:var(--c4);
 }
 
-.card-box {
-	background: white;
-	border-radius: 15px;
-	padding: 20px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, .05);
+nav{
+    display:flex;
+    gap:30px;
 }
 
-.tab-btn {
-	background: white;
-	border: none;
-	padding: 10px 20px;
-	border-radius: 10px;
-	margin-right: 10px;
+nav a{
+    text-decoration:none;
+    color:#333;
 }
 
-.tab-btn.active {
-	background: #4a7dff;
-	color: white;
+.search-top{
+    width:250px;
+    padding:12px;
+    border-radius:30px;
+    border:1px solid #ddd;
 }
 
-.table-box {
-	background: white;
-	border-radius: 15px;
-	padding: 20px;
+.user-box{
+    display:flex;
+    align-items:center;
+    gap:20px;
 }
 
-.stat-number {
-	font-size: 28px;
-	font-weight: bold;
-	color: #4a7dff;
+.alarm{
+    font-size:22px;
 }
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:8px 15px;
+    border-radius:30px;
+    border:1px solid #eee;
+    background:white;
+}
+
+.profile-img{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:var(--c4);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.profile-info{
+    display:flex;
+    flex-direction:column;
+}
+
+.profile-info strong{font-size:14px;}
+.profile-info span{font-size:12px;color:var(--gray);}
+
+/* ================= LAYOUT ================= */
+
+.detail-wrap{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+}
+
+.left-panel{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+/* IMAGE */
+.image-box{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.main-image{
+    height:450px;
+    border-radius:20px;
+    overflow:hidden;
+    background:white;
+}
+
+.thumb-list{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.thumb{
+    flex:1;
+    height:80px;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+/* CONTENT */
+.content-box{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 15px;
+    background:#dfffe4;
+    color:#009933;
+    border-radius:50px;
+    margin-bottom:15px;
+}
+
+.title{
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+.tags{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.tag{
+    background:#eef7ff;
+    color:var(--c4);
+    padding:8px 12px;
+    border-radius:50px;
+}
+
+/* SIDE */
+.side-box{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    margin-bottom:20px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+
+.btn{
+    width:100%;
+    border:none;
+    padding:15px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:var(--c4);
+    color:white;
+}
+
+.btn-outline{
+    margin-top:10px;
+    background:white;
+    border:2px solid var(--c4);
+    color:var(--c4);
+}
+
+/* ================= TABS (ë³µêµ¬ ì™„ë£Œ) ================= */
+
+.tabs{
+    background:white;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+}
+
+.tab-header{
+    display:flex;
+}
+
+.tab-btn{
+    flex:1;
+    padding:20px;
+    text-align:center;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+}
+
+.tab-btn.active{
+    border-color:var(--c4);
+    color:var(--c4);
+    font-weight:bold;
+}
+
+.tab-content{padding:25px;}
+
+.tab-panel{display:none;}
+.tab-panel.active{display:block}
+
+/* REVIEW */
+.rating-box{
+    display:flex;
+    gap:40px;
+    margin-bottom:20px;
+}
+
+.rating-score h1{
+    font-size:60px;
+    color:var(--c4);
+}
+
+.stars{color:gold}
+
+.bar-line{
+    width:200px;
+    height:8px;
+    background:#eee;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.bar-fill{
+    height:100%;
+    background:orange;
+}
+
+/* COMMENT */
+.comment{
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.comment-images{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.comment-images img{
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+/* ì¶”ì²œëª¨ì„ */
+.recommend-card{
+    display:flex;
+    gap:10px;
+    margin-bottom:12px;
+}
+
+.recommend-card img{
+    width:60px;
+    height:60px;
+    border-radius:10px;
+    object-fit:cover;
+}
+
+.recommend-title{
+    font-size:12px;
+    font-weight:bold;
+}
+
+.recommend-tag{
+    font-size:10px;
+    color:#666;
+}
+
+.report-btn{
+    border:none;
+    background:#ffeded;
+    color:#e53935;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:600;
+}
+
+.report-btn:hover{
+    background:#ffd6d6;
+}
+
+.content-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:15px;
+}
+
+.comment-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:5px;
+}
+
+.meetup-inquiry-btn{
+    width:100%;
+    margin-top:12px;
+    border:none;
+    background:var(--c2);
+    color:#222;
+    padding:12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+/* SIDEBAR AD */
+
+.sidebar-ad{
+    margin-top:25px;
+    min-height:450px;
+
+    background:linear-gradient(
+        180deg,
+        var(--c4),
+        var(--c3)
+    );
+
+    border-radius:20px;
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+    color:white;
+
+    box-shadow:var(--shadow);
+}
+
+.sidebar-ad .ad-tag{
+    background:rgba(255,255,255,.2);
+    padding:5px 12px;
+    border-radius:20px;
+    margin-bottom:15px;
+    font-size:12px;
+}
+
+.sidebar-ad h3{
+    font-size:24px;
+    margin-bottom:15px;
+    line-height:1.4;
+}
+
+.sidebar-ad p{
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+.sidebar-ad a{
+    background:white;
+    color:var(--c4);
+
+    text-decoration:none;
+
+    padding:12px 20px;
+    border-radius:12px;
+
+    font-weight:bold;
+}
+
+
 </style>
 
-</head>
-<body>
 
-	<div class="container-fluid">
 
-		<div class="row">
+<div class="container">
 
-		<%@include file="../../inc/sidebar.jsp"  %>
-		
-			<!-- ¸ŞÀÎ -->
-			<div class="col-md-10 p-4">
+<div class="detail-wrap">
 
-				<!-- »ó´Ü -->
-				<div
-					class="topbar d-flex justify-content-between align-items-center">
-					<h3>Çà»ç°ü¸®</h3>
+<!-- LEFT -->
+<div class="left-panel">
 
-					<div>°ü¸®ÀÚ´Ô</div>
-				</div>
+    <div class="image-box">
 
-				<!-- Åë°è -->
-				<div class="row mb-4">
+        <div class="main-image">
+            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=900&q=80"
+                 style="width:100%;height:100%;object-fit:cover;">
+        </div>
 
-					<div class="col-md-3">
-						<div class="card-box">
-							<h6>ÀüÃ¼ Çà»ç</h6>
-							<div class="stat-number">25</div>
-						</div>
-					</div>
+        <div class="thumb-list">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
+        </div>
 
-					<div class="col-md-3">
-						<div class="card-box">
-							<h6>¸ğÁıÁß</h6>
-							<div class="stat-number">8</div>
-						</div>
-					</div>
+    </div>
 
-					<div class="col-md-3">
-						<div class="card-box">
-							<h6>ÁøÇà¿¹Á¤</h6>
-							<div class="stat-number">10</div>
-						</div>
-					</div>
+    <div class="content-box">
+        <div class="content-top">
+            <div class="badge">ëª¨ì§‘ì¤‘</div>
+            <button class="report-btn">ğŸš¨ ëª¨ì„ ì‹ ê³ </button>
+        </div>
+        <h1 class="title">ë“±ì‚° ì¢‹ì•„í•˜ëŠ” ì‚¬ëŒ ëª¨ì—¬ë¼!</h1>
 
-					<div class="col-md-3">
-						<div class="card-box">
-							<h6>Á¾·áÇà»ç</h6>
-							<div class="stat-number">7</div>
-						</div>
-					</div>
+        <div class="tags">
+            <div class="tag">ìš´ë™</div>
+            <div class="tag">ë“±ì‚°</div>
+            <div class="tag">ì„œìš¸</div>
+        </div>
 
-				</div>
+        <div class="description">
+            ì£¼ë§ë§ˆë‹¤ í•¨ê»˜ ë“±ì‚°í•  ë¶„ë“¤ì„ ëª¨ì§‘í•©ë‹ˆë‹¤.
+        </div>
+    </div>
 
-				<!-- ÅÇ -->
-				<div class="mb-4">
-					<button class="tab-btn active">Çà»ç¸ñ·Ï</button>
-					<button class="tab-btn">Çà»çµî·Ï</button>
-					<button class="tab-btn">½ÅÃ»ÀÚ¸ñ·Ï</button>
-				</div>
+    <!-- âœ… TABS ë³µêµ¬ -->
+    <div class="tabs">
 
-				<!-- °Ë»ö -->
-				<div class="table-box mb-4">
+        <div class="tab-header">
+            <div class="tab-btn active" onclick="showTab(0)">ìƒì„¸ì •ë³´</div>
+            <div class="tab-btn" onclick="showTab(1)">ì‹ ì²­ì</div>
+            <div class="tab-btn" onclick="showTab(2)">í›„ê¸°</div>
+            <div class="tab-btn" onclick="showTab(3)">Q&A</div>
+        </div>
 
-					<div class="row">
+        <div class="tab-content">
 
-						<div class="col-md-4">
-							<input type="text" class="form-control" placeholder="Çà»ç¸í °Ë»ö">
-						</div>
+            <div class="tab-panel active">
+                <h3>ëª¨ì„ ì•ˆë‚´</h3>
+                <p>âœ” í† ìš”ì¼ 9ì‹œ</p>
+            </div>
 
-						<div class="col-md-3">
-							<select class="form-select">
-								<option>ÀüÃ¼</option>
-								<option>¸ğÁıÁß</option>
-								<option>ÁøÇà¿¹Á¤</option>
-								<option>Á¾·á</option>
-							</select>
-						</div>
+            <div class="tab-panel">
+                <p>í™ê¸¸ë™ ì™¸ 7ëª…</p>
+            </div>
 
-						<div class="col-md-2">
-							<button class="btn btn-primary">°Ë»ö</button>
-						</div>
+            <div class="tab-panel">
 
-					</div>
+                <div class="rating-box">
+                    <div class="rating-score">
+                        <h1>4.8</h1>
+                        <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
+                        <p>ì´ í›„ê¸° 12ê°œ</p>
+                    </div>
 
-				</div>
+                    <div>
+                        <div class="bar">
+                            <span>5ì </span>
+                            <div class="bar-line">
+                                <div class="bar-fill" style="width:80%"></div>
+                            </div>
+                            <span>10</span>
+                        </div>
 
-				<!-- ¹öÆ° -->
-				<div class="mb-3">
-					<button class="btn btn-primary">Çà»çµî·Ï</button>
-					<button class="btn btn-warning">¼öÁ¤</button>
-					<button class="btn btn-danger">»èÁ¦</button>
-				</div>
+                        <div class="bar">
+                            <span>4ì </span>
+                            <div class="bar-line">
+                                <div class="bar-fill" style="width:20%"></div>
+                            </div>
+                            <span>2</span>
+                        </div>
 
-				<!-- Çà»ç¸ñ·Ï -->
-				<div class="table-box">
+                        <div class="bar">
+                            <span>3ì </span>
+                            <div class="bar-line">
+                                <div class="bar-fill" style="width:0%"></div>
+                            </div>
+                            <span>0</span>
+                        </div>
+                    </div>
+                </div>
 
-					<table class="table table-hover">
+                <!-- COMMENTS -->
+                <div class="comment">
+                    <div class="comment-top">
+                        <div>
+                            <div class="comment-name">ê¹€ëª¨ì‡</div>
+                            <div class="comment-date">2026.06.15</div>
+                        </div>
 
-						<thead class="table-light">
-							<tr>
-								<th>¹øÈ£</th>
-								<th>Çà»ç¸í</th>
-								<th>Çà»çÀÏ</th>
-								<th>½ÅÃ»±â°£</th>
-								<th>¸ğÁıÀÎ¿ø</th>
-								<th>½ÅÃ»ÇöÈ²</th>
-								<th>°ü¸®</th>
-							</tr>
-						</thead>
+                        <button class="report-btn">ì‹ ê³ </button>
+                    </div>
 
-						<tbody>
+                    <div class="comment-images">
+                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
+                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
+                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
+                    </div>
 
-							<tr>
-								<td>1</td>
-								<td>È¯°æÁ¤È­ Ä·ÆäÀÎ</td>
-								<td>2026-07-01</td>
-								<td>06-01 ~ 06-25</td>
-								<td>50¸í</td>
-								<td>32¸í ½ÅÃ»</td>
-								<td>
-									<button class="btn btn-sm btn-outline-primary"
-										data-bs-toggle="modal" data-bs-target="#applicantModal">
-										½ÅÃ»ÀÚ¸ñ·Ï</button>
-								</td>
-							</tr>
+                    <p>ë¶„ìœ„ê¸° ë„ˆë¬´ ì¢‹ì•˜ì–´ìš”!</p>
+                </div>
 
-							<tr>
-								<td>2</td>
-								<td>ÇÃ·Î±ë Çà»ç</td>
-								<td>2026-07-15</td>
-								<td>06-10 ~ 07-10</td>
-								<td>30¸í</td>
-								<td>15¸í ½ÅÃ»</td>
-								<td>
-									<button class="btn btn-sm btn-outline-primary">½ÅÃ»ÀÚ¸ñ·Ï</button>
-								</td>
-							</tr>
+                <div class="comment">
+                    <div class="comment-top">
+                        <div>
+                            <div class="comment-name">ì´ëª¨ì„</div>
+                            <div class="comment-date">2026.06.12</div>
+                        </div>
 
-						</tbody>
+                        <button class="report-btn">ì‹ ê³ </button>
+                    </div>
+                    <p>ì´ˆë³´ë„ ë¶€ë‹´ ì—†ì´ ì°¸ì—¬ ê°€ëŠ¥</p>
+                </div>
 
-					</table>
+            </div>
 
-					<nav>
-						<ul class="pagination justify-content-center">
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-						</ul>
-					</nav>
+            <div class="tab-panel">
 
-				</div>
+                <h3>Q&A</h3>
 
-			</div>
+                <div class="comment">
+                    <div class="comment-name">ìµëª…</div>
+                    <div class="comment-date">2026.06.18</div>
+                    <p>ì´ˆë³´ì¸ë° ì°¸ì—¬ ê°€ëŠ¥í• ê¹Œìš”?</p>
+                </div>
 
-		</div>
+                <div class="comment">
+                    <div class="comment-name">ì‘ì„±ì</div>
+                    <div class="comment-date">2026.06.18</div>
+                    <p>ë„¤ ì´ˆë³´ë„ í™˜ì˜ì…ë‹ˆë‹¤!</p>
+                </div>
 
-	</div>
+            </div>
 
-	<!-- ½ÅÃ»ÀÚ¸ñ·Ï ¸ğ´Ş -->
-	<div class="modal fade" id="applicantModal">
+        </div>
 
-		<div class="modal-dialog modal-xl">
+    </div>
 
-			<div class="modal-content">
+</div>
 
-				<div class="modal-header">
-					<h5>Çà»ç ½ÅÃ»ÀÚ ¸ñ·Ï</h5>
-					<button class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
+<!-- RIGHT -->
+<div>
 
-				<div class="modal-body">
+    <div class="side-box">
+        <h3>ëª¨ì§‘ ì •ë³´</h3>
+        <div class="info-row"><span>ì¸ì›</span><span>8/10</span></div>
+        <div class="info-row"><span>ì§€ì—­</span><span>ì„œìš¸</span></div>
 
-					<table class="table">
+        <button class="btn btn-primary">ì‹ ì²­í•˜ê¸°</button>
+        <button class="btn btn-outline">â™¡ ê´€ì‹¬</button>
+    </div>
 
-						<thead>
-							<tr>
-								<th>È¸¿ø¸í</th>
-								<th>½ÅÃ»ÀÏ</th>
-								<th>Ã·ºÎÆÄÀÏ</th>
-								<th>»óÅÂ</th>
-								<th>Ã³¸®</th>
-							</tr>
-						</thead>
+    <div class="side-box">
+        <h3>ì‘ì„±ì</h3>
+        <p>í™ê¸¸ë™</p>
 
-						<tbody>
+        <button class="meetup-inquiry-btn">
+            ğŸ’¬ ëª¨ì„ê¸€ ë¬¸ì˜í•˜ê¸°
+        </button>
+    </div>
 
-							<tr>
-								<td>È«±æµ¿</td>
-								<td>2026-06-12</td>
-								<td>
-									<button class="btn btn-sm btn-secondary">´Ù¿î·Îµå</button>
-								</td>
-								<td>´ë±â</td>
-								<td>
-									<button class="btn btn-success btn-sm">½ÂÀÎ</button>
-									<button class="btn btn-danger btn-sm">°ÅÀı</button>
-								</td>
-							</tr>
+    <!-- âœ… ì¶”ì²œëª¨ì„ ë³µêµ¬ -->
+    <div class="side-box">
+        <h3>ì¶”ì²œ ëª¨ì„</h3>
 
-							<tr>
-								<td>±èÃ¶¼ö</td>
-								<td>2026-06-11</td>
-								<td>
-									<button class="btn btn-sm btn-secondary">´Ù¿î·Îµå</button>
-								</td>
-								<td>½ÂÀÎ</td>
-								<td>-</td>
-							</tr>
+        <div class="recommend-card">
+            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b">
+            <div>
+                <div class="recommend-title">ë¶í•œì‚° ë“±ì‚°</div>
+                <div class="recommend-tag">ì„œìš¸</div>
+            </div>
+        </div>
 
-						</tbody>
+        <div class="recommend-card">
+            <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6">
+            <div>
+                <div class="recommend-title">íŠ¸ë ˆí‚¹</div>
+                <div class="recommend-tag">ê²½ê¸°</div>
+            </div>
+        </div>
 
-					</table>
+    </div>
 
-				</div>
+    <div class="sidebar-ad">
 
-			</div>
+        <div class="ad-tag">
+            ADVERTISEMENT
+        </div>
 
-		</div>
+        <h3>
+            í”„ë¦¬ë¯¸ì—„<br>
+            ëª¨ì„ í™ë³´
+        </h3>
 
-	</div>
+        <p>
+            ë‚´ ëª¨ì„ì„ ë©”ì¸ í™”ë©´ì—<br>
+            ë…¸ì¶œí•´ ë³´ì„¸ìš”
+        </p>
 
-</body>
-</html>
+        <a href="#">
+            ê´‘ê³  ì‹ ì²­
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+function showTab(i){
+    const tabs=document.querySelectorAll(".tab-btn");
+    const panels=document.querySelectorAll(".tab-panel");
+
+    tabs.forEach(t=>t.classList.remove("active"));
+    panels.forEach(p=>p.classList.remove("active"));
+
+    tabs[i].classList.add("active");
+    panels[i].classList.add("active");
+}
+</script>
+
+
+
+<script>
+function showTab(i){
+    const tabs=document.querySelectorAll(".tab-btn");
+    const panels=document.querySelectorAll(".tab-panel");
+    tabs.forEach(t=>t.classList.remove("active"));
+    panels.forEach(p=>p.classList.remove("active"));
+    tabs[i].classList.add("active");
+    panels[i].classList.add("active");
+}
+</script>
+
+<%@ include file="../../inc/userFooter.jsp" %>

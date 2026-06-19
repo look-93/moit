@@ -29,15 +29,45 @@ public class UserTest {
 	@Autowired   SqlSession         sqlSession;
 	@Autowired   QuestionMapper     question;
 	
+	@Ignore @Test
+	public void findTodayCnt() {
+	    int count = question.findTodayCnt();
+	    System.out.println( "오늘 등록 문의 수 : " + count );
+	}
 	
 	@Ignore @Test
+	public void findAnsweredCnt() {
+	    int count = question.findAnsweredCnt();
+	    System.out.println( "답변 완료 수 : " + count );
+	}
+	
+	@Ignore @Test
+	public void findPendingCnt() {
+	    int count = question.findPendingCnt();
+	    System.out.println( "답변 대기 수 : " + count );
+	}
+	
+	@Ignore @Test
+	public void findAllCnt() {
+	    int count = question.findAllCnt();
+	    System.out.println( "전체 문의 수 : " + count );
+	}
+	
+	@Ignore @Test // 등록일 검색
+	public void findBySearchDate() {
+	    QuestionDto dto = new QuestionDto();
+	    dto.setCreatedAt( java.sql.Timestamp.valueOf( "2026-06-18 00:00:00") );
+	    System.out.println( question.findBySearch(dto) );
+	}
+	
+	@Ignore @Test // 내용 검색
 	public void findBySearchContent() {
 	    QuestionDto dto = new QuestionDto();
 	    dto.setContent("내용");
 	    System.out.println( question.findBySearch(dto) );
 	}
 	
-	@Ignore @Test // 제목으로 검색
+	@Ignore @Test // 제목 검색
 	public void findBySearchTitle() {
 	    QuestionDto dto = new QuestionDto();
 	    dto.setTitle("제목");
