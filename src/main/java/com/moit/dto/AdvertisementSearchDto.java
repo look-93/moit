@@ -5,17 +5,19 @@ import lombok.Data;
 @Data
 public class AdvertisementSearchDto {
 
-	// °Ë»öÁ¶°Ç
-	private String searchType;   // title, status µî
-	private String searchText;   // °Ë»ö¾î
+	// ê²€ìƒ‰ì–´ (ì œëª© ê²€ìƒ‰)
+	private String searchText;
 
-	// »óÅÂ
+	// ìƒíƒœ
 	private String status;       // OPEN, PENDING, CLOSED
 
-	// ÆäÀÌÂ¡
-	private int start;
-	private int end;
+	// í˜ì´ì§• 
+    private int page;
+    private int size;
 
-	// Á¤·Ä
-	private String orderType;    // latest, priority µî
+    // ê³„ì‚°ê°’
+    private int offset;
+
+	// ì •ë ¬
+	//private String orderType;    // latest, priority
 }

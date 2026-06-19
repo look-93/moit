@@ -1,7 +1,8 @@
 package com.moit.dto;
 
-import java.time.LocalDateTime;
+import lombok.Data;
 
+@Data
 public class AdvertisementDto {
 	private int adId;                    // 광고 ID
 
