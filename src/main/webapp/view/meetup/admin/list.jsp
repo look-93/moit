@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOIT 관리자 - 행사관리</title>
+<title>MOIT 관리자 - 모집관리</title>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -227,7 +227,7 @@ body {
 								varStatus="status">
 								<tr>
 									<td>${paging.listtotal - paging.pstartno - status.index}</td>
-									<td>${serchList.memberId}</td> <!-- 모집자명으로 수정! -->
+									<td>${serchList.nickname}</td> <!-- 모집자명으로 수정! -->
 									<td>${serchList.title}</td>
 									<td>${serchList.meetupAt}</td>
 									<td>${serchList.minParticipants }</td>

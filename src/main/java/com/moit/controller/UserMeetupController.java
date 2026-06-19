@@ -17,12 +17,25 @@ public class UserMeetupController {
 	
 	@RequestMapping("/list.do")
 	public String serchByUser(Model model, MeetupSerchDto meetupSerchDto, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
+		//System.out.println(meetupSerchDto);
 		model.addAttribute("menu", "meetup");
 		model.addAttribute("sidoList", userMeetupService.findAllSido());
 		model.addAttribute("paging", new PagingUtil(userMeetupService.selectUserMeetupTotalCnt(meetupSerchDto), pstartno));
-		model.addAttribute("serchList", userMeetupService.serchByUser(pstartno,meetupSerchDto));		
+		model.addAttribute("serchList", userMeetupService.serchByUser(pstartno,meetupSerchDto));	
 		return "meetup/user/list";
 	}
 	
+//	@RequestMapping("/write.do")
+//	public String write() {
+//		return "meetup/user/write";
+//	}
 	
+	@RequestMapping("/detail.do")
+	public String write(Model model, int meetupId) {
+		model.addAttribute("detailList", userMeetupService.selectMeetupDetail(meetupId));
+		return "meetup/user/detail";
+	}
+	
+
+		
 }

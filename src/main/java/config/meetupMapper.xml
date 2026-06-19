@@ -2,11 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moit.dao.MeetupMapper"> 	
 	
-  	<!-- admin 모집 검색조건조회(모집중, 모집마감, 취소/모집명,모집자명)+paging -->
+  	<!-- admin 모집 검색조건조회(모집중, 모집마감, 취소/모집명,모집자명)+paging admin/list-->
  	<select id="serchByAdmin" resultType="MeetupDto" parameterType="MeetupSerchDto">
 		SELECT A.*,
-		      (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = a.meetup_id AND status = 'APPROVED' AND A.delete_yn = 'n') AS total_participants
+		      (SELECT COUNT(*) 
+		         FROM meetup_applications 
+		        WHERE meetup_id = a.meetup_id 
+		          AND status = 'APPROVED' 
+		          AND A.delete_yn = 'n'
+		      ) AS total_participants,
+		      B.nickname
 		  FROM meetups AS A
+		  LEFT OUTER JOIN members AS B ON B.member_id = A.member_id
 		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
            AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		<if test="status != null and status != ''">
@@ -15,9 +22,9 @@
         <if test="searchType == 'title' and searchText != ''">
            AND A.title LIKE CONCAT('%', #{searchText}, '%')
         </if>
-<!--         <if test="searchType == 'name' and searchText != ''">
-           AND A.member_name LIKE CONCAT('%', #{searchText}, '%')
-        </if>  member join 후 사용-->
+		<if test="searchType == 'name' and searchText != ''">
+           AND B.nickname LIKE CONCAT('%', #{searchText}, '%')
+        </if>
         
 		 ORDER BY A.created_at DESC
 		 LIMIT #{start}, ${end}		 
@@ -25,43 +32,56 @@
  	<select id="selectMeetupTotalCnt" resultType="int" parameterType="MeetupSerchDto">
 		SELECT COUNT(*) 
 		  FROM meetups  AS A
-
+		  LEFT OUTER JOIN members AS B ON B.member_id = A.member_id
 		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
            AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		<if test="status != null and status != ''">
            AND A.status = #{status}
-        </if>       
-       
+        </if>      
         <if test="searchType == 'title' and searchText != ''">
            AND A.title LIKE CONCAT('%', #{searchText}, '%')
         </if>
-        <!--         <if test="searchType == 'name' and searchText != ''">
-           AND A.member_name LIKE CONCAT('%', #{searchText}, '%')
-        </if> -->
+        <if test="searchType == 'name' and searchText != ''">
+           AND B.nickname LIKE CONCAT('%', #{searchText}, '%')
+        </if>
 		 ORDER BY A.created_at DESC
  	</select>
  	
-   	<!-- user 모집 검색조건조회(지역/최신순,인기순,마감임박순)+paging -->
+   	<!-- user 모집 검색조건조회(지역/최신순,인기순,마감임박순)+paging / user/list-->
  	<select id="serchByUser" resultType="MeetupDto" parameterType="MeetupSerchDto">
 	SELECT A.*,
-		   E.image_path,
 		   C.name as sido_name,
 		   B.name as sigungu_name,
-		   (SELECT COUNT(*) FROM meetup_applications WHERE meetup_id = A.meetup_id) AS participant,
-		   DATE_FORMAT(meetup_At, '%Y.%m.%d') as fomatMeetupAt
-		   <!-- 좋아요 수 -->
+		   
+		   (SELECT COUNT(*) 
+		      FROM meetup_applications 
+		     WHERE meetup_id = A.meetup_id
+		   ) AS participant,
+		   
+		   DATE_FORMAT(meetup_At, '%Y.%m.%d') as fomatMeetupAt,
+		   
+		   (SELECT E.image_path 
+			  FROM images  		   AS E
+			  JOIN meetup_images   AS F ON E.image_id = F.image_id
+			 WHERE F.meetup_id = A.meetup_id
+			 ORDER BY E.image_id ASC
+			 LIMIT 1
+		   ) AS image_path		   
+		   
+		   <!-- 좋아요 수 추가-->
 	  FROM meetups AS A
       LEFT OUTER JOIN sigungus AS B ON B.sigungu_id = A.sigungu_id
-      LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id
-      LEFT OUTER JOIN meetup_images  AS D ON D.meetup_id  = A.meetup_id 
-      LEFT OUTER JOIN images  AS E ON E.image_id  = D.image_id       
+      LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id     
 	 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
        AND A.status != 'DELETED' <!-- 삭제 제외 -->
 	 <if test="sidoId != null and sidoId != 0">
           AND C.sido_id = #{sidoId}
      </if>  
+     <if test="searchText != null and searchText != ''">
+           AND A.title LIKE CONCAT('%', #{searchText}, '%')
+     </if>
 	 ORDER BY
-	<choose> <!--  -->
+	<choose>
 		<when test="orderType == 'createAt' and orderType != ''"> 
 			A.created_at ASC
 		</when>
@@ -80,19 +100,19 @@
 	</choose>
 		 LIMIT #{start}, ${end}
  	</select>	
- 	
   	<select id="selectUserMeetupTotalCnt" resultType="int" parameterType="MeetupSerchDto">
 		SELECT COUNT(*)
 		  FROM meetups AS A
 	      LEFT OUTER JOIN sigungus AS B ON B.sigungu_id = A.sigungu_id
-	      LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id
-	      LEFT OUTER JOIN meetup_images  AS D ON D.meetup_id  = A.meetup_id 
-	      LEFT OUTER JOIN images  AS E ON E.image_id  = D.image_id       
+	      LEFT OUTER JOIN sidos AS C ON C.sido_id = B.sido_id    
 		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
 	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		 <if test="sidoId != null and sidoId != 0">
 	          AND C.sido_id = #{sidoId}
 	     </if>  
+	     <if test="searchText != null and searchText != ''">
+	           AND A.title LIKE CONCAT('%', #{searchText}, '%')
+	     </if>
 		 ORDER BY
 		<choose> <!--  -->
 			<when test="orderType == 'createAt' and orderType != ''"> 
@@ -114,14 +134,30 @@
  	</select>	
  			
   	
-  	<!-- 모집 상세조회 -->
- 	<select id="meetupDetail" resultType="MeetupDto"> 
- 		SELECT A.*, C.image_path 
- 		  FROM meetups AS A
-		  JOIN meetup_images  AS B ON B.meetup_id  = A.meetup_id 
-          JOIN images  AS C ON C.image_id  = B.image_id 
+  	<!-- 모집 상세조회 detail -->
+ 	<select id="selectMeetupDetail" resultType="MeetupDto" parameterType="int"> 
+ 		SELECT A.*, 
+ 		       B.nickname,
+ 		       (SELECT COUNT(*) 
+			      FROM meetup_applications 
+			     WHERE meetup_id = A.meetup_id
+			   ) AS participant,
+			   F.name as sido_name
+ 		       
+ 		  FROM meetups 		AS A
+ 		  JOIN members 	    AS B ON B.member_id = A.member_id
+		  JOIN sigungus 	AS E ON E.sigungu_id = A.sigungu_id
+		  JOIN sidos 		AS F ON F.sido_id = E.sido_id
 		 WHERE A.meetup_id = ${meetup_id}
- 	</select> 
+ 	</select>
+ 	<!-- 모집 이미지 상세조회  detail-->
+ 	<select id="selectMeetupImage" resultType="MeetupImageDto" parameterType="int">
+		SELECT C.image_path 
+		  FROM meetups 			AS A
+		  JOIN meetup_images 	AS B ON B.meetup_id = A.meetup_id
+		  JOIN images    		AS C ON C.image_id = B.image_id
+		 WHERE A.meetup_id = ${meetupId}
+ 	</select>	
  	
  	<!-- 모집 신청 -->
  	<insert id="insertApplication">

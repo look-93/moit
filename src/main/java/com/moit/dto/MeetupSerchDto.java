@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MeetupSerchDto {
-	// °Ë»öÁ¶°Ç
+	// ëª¨ì§‘ ê²€ìƒ‰ ì¡°ê±´ Dto
 	private String searchType;
     private String searchText;
     private String status;
@@ -12,4 +12,5 @@ public class MeetupSerchDto {
     private int end;
    	private int sidoId;
    	private String orderType;
+   	
 }

@@ -36,8 +36,5 @@ public class AdminMeetupServiceImpl implements AdminMeetupService{
 	}	
 	
 	
-	
-	
-	
 
 }

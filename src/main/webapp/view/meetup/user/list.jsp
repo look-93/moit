@@ -19,11 +19,11 @@
     --shadow:0 5px 15px rgba(0,0,0,.07);
 }
 
-*{
+/* *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-}
+} */
 
 body{
     font-family:sans-serif;
@@ -309,7 +309,10 @@ nav{
     border-radius:12px;
     text-decoration:none;
 }
-
+a {
+	text-decoration: none;
+	color:inherit;
+}
 </style>
 
 <div class="container">
@@ -382,9 +385,9 @@ nav{
 			<form action="${pageContext.request.contextPath}/meetup/user/list.do" method="get">		
 	            <div class="filter-box">
 					<!-- 검색 -->
-	                <input type="text" name="searchText" placeholder="모임명 검색">
+	                <input type="text" name="searchText"  class="form-control" placeholder="모임명 검색">
 					<!-- 시도 -->
-	                <select id="sido" name="sido">
+	                <select id="sido" name="sido"  class="form-select">
 	                    <option value="">전체 지역</option>	                    
 	                    <c:forEach var="sido" items="${sidoList}" varStatus="status">
 	                    	<option value="${sido.sidoId}">${sido.name}</option>	                    
@@ -392,56 +395,53 @@ nav{
 
 	                </select>
 	
-	                <select id="orderType" name="orderType">
+	                <select id="orderType" name="orderType"  class="form-select">
 	                    <option value="createAt">최신순</option>
 	                    <option value="like">인기순</option>
 	                    <option value="meetupAt">마감임박순</option>
 	                </select>
 	
-	                <button>검색</button>
+	                <div class="col-md-2">
+						<button type="submit" class="btn btn-primary">검색</button>
+					</div>
 	
 	            </div>
             </form>
+            
 
             <div class="card-grid">
-
-                <!-- CARD -->
-				
+            
+			
+                <!-- CARD -->				
 				<c:forEach var="serchList" items="${serchList}" varStatus="status">
-	                <div class="card">
-	
-	                    <div class="card-img"></div>
-	
-	                    <div class="card-body">
-	
-	                        <span class="badge">
-	                        	<c:choose>
-	                        		<c:when test="${serchList.status eq 'RECRUITING'}" >
-	                        			모집중
-	                        		</c:when>
-	                        		<c:when test="${serchList.status eq 'CLOSED'}" >
-	                        			모집마감
-	                        		</c:when>	                        	
-	                        	</c:choose>
-	                        
-	                            
-	                        </span>
-	
-	                        <h4>${serchList.title}</h4>
-	
-	                        <p>🏃 운동/스포츠</p>  <!-- 수정 카테고리추가 -->
-	                        <p>${serchList.sigunguName}</p>
-	                        <p>👥 ${serchList.participant} / ${serchList.maxParticipants}명</p>
-	
-	                        <div class="card-footer">
-	                            <span>${serchList.fomatMeetupAt}</span>
-	                            <span class="like">❤️ 34</span> <!-- 수정 좋아요 -->
-	                        </div>
-	
-	                    </div>
-	
-	                </div>
-
+					<a href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${serchList.meetupId}" action="get">
+		                <div class="card">		
+		                    <div class="card-img"></div>		
+		                    <div class="card-body">		
+		                        <span class="badge">
+		                        	<c:choose>
+		                        		<c:when test="${serchList.status eq 'RECRUITING'}" >
+		                        			모집중
+		                        		</c:when>
+		                        		<c:when test="${serchList.status eq 'CLOSED'}" >
+		                        			모집마감
+		                        		</c:when>	                        	
+		                        	</c:choose>	                      
+		                        </span>
+		
+		                        <h4>${serchList.title}</h4>
+		
+		                        <p>🏃 운동/스포츠</p>  <!-- 수정 카테고리추가 -->
+		                        <p>${serchList.sigunguName}</p>
+		                        <p>👥 ${serchList.participant} / ${serchList.maxParticipants}명</p>
+		
+		                        <div class="card-footer">
+		                            <span>${serchList.fomatMeetupAt}</span>
+		                            <span class="like">❤️ 34</span> <!-- 수정 좋아요 -->
+		                        </div>		
+		                    </div>		
+		                </div>
+					</a>
 				</c:forEach>
             </div>
 				

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.moit.dao.MeetupMapper;
 import com.moit.dto.MeetupDto;
+import com.moit.dto.MeetupImageDto;
 import com.moit.dto.MeetupSerchDto;
 import com.moit.dto.common.SidoDto;
 
@@ -30,7 +31,16 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 	public int selectUserMeetupTotalCnt(MeetupSerchDto meetupSerchDto) {
 		return meetupMapper.selectUserMeetupTotalCnt(meetupSerchDto);
 	}
+
+	@Override
+	public MeetupDto selectMeetupDetail(int meetupId) {
+		return meetupMapper.selectMeetupDetail(meetupId);
+	}
+
+	@Override
+	public MeetupImageDto selectMeetupImage(int meetupId) {
+		return meetupMapper.selectMeetupImage(meetupId);
+	}
 	
-	
-	
+
 }
