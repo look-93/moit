@@ -199,7 +199,7 @@ textarea{
     <!-- 답변 입력 -->
     <div class="card">
 
-        <div class="card-title">답변 정보 입력s</div>
+        <div class="card-title">답변 정보 입력</div>
 
         <div class="form-group">
             <label>
