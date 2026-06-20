@@ -27,7 +27,7 @@ public interface AdvertisementMapper {
             AdvertisementDto dto);
 
     // 삭제   -  논리삭제
-    public int deleteAdvertisement(int adId);
+    public int deleteAdvertisement(AdvertisementDto dto);
 
     // 상태변경
     public int updateAdvertisementStatus(
@@ -35,6 +35,15 @@ public interface AdvertisementMapper {
 
     // 클릭수 증가
     public int updateAdvertisementClick(int adId);
+    
+    // 통계
+    public int selectTotalAdvertisementCnt();
+
+    public int selectOpenAdvertisementCnt();
+
+    public int selectPendingAdvertisementCnt();
+
+    public int selectClosedAdvertisementCnt();
 
     ///////////////////// 
 
@@ -58,4 +67,5 @@ public interface AdvertisementMapper {
     // 타겟 필터 (연령/성별/디바이스)
     //public List<AdvertisementDto> selectByTarget(HashMap<String, Object> map);
 
+    public AdvertisementDto selectTopAdvertisement();
 }

@@ -47,8 +47,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     // 삭제 (논리삭제)
     @Override
-    public int deleteAdvertisement(int adId) {
-        return advertisementMapper.deleteAdvertisement(adId);
+    public int deleteAdvertisement(AdvertisementDto dto) {
+        return advertisementMapper.deleteAdvertisement(dto);
     }
 
     // 상태 변경
@@ -67,5 +67,40 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public int updateImpressions(int adId) {
         return advertisementMapper.updateImpressions(adId);
+    }
+
+    // 통계
+    @Override
+    public int selectTotalAdvertisementCnt() {
+        return advertisementMapper.selectTotalAdvertisementCnt();
+    }
+
+    @Override
+    public int selectOpenAdvertisementCnt() {
+        return advertisementMapper.selectOpenAdvertisementCnt();
+    }
+
+    @Override
+    public int selectPendingAdvertisementCnt() {
+        return advertisementMapper.selectPendingAdvertisementCnt();
+    }
+
+    @Override
+    public int selectClosedAdvertisementCnt() {
+        return advertisementMapper.selectClosedAdvertisementCnt();
+    }
+
+    ////////////////////////////////////////////////////
+    @Override
+    public AdvertisementDto selectTopAdvertisement() {
+
+        System.out.println("🔥 ServiceImpl 들어옴");
+
+        AdvertisementDto ad =
+                advertisementMapper.selectTopAdvertisement();
+
+        System.out.println("🔥 Mapper 결과 = " + ad);
+
+        return ad;
     }
 }

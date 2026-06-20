@@ -8,29 +8,45 @@ import com.moit.dto.AdvertisementSearchDto;
 public interface AdvertisementService {
 
     // 목록 + 검색 + 페이징
-    List<AdvertisementDto> searchByAdmin(AdvertisementSearchDto dto);
+	public List<AdvertisementDto> searchByAdmin(AdvertisementSearchDto dto);
 
     // 전체 개수
-    int selectAdvertisementTotalCnt(AdvertisementSearchDto dto);
+	public int selectAdvertisementTotalCnt(AdvertisementSearchDto dto);
 
     // 상세
-    AdvertisementDto selectAdvertisementOne(int adId);
+	public AdvertisementDto selectAdvertisementOne(int adId);
 
     // 등록
-    int insertAdvertisement(AdvertisementDto dto);
+	public int insertAdvertisement(AdvertisementDto dto);
 
     // 수정
-    int updateAdvertisement(AdvertisementDto dto);
+	public int updateAdvertisement(AdvertisementDto dto);
 
     // 삭제 (논리삭제)
-    int deleteAdvertisement(int adId);
+	public int deleteAdvertisement(AdvertisementDto dto);
 
     // 상태 변경
-    int updateAdvertisementStatus(AdvertisementDto dto);
+	public int updateAdvertisementStatus(AdvertisementDto dto);
 
     // 클릭 수 증가
-    int updateAdvertisementClick(int adId);
+	public int updateAdvertisementClick(int adId);
 
     // 노출 수 증가
-    int updateImpressions(int adId);
+	public int updateImpressions(int adId);
+	
+	
+	// 통계
+	public int selectTotalAdvertisementCnt();
+
+	public int selectOpenAdvertisementCnt();
+
+	public int selectPendingAdvertisementCnt();
+
+	public int selectClosedAdvertisementCnt();
+	
+	
+	
+	
+	////////////////// 클릭+노출 테스트
+	public AdvertisementDto selectTopAdvertisement();
 }

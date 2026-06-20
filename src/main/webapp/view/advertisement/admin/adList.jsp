@@ -23,6 +23,10 @@ body {
 	background: #f4f7fc;
 }
 
+h3 {
+	color: #4a7dff;
+}
+
 .sidebar {
 	min-height: 100vh;
 	background: #fff;
@@ -122,7 +126,8 @@ body {
 }
 
 </style>
-
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 </head>
 
 <body>
@@ -139,7 +144,14 @@ body {
 			<!-- 상단 -->
 			<div class="topbar d-flex justify-content-between align-items-center">
 				<h3>광고관리</h3>
-				<div>관리자님</div>
+				<c:choose>
+				    <c:when test="${not empty sessionScope.loginUserName}">
+				        <div>${sessionScope.loginUserName}님</div>
+				    </c:when>
+				    <c:otherwise>
+				        <div>관리자님</div>
+				    </c:otherwise>
+				</c:choose>
 			</div>
 
 			<!-- 통계 -->
@@ -148,28 +160,28 @@ body {
 				<div class="col-md-3">
 					<div class="card-box">
 						<h6>전체 광고</h6>
-						<div class="stat-number">12</div>
+						<div class="stat-number">${totalAdCnt}</div>
 					</div>
 				</div>
 
 				<div class="col-md-3">
 					<div class="card-box">
 						<h6>진행중</h6>
-						<div class="stat-number">5</div>
+						<div class="stat-number">${openCnt}</div>
 					</div>
 				</div>
 
 				<div class="col-md-3">
 					<div class="card-box">
 						<h6>대기</h6>
-						<div class="stat-number">4</div>
+						<div class="stat-number">${pendingCnt}</div>
 					</div>
 				</div>
 
 				<div class="col-md-3">
 					<div class="card-box">
 						<h6>종료</h6>
-						<div class="stat-number">3</div>
+						<div class="stat-number">${closedCnt}</div>
 					</div>
 				</div>
 
@@ -242,11 +254,29 @@ body {
 							<td> ${totalCnt - (((dto.page - 1) * dto.size) + status.index)} </td>
 						
 							<td>
-								<div style="width:70px;height:45px;
-									background-image:url('${ad.imageUrl}');
-									background-size:cover;
-									border-radius:8px;">
-								</div>
+							    <c:choose>
+							        <c:when test="${not empty ad.imageUrl}">
+							            <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+							            	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"
+							                 style="width:70px;
+							                        height:45px;
+							                        object-fit:cover;
+							                        border-radius:8px;">
+							        </c:when>
+							        <c:otherwise>
+							            <div style="
+							                width:70px;
+							                height:45px;
+							                background:#eee;
+							                border-radius:8px;
+							                display:flex;
+							                align-items:center;
+							                justify-content:center;
+							                font-size:12px;">
+							                NO IMG
+							            </div>
+							        </c:otherwise>
+							    </c:choose>
 							</td>
 						
 							<td>${ad.title}</td>
@@ -266,23 +296,20 @@ body {
 								
 								<script>
 									function changeStatus(select, adId) {
-									
+	
 									    const status = select.value;
-									
-									    /*fetch("${pageContext.request.contextPath}/advertisement/admin/updateStatusAjax.do", {
-									        method: "POST",
-									        headers: {
-									            "Content-Type": "application/json"
-									        },
-									        body: JSON.stringify({
-									            adId: adId,
-									            status: status
-									        })
-									    })*/
+	
+									    const token =
+									        document.querySelector("meta[name='_csrf']").content;
+	
+									    const header =
+									        document.querySelector("meta[name='_csrf_header']").content;
+	
 									    fetch("${pageContext.request.contextPath}/advertisement/admin/updateStatusAjax.do?testMode=true", {
 									        method: "POST",
 									        headers: {
-									            "Content-Type": "application/json"
+									            "Content-Type": "application/json",
+									            [header]: token
 									        },
 									        body: JSON.stringify({
 									            adId: adId,
@@ -290,17 +317,27 @@ body {
 									        })
 									    })
 									    .then(res => res.json())
-										.then(data => {
-										    if (data.result === "OK") {
+									    .then(data => {
+	
+									        if (data.result === "OK") {
+	
 									            alert("상태 변경 완료");
-									
-									            // 색상 갱신
-									            select.classList.remove("status-open", "status-pending", "status-closed");
-									
-									            if (status === "OPEN") select.classList.add("status-open");
-									            else if (status === "PENDING") select.classList.add("status-pending");
-									            else select.classList.add("status-closed");
-									
+	
+									            select.classList.remove(
+									                "status-open",
+									                "status-pending",
+									                "status-closed"
+									            );
+	
+									            if (status === "OPEN")
+									                select.classList.add("status-open");
+									            else if (status === "PENDING")
+									                select.classList.add("status-pending");
+									            else
+									                select.classList.add("status-closed");
+									            
+									            location.reload();
+	
 									        } else {
 									            alert("상태 변경 실패");
 									        }
@@ -326,7 +363,25 @@ body {
 									class="btn btn-sm btn-outline-primary">
 								    상세
 								</a>
-								<button class="btn btn-sm btn-outline-danger">삭제</button>
+								<form action="${pageContext.request.contextPath}/advertisement/admin/adDelete.do"
+								      method="post"
+								      style="display:inline;"
+								      onsubmit="return confirm('삭제하시겠습니까?');">
+								
+								    <input type="hidden"
+								           name="${_csrf.parameterName}"
+								           value="${_csrf.token}">
+								
+								    <input type="hidden"
+								           name="adId"
+								           value="${ad.adId}">
+								
+								    <button type="submit"
+								            class="btn btn-sm btn-outline-danger">
+								        삭제
+								    </button>
+								
+								</form>
 							</td>
 						</tr>
 						

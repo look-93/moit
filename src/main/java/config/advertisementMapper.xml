@@ -42,6 +42,7 @@
 	    SELECT *
 	    FROM advertisements
 	    WHERE ad_id = #{adId}
+	    AND delete_yn = 'N'
 	</select>
 
     <!-- 등록 -->
@@ -81,6 +82,7 @@
 	        landing_url = #{landingUrl},
 	        start_datetime = #{startDatetime},
 	        end_datetime = #{endDatetime},
+	        status = #{status},
 	        advertiser_id = #{advertiserId},
 	        updated_at = NOW()
 	    WHERE ad_id = #{adId}
@@ -89,7 +91,9 @@
     <!-- 삭제  (논리삭제) -->
     <update id="deleteAdvertisement">
     	UPDATE advertisements
-		SET delete_yn='Y' 
+		SET delete_yn='Y',
+	        author_id = #{authorId},
+	        updated_at = NOW()
 		where ad_id= #{adId}
     </update>
 
@@ -100,6 +104,13 @@
 	        updated_at = NOW()
 	    WHERE ad_id = #{adId}
 	</update>
+	
+	    <!--  노출 수 증가 -->
+    <update id="updateImpressions">
+	    UPDATE advertisements
+	    SET impressions = impressions + 1
+	    WHERE ad_id = #{adId}
+	</update>
 
     <!-- 클릭 수 증가 -->
     <update id="updateAdvertisementClick">
@@ -107,22 +118,59 @@
 	    SET clicks = clicks + 1
 	    WHERE ad_id = #{adId}
 	</update>
+
+
+<!--  사용자화면 광고 조회 -->
+	<select id="selectTopAdvertisement"
+	        resultType="com.moit.dto.AdvertisementDto">
+	
+	    SELECT *
+		FROM advertisements
+		WHERE delete_yn='N'
+		  AND status='OPEN'
+		  AND NOW() BETWEEN start_datetime AND end_datetime
+		ORDER BY
+			(clicks * 4)
+			+ (impressions * 1)
+			+ RAND() * 15
+		LIMIT 1;
+	
+	</select>
+	
+	<!-- 통계 -->
+	<select id="selectTotalAdvertisementCnt" resultType="int">
+	    SELECT COUNT(*)
+	    FROM advertisements
+	    WHERE delete_yn='N'
+	</select>
+	
+	<select id="selectOpenAdvertisementCnt" resultType="int">
+	    SELECT COUNT(*)
+	    FROM advertisements
+	    WHERE delete_yn='N'
+	      AND status='OPEN'
+	</select>
+	
+	<select id="selectPendingAdvertisementCnt" resultType="int">
+	    SELECT COUNT(*)
+	    FROM advertisements
+	    WHERE delete_yn='N'
+	      AND status='PENDING'
+	</select>
+	
+	<select id="selectClosedAdvertisementCnt" resultType="int">
+	    SELECT COUNT(*)
+	    FROM advertisements
+	    WHERE delete_yn='N'
+	      AND status='CLOSED'
+	</select>
     
     
 
  <!--    추가할점                   -->
     
 
-    <!--  노출 수 증가 -->
-    <update id="updateImpressions">
-	    UPDATE advertisements
-	    SET impressions = impressions + 1
-	    WHERE ad_id = #{adId}
-	</update>
 
-    <!--  전체 광고 조회-->
-    <!-- <select id="selectAll">
-    </select> -->
 
 
     <!-- 위치별 광고 조회 -->
@@ -145,6 +193,7 @@
 		      AND status = 'OPEN'
 		    ORDER BY priority DESC
 		</select> -->
+
 
 
 </mapper>

@@ -16,6 +16,33 @@
     
     
   </table>
+  ${ad}
+<br>
+${ad.title}
+<br>
+${ad.imageUrl}
+  <c:if test="${not empty ad}">
+
+    <div class="card mt-4">
+
+        <div class="card-header">
+            광고
+        </div>
+
+        <div class="card-body text-center">
+
+            <a href="${pageContext.request.contextPath}/advertisement/click.do?adId=${ad.adId}">
+
+                <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+                     style="max-width:100%; border-radius:10px;">
+
+            </a>
+
+        </div>
+
+    </div>
+
+</c:if>
 </div>
 
 <%@include file="../inc/footer.jsp" %>

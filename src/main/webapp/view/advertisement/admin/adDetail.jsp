@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -55,9 +55,11 @@ body {
 }
 
 .page-title{
+	margin-top:50px;
     font-size:28px;
     font-weight:700;
     margin-bottom:20px;
+    color: #4a7dff;
 }
 
 .card-box{
@@ -92,16 +94,18 @@ body {
     display:flex;
     align-items:center;
     justify-content:center;
-    color:white;
-    font-size:32px;
-    font-weight:bold;
-    margin-bottom:20px;
 }
 
 .btn-area{
     display:flex;
     justify-content:flex-end;
     gap:10px;
+}
+
+.stat-number{
+    font-size:32px;
+    font-weight:700;
+    color:#4a7dff;
 }
 
 </style>
@@ -122,11 +126,47 @@ body {
             <h1 class="page-title">광고 상세</h1>
 
             <div class="card-box">
-
                 <!-- 이미지 -->
                 <div class="ad-image">
-                    ${dto.title}
-                </div>
+				    <img src="${pageContext.request.contextPath}${dto.imageUrl}"
+				    	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"
+				         style="width:100%;height:100%;object-fit:cover;border-radius:15px;">
+				</div>
+                
+                <!-- 클릭률 -->
+                <div class="row mb-4">
+
+			    <div class="col-md-4">
+			        <div class="card-box text-center">
+			            <div class="info-title">노출수</div>
+			            <div class="stat-number">${dto.impressions}</div>
+			        </div>
+			    </div>
+			
+			    <div class="col-md-4">
+			        <div class="card-box text-center">
+			            <div class="info-title">클릭수</div>
+			            <div class="stat-number">${dto.clicks}</div>
+			        </div>
+			    </div>
+			
+			    <div class="col-md-4">
+			        <div class="card-box text-center">
+			            <div class="info-title">CTR</div>
+			            <div class="stat-number">
+						    <c:choose>
+						        <c:when test="${dto.impressions > 0}">
+						            <fmt:formatNumber
+						                value="${dto.clicks * 100.0 / dto.impressions}"
+						                pattern="0.00"/>%
+						        </c:when>
+						        <c:otherwise>
+						            0.00%
+						        </c:otherwise>
+						    </c:choose>
+						</div>
+					</div>
+			    </div>
 
                 <!-- 정보 -->
                 <div class="row g-3">
@@ -196,20 +236,6 @@ body {
 
                     <div class="col-md-3">
                         <div class="info-box">
-                            <div class="info-title">노출수</div>
-                            <div class="info-value">${dto.impressions}</div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="info-box">
-                            <div class="info-title">클릭수</div>
-                            <div class="info-value">${dto.clicks}</div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="info-box">
                             <div class="info-title">등록자</div>
                             <div class="info-value">${dto.authorId}</div>
                         </div>
@@ -221,6 +247,13 @@ body {
                             <div class="info-value">${dto.createdAt}</div>
                         </div>
                     </div>
+                    
+                    <div class="col-md-3">
+					    <div class="info-box">
+					        <div class="info-title">수정일</div>
+					        <div class="info-value">${dto.updatedAt}</div>
+					    </div>
+					</div>
 
                 </div>
 
@@ -240,6 +273,8 @@ body {
                     </a>
                 </p>
 
+			</div>
+
                 <!-- 버튼 -->
                 <div class="btn-area mt-4">
 
@@ -251,9 +286,25 @@ body {
                         수정 ${dto.adId}
                     </a>
 
-                    <a href="${ctx}/advertisement/admin/adDelete.do?adId=${dto.adId}" class="btn btn-danger">
-                        삭제
-                    </a>
+                    <form action="${pageContext.request.contextPath}/advertisement/admin/adDelete.do"
+					      method="post"
+					      style="display:inline;"
+					      onsubmit="return confirm('삭제하시겠습니까?');">
+					
+					    <input type="hidden"
+					           name="${_csrf.parameterName}"
+					           value="${_csrf.token}">
+					
+					    <input type="hidden"
+					           name="adId"
+					           value="${dto.adId}">
+					
+					    <button type="submit"
+					            class="btn btn-danger">
+					        삭제
+					    </button>
+					
+					</form>
 
                 </div>
 

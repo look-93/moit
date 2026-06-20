@@ -132,7 +132,7 @@ body {
 
             <h1 class="page-title">광고 등록</h1>
 
-            <form class="card-box" action="${ctx}/admin/advertisement/insert.do" 
+            <form class="card-box" action="${ctx}/advertisement/admin/adWriteAction.do" 
             		method="post" enctype="multipart/form-data">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			
@@ -154,7 +154,7 @@ body {
 
                     <div class="preview-box">이미지 미리보기</div>
 
-                    <input type="file" class="form-control" name="image_file" accept="image/*">
+                    <input type="file" class="form-control" name="imageFile" accept="image/*">
                 </div>
 
                 <div class="mb-3">
