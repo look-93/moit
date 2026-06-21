@@ -8,7 +8,7 @@
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
     <div class="form-group-inline">
       <input type="text" id="loginId" name="loginId" placeholder="아이디" required>
-      <button type="button" class="btn">중복확인</button>
+      <!-- <button type="button" class="btn">중복확인</button> -->
     </div>
     <div id="idCheck" class="target"></div>
     <script>
@@ -54,9 +54,45 @@
     
     <div class="form-group-inline">
       <input type="text" id="nickname" name="nickname" placeholder="닉네임" required>
-      <button type="button" class="btn">중복확인</button>
+      <!-- <button type="button" class="btn">중복확인</button> -->
     </div>
-    <div id="nickCheck"></div>
+    <div id="nickCheck" class="target"></div>
+    <script>
+    	window.addEventListener("load",function(){
+    		
+    		let nickname = document.getElementById("nickname");
+    		let target = document.getElementById("nickCheck");
+    		
+    		nickname.addEventListener("keyup",function(e){
+    			
+    			let value = e.target.value.trim();
+    			
+    			if(value==""){
+    				target.textContent="닉네임을 입력해주세요.";
+    				target.className="target text-warning";
+    				return;
+    			}
+    			fetch("${pageContext.request.contextPath}/users/checkNickname?nickname="+encodeURIComponent(value))
+    			.then(response=>response.json())
+    			.then(data=>{
+    				if(data.exists){
+    					target.textContent="이미 사용중인 닉네임입니다.";
+    					target.className="target text-danger";
+    				}
+    				else{
+    					target.textContent="사용 가능한 닉네임입니다.";
+    					target.className="target text-success";
+    				}
+    			})
+    			.catch(error=>{
+    				target.textContent="서버 오류가 발생했습니다.";
+    				target.className="target text-warning"
+    			});
+    			
+    		});
+    		
+    	});
+    </script>
     
     <div class="form-group"><input type="email" id="email" name="email" placeholder="이메일" required></div>
     <div class="form-group">
