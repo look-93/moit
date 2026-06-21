@@ -418,39 +418,44 @@ a {
 
 
 					<!-- CARD -->
-					<c:forEach var="meetupList" items="${serchList}" varStatus="status">
-						<a
-							href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${meetupList.meetupId}"
-							action="get">
+					<c:forEach var="meetup" items="${serchList}" varStatus="status">
 							<div class="card">
 								<div class="card-img"></div>
 								<div class="card-body">
-									<span class="badge"> <c:choose>
-											<c:when test="${meetupList.status eq 'RECRUITING'}">
-		                        			모집중
-		                        		</c:when>
-											<c:when test="${meetupList.status eq 'CLOSED'}">
-		                        			모집마감
-		                        		</c:when>
+									<a href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${meetup.meetupId}">
+									<span class="badge"> 
+										<c:choose>
+											<c:when test="${meetup.status eq 'RECRUITING'}">
+			                        			모집중
+			                        		</c:when>
+												<c:when test="${meetup.status eq 'CLOSED'}">
+			                        			모집마감
+			                        		</c:when>
 										</c:choose>
 									</span>
 
-									<h4>${meetupList.title}</h4>
+									<h4>${meetup.title}</h4>
 
-									<p>${meetupList.categoryName}</p>
+									<p>${meetup.categoryName}</p>
 									<!-- 수정 카테고리추가 -->
-									<p>${meetupList.sigunguName}</p>
-									<p>👥 ${meetupList.participant} /
-										${meetupList.maxParticipants}명</p>
-
+									<p>${meetup.sigunguName}</p>
+									<p>👥 ${meetup.participant} /
+										${meetup.maxParticipants}명</p>
+									</a>
 									<div class="card-footer">
-										<span>${meetupList.fomatMeetupAt}</span> <span class="like">❤️
-											34</span>
+										<span>${meetup.fomatMeetupAt}</span> 
+										<span class="like">
+										    <a href="#"
+										       onclick="toggleLike(event, ${meetup.meetupId}, this)">
+										        ${meetup.hasLike ? '♥' : '♡'}
+										    </a>
+										
+										    <span class="like-count">${meetup.likeCnt}</span>
+										</span>
 										<!-- 수정 좋아요 -->
 									</div>
 								</div>
 							</div>
-						</a>
 					</c:forEach>
 				</div>
 
@@ -491,6 +496,36 @@ a {
 	    if ('${param.orderType}' !== '') {
 	        orderType.value = '${param.orderType}';
 	    }
+	}
+	const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+
+	function toggleLike(e, meetupId, el) {
+	    e.preventDefault();
+
+	    fetch(
+	        "${pageContext.request.contextPath}/meetup/user/meetupLike.do?meetupId=" + meetupId,
+	        {
+	            method: "POST",
+	            headers: {
+	                [csrfHeader]: csrfToken
+	            }
+	        }
+	    )
+	    .then(res => res.json())
+	    .then(data => {
+			console.log(data)
+	        // 서버에서 true/false 반환한다고 가정
+	        if (data.hasLike) {
+	            el.innerText = "♥";
+	        } else {
+	            el.innerText = "♡";
+	        }
+
+	        el.parentElement.querySelector(".like-count").innerText =
+	            data.likeCnt;
+	    })
+	    .catch(err => console.error(err));
 	}
 </script>
 <%@ include file="../../inc/userFooter.jsp"%>

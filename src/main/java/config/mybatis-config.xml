@@ -13,9 +13,13 @@
 		<typeAlias type="com.moit.dto.MeetupDto" alias="MeetupDto" />
 		<typeAlias type="com.moit.dto.MeetupSearchDto" alias="MeetupSearchDto" />
 		<typeAlias type="com.moit.dto.MeetupImageDto" alias="MeetupImageDto" />
+		<typeAlias type="com.moit.dto.MeetupApplicationsDto" alias="MeetupApplicationsDto" />
+		<typeAlias type="com.moit.dto.MeetupLikeDto" alias="MeetupLikeDto" />
 		<typeAlias type="com.moit.dto.common.SidoDto" alias="SidoDto" />
 		<typeAlias type="com.moit.dto.common.SigunguDto" alias="SigunguDto" />
-		<typeAlias type="com.moit.dto.common.CategoryDto" alias="CategoryDto" />
+		<typeAlias type="com.moit.dto.common.CategoryDto" alias="CategoryDto" />	
+		
+				
 	</typeAliases>
 </configuration>
 

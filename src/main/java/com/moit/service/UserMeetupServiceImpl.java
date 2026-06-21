@@ -1,13 +1,16 @@
 package com.moit.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.moit.dao.MeetupMapper;
+import com.moit.dto.MeetupApplicationsDto;
 import com.moit.dto.MeetupDto;
 import com.moit.dto.MeetupImageDto;
+import com.moit.dto.MeetupLikeDto;
 import com.moit.dto.MeetupSearchDto;
 import com.moit.dto.common.CategoryDto;
 import com.moit.dto.common.SidoDto;
@@ -49,13 +52,18 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 		return meetupMapper.insertMeetup(meetupDto);
 	}
 	
-	
 	//모집수정
 	@Override
 	public int updateMeetup(MeetupDto meetupDto) {
 		return meetupMapper.updateMeetup(meetupDto);
 	}
-
+	
+	//모집글삭제
+	@Override
+	public int deleteMeetup(int meetupId) {		
+		return meetupMapper.deleteMeetup(meetupId);
+	}
+	
 	//마이페이지 내 모집글 조회 + paging
 	@Override
 	public List<MeetupDto> selectMyMeetup(int pstartno,MeetupDto meetupDto) {
@@ -74,6 +82,29 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 	@Override
 	public MeetupDto selectMyPageStats(int memberId) {
 		return meetupMapper.selectMyPageStats(memberId);
+	}
+	
+	//모집신청
+	@Override
+	public int insertApplication(MeetupApplicationsDto meetupApplicationsDto) {
+		MeetupApplicationsDto find = this.findApplyInfo(meetupApplicationsDto);
+		if(find != null) {
+			return meetupMapper.updateApplication(find);	
+		}else {
+			return meetupMapper.insertApplication(meetupApplicationsDto);
+		}
+	}
+	
+	//모집신청 정보조회
+	@Override
+	public MeetupApplicationsDto findApplyInfo(MeetupApplicationsDto meetupApplicationsDto) {
+		return meetupMapper.findApplyInfo(meetupApplicationsDto);
+	}
+
+	//모집신청 취소
+	@Override
+	public int cancelApplyMeetup(MeetupApplicationsDto meetupApplicationsDto) {
+		return meetupMapper.cancelApplyMeetup(meetupApplicationsDto);
 	}
 
 	// 시도
@@ -104,5 +135,37 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 	public int findByMamberId(String loginId) {
 		return meetupMapper.findByMamberId(loginId);
 	}
+	
+	//좋아요기능
+	@Override
+	public boolean insertMeetupLike(MeetupLikeDto meetupLikeDto) {
+		MeetupLikeDto find = this.selectMeetupLike(meetupLikeDto);
+		if(find != null) {
+			meetupMapper.deleteMeetupLike(find);	
+			return false;
+		}else {
+			meetupMapper.insertMeetupLike(meetupLikeDto);
+			return true;
+		}
+	}
+	
+	//좋아요갯수조회
+	@Override
+	public int countMeetupLike(int meetupId) {
+		return meetupMapper.countMeetupLike(meetupId);
+	}
+
+	@Override
+	public int deleteMeetupLike(MeetupLikeDto meetupLikeDto) {
+		return meetupMapper.deleteMeetupLike(meetupLikeDto);
+	}
+
+	@Override
+	public MeetupLikeDto selectMeetupLike(MeetupLikeDto meetupLikeDto) {
+		return meetupMapper.selectMeetupLike(meetupLikeDto);
+	}
+	
+	
+
 	
 }

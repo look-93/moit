@@ -66,14 +66,22 @@
 			 ORDER BY E.image_id ASC
 			 LIMIT 1
 		   ) AS image_path,
-		   D.category_name		   
+		   D.category_name,		   
 		   
 		   <!-- 좋아요 수 추가-->
+		   IF(F.member_id IS NULL, FALSE, TRUE) AS has_like,
+		   G.like_cnt
 	  FROM meetups AS A
       LEFT OUTER JOIN sigungus 	 AS B ON B.sigungu_id = A.sigungu_id
       LEFT OUTER JOIN sidos 	 AS C ON C.sido_id = B.sido_id 
 	  LEFT OUTER JOIN categories AS D ON D.category_id = A.category_id
 	  LEFT OUTER JOIN categories AS P ON P.category_id = D.parent_id
+	  LEFT OUTER JOIN meetup_likes AS F ON F.meetup_id = A.meetup_id AND F.member_id = #{memberId} 
+	  LEFT OUTER JOIN (SELECT COUNT(meetup_id) as like_cnt, 
+	  						  meetup_id 
+	  				     FROM meetup_likes 
+	  				    GROUP BY meetup_id
+	  				  ) AS G ON G.meetup_id = A.meetup_id
 	 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
        AND A.status != 'DELETED' <!-- 삭제 제외 -->
 	 <if test="sidoId != null and sidoId != 0">
@@ -158,7 +166,7 @@
 		  JOIN sigungus 	AS E ON E.sigungu_id = A.sigungu_id
 		  JOIN sidos 		AS F ON F.sido_id = E.sido_id
 		 WHERE A.meetup_id = #{meetup_id}
- 	</select>
+ 	</select>	
  	
  	<!-- 모집 이미지 상세조회  detail-->
  	<select id="selectMeetupImage" resultType="MeetupImageDto" parameterType="int">
@@ -192,22 +200,84 @@
  		   	   meetup_at 	 	 = #{meetupAt},
  		   	   status			 = #{status} 		   	   
  		 WHERE meetup_id = #{meetupId}
- 	</update> 	
-	
- 	
-  	<!-- 모집 신청 -->
- 	<insert id="insertApplication">
-		INSERT INTO meetup_applications (meetup_id, member_id, status)
-		 VAEUE (#{meetup_id}, #{member_id}, #{status}) 	
- 	</insert> 
- 	
+ 	</update> 	 	
 
   	<!-- 논리삭제(공통) -->
   	<update id="deleteMeetup" parameterType="int">
  		UPDATE meetups
  		   SET delete_yn = 'Y' 		   	   
- 		 WHERE meetup_id = #{meetup_id}
+ 		 WHERE meetup_id = #{meetupId}
  	</update>	
+ 	
+ 	<!-- 좋아요 -->
+ 	<insert id="insertMeetupLike" parameterType="MeetupLikeDto">
+		INSERT INTO meetup_likes  (meetup_id, member_id)
+		VALUES (#{meetupId}, #{memberId}) 	
+ 	</insert> 
+ 	<!-- 좋아요 삭제 -->
+ 	<delete id="deleteMeetupLike" parameterType="MeetupLikeDto">
+		DELETE FROM meetup_likes
+		WHERE 1=1
+		  AND meetup_id = #{meetupId}
+		  AND member_id = #{memberId}	
+ 	</delete>  	
+ 	<!-- 좋아요 조회-->
+ 	<select id="selectMeetupLike" parameterType="MeetupLikeDto" resultType="MeetupLikeDto">
+		SELECT *
+		  FROM meetup_likes
+		WHERE 1=1
+		  AND meetup_id = #{meetupId}
+		  AND member_id = #{memberId}	
+ 	</select>  	
+  	<!-- 좋아요 갯수 조회-->
+ 	<select id="countMeetupLike" parameterType="int" resultType="int">
+		SELECT COUNT(meetup_id)
+		FROM meetup_likes 
+		WHERE meetup_id = #{meetupId}
+		GROUP BY meetup_id 	 
+ 	</select>  		
+
+ 
+  	<!-- 모집 신청저장 -->
+ 	<insert id="insertApplication" parameterType="MeetupApplicationsDto">
+		INSERT INTO meetup_applications (meetup_id, member_id)
+		VALUES (#{meetupId}, #{memberId}) 	
+ 	</insert> 
+ 	
+ 	<!-- 모집 신청 수정 -->
+ 	<update id="updateApplication" parameterType="MeetupApplicationsDto">
+ 		UPDATE meetup_applications
+ 		   SET status = 'PENDING'
+		 WHERE 1=1
+ 		   AND application_id = #{applicationId}
+ 	</update> 
+ 	
+  	<!-- 모집신청 정보조회 -->
+ 	<select id="findApplyInfo" resultType="MeetupApplicationsDto" parameterType="MeetupApplicationsDto"> 
+ 		SELECT *
+ 		  FROM meetup_applications
+		 WHERE 1=1		  
+ 		   AND meetup_id = #{meetupId}
+		   AND member_id = #{memberId} 
+			<if test="statusList != null and statusList.size() > 0">
+			AND status IN
+			<foreach collection="statusList"
+			         item="status"
+			         open="("
+			         separator=","
+			         close=")">
+			    #{status}
+			</foreach>
+    </if>
+ 	</select>
+ 	
+  	<!-- 모집신청 취소 -->
+ 	<update id="cancelApplyMeetup" parameterType="MeetupApplicationsDto"> 
+ 		UPDATE meetup_applications
+ 		   SET status = 'CANCELED'
+		 WHERE 1=1
+ 		   AND application_id = #{applicationId}
+ 	</update> 
  
  	<!-- 마이페이지 내 모집글 조회 + paging-->
  	<select id="selectMyMeetup" resultType="MeetupDto" parameterType="MeetupDto">

@@ -2,8 +2,10 @@ package com.moit.dao;
 
 import java.util.List;
 
+import com.moit.dto.MeetupApplicationsDto;
 import com.moit.dto.MeetupDto;
 import com.moit.dto.MeetupImageDto;
+import com.moit.dto.MeetupLikeDto;
 import com.moit.dto.MeetupSearchDto;
 import com.moit.dto.common.CategoryDto;
 import com.moit.dto.common.SidoDto;
@@ -25,6 +27,19 @@ public interface MeetupMapper {
 	public int insertMeetup(MeetupDto meetupDto);
 	public int updateMeetup(MeetupDto meetupDto);
 	
+	public int insertApplication(MeetupApplicationsDto meetupApplicationsDto);
+	public MeetupApplicationsDto findApplyInfo(MeetupApplicationsDto meetupApplicationsDto);
+	public int cancelApplyMeetup(MeetupApplicationsDto meetupApplicationsDto);
+	public int updateApplication(MeetupApplicationsDto meetupApplicationsDto);
+	
+	
+	//좋아요기능
+	public int insertMeetupLike(MeetupLikeDto meetupLikeDto);
+	public int deleteMeetupLike(MeetupLikeDto meetupLikeDto);
+	public MeetupLikeDto selectMeetupLike(MeetupLikeDto meetupLikeDto);
+	public int countMeetupLike(int meetupId);
+	
+	
 	//마이페이지 내 모집글 조회 + paging
 	public List<MeetupDto> selectMyMeetup(MeetupDto meetupDto);
 	public int selectMyMeetupTotalCnt(MeetupDto meetupDto);
@@ -37,10 +52,10 @@ public interface MeetupMapper {
 	
 	//카테고리
 	public List<CategoryDto> findAllCategory();
-	public List<CategoryDto> findAllChildCategory();
-	
+	public List<CategoryDto> findAllChildCategory();	
 	
 	//login_id로 member_id 찾기
 	public int findByMamberId(String loginId);
+
 	
 }

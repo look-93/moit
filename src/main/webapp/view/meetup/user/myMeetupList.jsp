@@ -549,8 +549,13 @@ td:nth-child(2){
 							                <div class="action-btn-wrap">
 							                    <button class="applicant-btn" onclick="openModal()">신청자 조회</button>
 							                    <button class="edit-btn" onClick="goDetail(${meetup.meetupId})">수정</button>
-							                    <button class="delete-btn">삭제</button>
+												<form action="${pageContext.request.contextPath}/meetup/mypage/delete.do?meetupId=${meetup.meetupId}" method="post">
+													<input  type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" /> <!-- 보안 -->
+													<button class="delete-btn">삭제</button>
+												</form>							                    
 							                </div>
+							                
+							                
 								        </td>
 							        </tr>
 							    </c:forEach>

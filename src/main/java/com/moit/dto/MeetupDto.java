@@ -37,5 +37,9 @@ public class MeetupDto {
 	private String nickname;
     private int start;
     private int end;
+    
+   	//좋아요
+   	private boolean hasLike;
+   	private int likeCnt;
 	
 }

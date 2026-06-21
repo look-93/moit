@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../../inc/userHeader.jsp"%>
 
 <style>
@@ -377,7 +378,7 @@ body{
 			            <div class="detail-badge">모집중</div>
 			            <button class="report-btn">🚨 모임 신고</button>
 			        </div>
-			        <h1 class="title">${detailList.title}</h1>
+			        <h1 class="title">${detail.title}</h1>
 			    </div>
 			
 			    <div class="tabs">
@@ -391,7 +392,7 @@ body{
 			        <div class="tab-content">
 			            <div class="tab-panel active">
 			                <h3>모임 안내</h3>
-			                <div class="description">${detailList.content}</div>
+			                <div class="description">${detail.content}</div>
 			            </div>
 			
 			            <div class="tab-panel">
@@ -479,14 +480,30 @@ body{
 			<div>
 			    <div class="side-box">
 			        <h3>모집 정보</h3>
-			        <div class="info-row"><span>인원</span><span>${detailList.participant}/${detailList.maxParticipants}</span></div>
-			        <div class="info-row"><span>지역</span><span>${detailList.sidoName}</span></div>
-			        <button class="btn btn-primary">신청하기</button>
+			        <div class="info-row"><span>인원</span><span>${detail.participant}/${detail.maxParticipants}</span></div>
+			        <div class="info-row"><span>지역</span><span>${detail.sidoName}</span></div>
+					<c:choose>
+					    <c:when test="${empty applyInfo}">
+					        <form action="${pageContext.request.contextPath}/meetup/user/applyMeetup.do?meetupId=${detail.meetupId}" method="post">
+					            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					            <button type="submit" class="btn btn-primary">신청하기</button>
+					        </form>
+					    </c:when>
+					
+					    <c:otherwise>
+					        <form action="${pageContext.request.contextPath}/meetup/user/cancelApplyMeetup.do" method="post">
+					            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					            <input type="hidden" name="meetupId" value="${detail.meetupId}">
+					            <input type="hidden" name="applicationId" value="${applyInfo.applicationId}">
+					            <button type="submit" class="btn btn-danger">신청취소</button>
+					        </form>
+					    </c:otherwise>
+					</c:choose>		        
 			    </div>
 			
 			    <div class="side-box">
 			        <h3>작성자</h3>
-			        <p>${detailList.nickname}</p>
+			        <p>${detail.nickname}</p>
 			        <button class="detail-inquiry-btn">
 			            💬 모임글 문의하기
 			        </button>
@@ -524,6 +541,9 @@ body{
 </div>
 
 <script>
+	const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+	const applyInfo = "${applyInfo}";
 	function showTab(i){
 		const tabs=document.querySelectorAll(".tab-btn");
 		const panels=document.querySelectorAll(".tab-panel");
@@ -534,6 +554,50 @@ body{
 		tabs[i].classList.add("active");
 		panels[i].classList.add("active");
 	}
+    
+    window.onload = function(){
+    	const result = "${result}";
+    	if(result == "true"){
+    		alert("처리 되었습니다.");
+    	}else if(result == "false") {
+    		alert("관리자에게 문의하세요");	
+    	}	
+    }
+    
+    	
+	function cancelApplyMeetup() {
+		if(applyInfo != null){
+			const data = {
+				applicationId:"${empty applyInfo? '':applyInfo.applicationId}"
+		    };
+		
+		    fetch("${pageContext.request.contextPath}/meetup/user/cancelApplyMeetup.do", {
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/json",
+		            [csrfHeader]: csrfToken
+		        },
+		        body: JSON.stringify(data)
+		    })
+		    .then(response => {
+		    	console.log()
+		        if (!response.ok) {
+		            throw new Error("서버 오류");
+		        }
+		        return response.json();
+		    })
+		    .then(result => {
+		        console.log(result);
+		        alert("취소 완료 되었습니다.");
+		    })
+		    .catch(error => {
+		        console.error(error);
+		        alert("취소 실패");
+		    });
+		}
+	    
+	}
 </script>
+
 
 <%@ include file="../../inc/userFooter.jsp"%>
