@@ -138,7 +138,7 @@
 
         <div class="info-box">
 
-            <div class="info-title">문의 정보</div>
+            <div class="info-title">문의 정보1</div>
 
             <div class="info-row">
                 <div class="info-label">제목</div>
