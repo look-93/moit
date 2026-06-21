@@ -547,7 +547,9 @@ td:nth-child(2){
 								        <td>${meetup.fomatcreatedAt}</td> 
 								        <td>
 							                <div class="action-btn-wrap">
-							                    <button class="applicant-btn" onclick="openModal()">신청자 조회</button>
+
+								                <button type="button" class="applicant-btn" onclick="openModal(${meetup.meetupId})">신청자 조회</button>
+
 							                    <button class="edit-btn" onClick="goDetail(${meetup.meetupId})">수정</button>
 												<form action="${pageContext.request.contextPath}/meetup/mypage/delete.do?meetupId=${meetup.meetupId}" method="post">
 													<input  type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" /> <!-- 보안 -->
@@ -605,31 +607,21 @@ td:nth-child(2){
             <table class="modal-table">
                 <thead>
                     <tr>
-                        <th style="width: 15%; text-align: left;">회원명</th>
-                        <th style="width: 25%;">신청일</th>
-                        <th style="width: 25%;">첨부파일</th>
-                        <th style="width: 15%;">상태</th>
-                        <th style="width: 20%;">처리</th>
+                        <th style="width: 20%; text-align: left;">회원명</th>
+                        <th style="width: 30%;">신청일</th>
+                        <th style="width: 20%;">상태</th>
+                        <th style="width: 30%;">처리</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td style="text-align: left; font-weight: bold;">홍길동</td>
-                        <td>2026-06-12</td>
-                        <td><button class="download-btn">다운로드</button></td>
-                        <td><span class="state-text-wait">대기</span></td>
-                        <td>
-                            <button class="btn-approve">승인</button>
-                            <button class="btn-reject">거절</button>
-                        </td>
-                    </tr>
-                    <tr>
+                <tbody id="modalBody">
+                	
+<!--                     <tr>
                         <td style="text-align: left; font-weight: bold;">김철수</td>
                         <td>2026-06-11</td>
                         <td><button class="download-btn">다운로드</button></td>
                         <td><span class="state-text-pass">승인</span></td>
                         <td>-</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>
@@ -638,10 +630,79 @@ td:nth-child(2){
 
 <script>
     const modal = document.getElementById('applicantModal');
+	function changeStatus(applicationId, status, btn){
+		fetch(
+	    	'${pageContext.request.contextPath}/meetup/mypage/updateApplyStatus.do?status=' + status + '&applicationId=' + applicationId
+	    )
+    	.then(res => res.json())
+    	.then(data => { 
+    		const statusTd = btn.parentElement.previousElementSibling;
+    		const statusSpan = statusTd.querySelector("span");
+    		statusSpan.innerHTML = status == 'APPROVED' ? '승인' : '거절';
+    		
+    		if(status == 'APPROVED'){
+    			btn.parentElement.innerHTML = `<button class="btn-reject" onClick="changeStatus(${'${applicationId}'}, 'REJECTED', this)">거절</button>`
+    		}else {
+    			btn.parentElement.innerHTML = `<button class="btn-approve" onClick="changeStatus(${'${applicationId}'}, 'APPROVED', this)">승인</button>`
+    		}
+    	})
+    	.catch(error => {
+	    alert("관리자에게 문의하세요.");
+		})
+		
+	}
+    
+    function openModal(meetupId) {
+    	
+    	fetch(
+    		'${pageContext.request.contextPath}/meetup/mypage/meetupMember.do?meetupId=' + meetupId
+    	)
+    	.then(res => res.json())
+    	.then(data => {
+    		const tbody = document.getElementById("modalBody")
+			const list = data.list;
+    		let html= '';
+    		let button = ''
 
-    function openModal() {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; 
+    		for(var i= 0; i < list.length; i++){
+    			const item = list[i];
+				//console.log(item);    		
+    			const status = item.applyStatus == "PENDING" ? "대기" : item.applyStatus == "APPROVED" ? "승인" : "거절";
+    			const applicationId = item.applicationId;
+    			if (item.applyStatus === 'PENDING') {
+    				button = `
+    			        <button class="btn-approve" onclick="changeStatus(${'${applicationId}'}, 'APPROVED', this)">승인</button>
+    			        <button class="btn-reject" onclick="changeStatus(${'${applicationId}'}, 'REJECTED', this)">거절</button>
+    			    `;
+    			} else if (item.applyStatus === 'APPROVED') {
+    				button = `
+    			        <button class="btn-reject" onclick="changeStatus(${'${applicationId}'}, 'REJECTED', this)">거절</button>
+    			    `;
+    			} else if (item.applyStatus === 'REJECTED') {
+    				button = `
+    			        <button class="btn-approve" onclick="changeStatus(${'${applicationId}'}, 'APPROVED', this)">승인</button>
+    			    `;
+    			}
+
+    			html += `
+    			<tr>
+    			    <td style="text-align: left; font-weight: bold;">${'${item.nickname}'}</td>
+    			    <td>${'${item.applyAt}'}</td>
+    			    <td><span class="state-text-wait">${'${status}'}</span></td>
+    			    <td>${'${button}'}</td>
+    			</tr>
+    			`;
+    		
+    		}
+    		tbody.innerHTML = html;
+    		modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+    	})
+    	.catch(error => {
+		    alert("관리자에게 문의하세요.");
+		})
+    	
+
     }
 
     function closeModal() {

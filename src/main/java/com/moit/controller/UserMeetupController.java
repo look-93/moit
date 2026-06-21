@@ -2,6 +2,7 @@ package com.moit.controller;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,7 @@ public class UserMeetupController {
 		return "redirect:/meetup/mypage/meetup.do";
 	}
 	
+	//마이페이지 - 내 모집글 조회
 	@RequestMapping("/meetup/mypage/meetup.do")
 	public String myMeetupList(Model model, MeetupDto meetupdto, RedirectAttributes rttr, Authentication authentication, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
 		// 멤버완료 취합 후 적용
@@ -113,15 +115,39 @@ public class UserMeetupController {
 //		int memberId = userMeetupService.findByMamberId(user.getUsername());		
 //		meetupdto.setMemberId(memberId);
 		
-		meetupdto.setMemberId(1);		
-		model.addAttribute("meetupStats", userMeetupService.selectMyPageStats(1));
+		meetupdto.setMemberId(1);
+		System.out.println(meetupdto.getMeetupId());
+		model.addAttribute("meetupApplyMemberList", userMeetupService.selectMeetupApplyMember(meetupdto.getMeetupId())); //신청자목록
+		model.addAttribute("meetupStats", userMeetupService.selectMyPageStats(1)); //통계
 		model.addAttribute("meetupList", userMeetupService.selectMyMeetup(pstartno,meetupdto));
 		model.addAttribute("paging", new PagingUtil(userMeetupService.selectMyMeetupTotalCnt(meetupdto), pstartno));
 		model.addAttribute("menu", "meetup");
 		
 		return "meetup/user/myMeetupList";
-	}
+	}	
 	
+	//마이페이지 - 내 모집글 조회
+	@RequestMapping("/meetup/mypage/meetupMember.do")
+	@ResponseBody
+	public Map<String, Object> myMeetupMemberList(Model model, int meetupId) {
+		
+		Map<String, Object> result = new HashMap<>();
+		List<MeetupDto> list= userMeetupService.selectMeetupApplyMember(meetupId);
+		result.put("list", list);
+	
+		return result;
+	}	
+	
+	//마이페이지 - 내 모집글 조회
+	@RequestMapping("/meetup/mypage/updateApplyStatus.do")
+	@ResponseBody
+	public Map<String, Object> myMeetupApplyStatus(Model model, MeetupApplicationsDto meetupApplicationsDto) {
+		
+		Map<String, Object> result = new HashMap<>();
+		boolean insert = userMeetupService.changeMeetupApplyStatus(meetupApplicationsDto) > 0;	
+		result.put("insert", insert);
+		return result;
+	}	
 	
 	////////////////모집신청////////////////////
 	//모집신청
@@ -146,6 +172,23 @@ public class UserMeetupController {
 	
 		rttr.addFlashAttribute("result", result);		
 		return "redirect:/meetup/user/detail.do?meetupId=" + meetupApplicationsDto.getMeetupId();
+	}
+	
+	//마이페이지 내 신청글 조회
+	@RequestMapping("/meetup/mypage/apply.do")
+	public String myMeetupApplyList(Model model, MeetupDto meetupdto, RedirectAttributes rttr, Authentication authentication, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
+		// 멤버완료 취합 후 적용
+//		CustomUser user = (CustomUser) authentication.getPrincipal();		
+//		int memberId = userMeetupService.findByMamberId(user.getUsername());		
+//		meetupdto.setMemberId(memberId);
+		
+		meetupdto.setMemberId(3);		
+		model.addAttribute("meetupStats", userMeetupService.selectMyPageStats(3));
+		model.addAttribute("applyList", userMeetupService.selectMyMeetupApply(pstartno,meetupdto));
+		model.addAttribute("paging", new PagingUtil(userMeetupService.selectMyMeetupApplyTotalCnt(meetupdto), pstartno));
+		model.addAttribute("menu", "meetupApply");
+		
+		return "meetup/user/myMeetupApplicationList";
 	}
 	
 	//좋아요기능처리

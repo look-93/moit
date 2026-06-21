@@ -34,6 +34,15 @@ public interface UserMeetupService {
 	public int selectMyMeetupTotalCnt(MeetupDto meetupDto);
 	public MeetupDto selectMyPageStats(int memberId);
 	
+	//마이페이지 내 신청글
+	public List<MeetupDto> selectMyMeetupApply(int pstartno,MeetupDto meetupDto);
+	public int selectMyMeetupApplyTotalCnt(MeetupDto meetupDto);
+	
+	//마이페이지 내모집글 - 신청자목록조회
+	public List<MeetupDto> selectMeetupApplyMember(int meetupId);
+	//마이페이지 내모집글 - 신청자목록조회 - 신청,거절
+	public int changeMeetupApplyStatus(MeetupApplicationsDto meetupApplicationsDto);
+	
 	public List<SidoDto> findAllSido();
 	public List<SigunguDto> findAllSigungu();
 	public List<CategoryDto> findAllCategory();

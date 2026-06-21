@@ -202,7 +202,7 @@
  		 WHERE meetup_id = #{meetupId}
  	</update> 	 	
 
-  	<!-- 논리삭제(공통) -->
+  	<!-- 논리삭제(user/admin 공통) -->
   	<update id="deleteMeetup" parameterType="int">
  		UPDATE meetups
  		   SET delete_yn = 'Y' 		   	   
@@ -268,7 +268,7 @@
 			         close=")">
 			    #{status}
 			</foreach>
-    </if>
+    		</if>
  	</select>
  	
   	<!-- 모집신청 취소 -->
@@ -300,6 +300,7 @@
 	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
 	       AND A.member_id = #{memberId}
 	     ORDER BY A.created_at DESC
+	     LIMIT #{start}, #{end}
  	</select>
   	<select id="selectMyMeetupTotalCnt" resultType="int" parameterType="MeetupDto">
 		SELECT COUNT(*)
@@ -308,7 +309,6 @@
 	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
 	       AND A.member_id = #{memberId}
 	     ORDER BY A.created_at DESC
-	     LIMIT #{start}, #{end}
  	</select> 	
  	
  	<!-- 내모집글 통계 -->
@@ -330,8 +330,65 @@
 	        (SELECT COUNT(*) 
 	           FROM meetup_applications 
 	          WHERE member_id = #{memberId} 
-	            AND status = 'APPROVED') AS applicationCount
+	            AND status IN ('APPROVED', 'PENDING')) AS applicationCount
 	</select>
+
+	<!-- 마이페이지 내 모집신청 조회 -->
+	<select id="selectMyMeetupApply" resultType="MeetupDto" parameterType="MeetupDto">
+		SELECT DATE_FORMAT(B.created_at, '%Y.%m.%d') AS apply_at , <!-- 신청일 -->			   
+			   B.reject_reason,
+			   B.member_id AS apply_member_id,
+			   B.status AS apply_status,
+			   C.nickname, <!-- 신청자명 -->
+			   DATE_FORMAT(A.meetup_At, '%Y.%m.%d') as fomatMeetupAt, <!-- 모집일 -->
+               A.*
+		  FROM meetup_applications  AS B
+          JOIN meetups  			AS A ON B.meetup_id = B.meetup_id and A.member_id = B.member_id
+          JOIN members 			    AS C ON C.member_id = B.member_id
+		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
+	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
+		   AND B.status != 'CANCELED' <!-- 취소 제외 -->
+	       AND B.member_id = #{memberId} -- 모임 신청자 아이디; 
+	     ORDER BY A.created_at DESC
+		 LIMIT #{start}, #{end}	
+	</select>
+  	<select id="selectMyMeetupApplyTotalCnt" resultType="int" parameterType="MeetupDto">
+		SELECT COUNT(*)
+		  FROM meetup_applications  AS B
+          JOIN meetups  			AS A ON B.meetup_id = B.meetup_id and A.member_id = B.member_id
+          JOIN members 			    AS C ON C.member_id = B.member_id
+		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
+	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
+		   AND B.status != 'CANCELED'
+	       AND B.member_id = #{memberId} -- 모임 신청자 아이디; 
+	     ORDER BY A.created_at DESC
+ 	</select> 	
+ 	
+ 	<!-- 마이페이지 신청자 목록조회 -->
+	<select id="selectMeetupApplyMember" resultType="MeetupDto" parameterType="int">
+		SELECT C.nickname,               
+               DATE_FORMAT(B.created_at, '%Y.%m.%d') AS apply_at,
+               B.status AS apply_status,
+               A.meetup_id,
+			   B.member_id,
+			   B.application_id
+		  FROM meetups 				AS A
+          JOIN meetup_applications  AS B ON B.meetup_id = A.meetup_id
+          JOIN members  			AS C ON C.member_id = B.member_id
+		 WHERE A.delete_yn = 'N' 
+	       AND A.status != 'DELETED' 
+		   AND B.status != 'CANCELED'
+	       AND A.meetup_id = #{meetupId}
+	     ORDER BY B.created_at DESC
+	</select>	
+	
+	<!-- 마이페이지 신청자 목록조회 - 승인/거절 -->
+	<update id="changeMeetupApplyStatus" parameterType="MeetupApplicationsDto">
+		UPDATE meetup_applications
+		SET status = #{status}
+		WHERE 1=1
+		AND application_id = #{applicationId}
+	</update>	
  	
  	<!-- 시도 조회 -->
  	<select id="findAllSido" resultType="SidoDto">

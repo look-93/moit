@@ -46,6 +46,15 @@ public interface MeetupMapper {
 	//마이페이지 내 모집글 통계
 	public MeetupDto selectMyPageStats(int memberId);
 	
+	//마이페이지 내 신청글 조회 + paging
+	public List<MeetupDto> selectMyMeetupApply(MeetupDto meetupDto);
+	public int selectMyMeetupApplyTotalCnt(MeetupDto meetupDto);
+	
+	//마이페이지 내모집글 - 신청자목록조회
+	public List<MeetupDto> selectMeetupApplyMember(int meetupId);
+	//마이페이지 내모집글 - 신청자목록조회 - 신청,거절
+	public int changeMeetupApplyStatus(MeetupApplicationsDto meetupApplicationsDto);
+
 	//시도, 시군구
 	public List<SidoDto> findAllSido();
 	public List<SigunguDto> findAllSigungu();

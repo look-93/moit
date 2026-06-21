@@ -514,7 +514,7 @@ a {
 	    )
 	    .then(res => res.json())
 	    .then(data => {
-			console.log(data)
+			// console.log(data)
 	        // 서버에서 true/false 반환한다고 가정
 	        if (data.hasLike) {
 	            el.innerText = "♥";

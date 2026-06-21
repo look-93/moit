@@ -106,6 +106,32 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 	public int cancelApplyMeetup(MeetupApplicationsDto meetupApplicationsDto) {
 		return meetupMapper.cancelApplyMeetup(meetupApplicationsDto);
 	}
+	
+	//마이페이지 내 신청글 조회 + paging
+	@Override
+	public List<MeetupDto> selectMyMeetupApply(int pstartno, MeetupDto meetupDto) {
+		meetupDto.setEnd(4);
+		meetupDto.setStart((pstartno-1)*4);
+		return meetupMapper.selectMyMeetupApply(meetupDto);
+	}
+	
+	//마이페이지 내 신청글 조회 + paging
+	@Override
+	public int selectMyMeetupApplyTotalCnt(MeetupDto meetupDto) {
+		return meetupMapper.selectMyMeetupApplyTotalCnt(meetupDto);
+	}
+	
+	//마이페이지 내모집글 - 신청자목록조회
+	@Override
+	public List<MeetupDto> selectMeetupApplyMember(int meetupId) {
+		return meetupMapper.selectMeetupApplyMember(meetupId);
+	}
+
+	//마이페이지 내모집글 - 신청자목록조회 - 신청,거절
+	@Override
+	public int changeMeetupApplyStatus(MeetupApplicationsDto meetupApplicationsDto) {
+		return meetupMapper.changeMeetupApplyStatus(meetupApplicationsDto);
+	}
 
 	// 시도
 	@Override
@@ -119,12 +145,13 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 		return meetupMapper.findAllSigungu();
 	}
 	
-	//카테고리
+	//부모카테고리
 	@Override
 	public List<CategoryDto> findAllCategory() {
 		return meetupMapper.findAllCategory();
 	}
 	
+	//자식카테고리
 	@Override
 	public List<CategoryDto> findAllChildCategory() {
 		return meetupMapper.findAllChildCategory();
@@ -164,8 +191,5 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 	public MeetupLikeDto selectMeetupLike(MeetupLikeDto meetupLikeDto) {
 		return meetupMapper.selectMeetupLike(meetupLikeDto);
 	}
-	
-	
 
-	
 }
