@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moit.dao.ReportsMapper">
+
+
+	<!-- ===== user ===== -->
+	<!-- ===== user ===== -->
+	<!-- 신고 작성  /     서비스에서  - target_type  (MEETUP , REVIEW )   -->
+	<insert id="insertUserReport" parameterType="ReportsDto">
+		insert into reports (target_type, target_id, member_id, reason_code, reason_detail)
+		values ( #{targetType}, #{targetId}, #{memberId}, #{reasonCode}, #{reasonDetail} )
+	</insert> 
+  
+	<!-- 사용자 본인이 작성한 신고 내역 수정 -->
+	<update id="updateUserReport" parameterType="ReportsDto">
+		update reports
+		set reason_code = #{reasonCode}, reason_detail = #{reasonDetail}
+		where report_id = #{reportId} and member_id = #{memberId} and delete_yn = 'N' and status = 'PENDING'
+	</update>
+
+	<!-- 사용자 본인이 작성한 신고 내역 삭제 (update delete_yn = 'Y') -->
+	<update id="deleteUserReport" parameterType="ReportsDto">
+		update reports
+		set delete_yn = 'Y'
+		where report_id = #{reportId} and member_id = #{memberId} and delete_yn = 'N' and status = 'PENDING'
+	</update>
+
+	<!-- 사용자 본인이 작성한 신고 내역 조회 & 유저 - 페이징 -->
+	<select id="selectUserReport" resultType="ReportsDto"   parameterType="java.util.HashMap">
+		select report_id, target_type, target_id, member_id, reason_code, reason_detail, status, created_at
+		from reports
+		where member_id = #{memberId} and delete_yn = 'N'
+		order by report_id desc
+		limit #{start}, #{end}
+	</select>
+	<select id="selectUserCnt" resultType="int">
+		select count(*) from reports 
+		where member_id = #{memberId} and delete_yn = 'N'
+	</select>
+
+	<!-- 사용자 본인이 작성한 신고 내역 상세 조회 -->
+	<select id="selectUserReportDetail" resultType="ReportsDto" parameterType="ReportsDto">
+		select report_id, target_type, target_id, member_id, reason_code, reason_detail, status, created_at
+		from reports
+		where report_id = #{reportId} and member_id = #{memberId} and delete_yn = 'N'
+	</select>
+
+	
+	<!-- ===== admin ===== -->
+	<!-- ===== admin ===== -->
+	<!-- 신고 상태 변경 - PENDING(처리대기) or APPROVED(신고완료) -->
+	<update id="updateAdmin" parameterType="ReportsDto">
+		update reports
+		set status = #{status}
+		where report_id = #{reportId} and status = 'PENDING'
+	</update>
+
+	<!-- 신고 강제 삭제 -->
+	<delete id="deleteAdmin" parameterType="int">
+		delete
+		from reports
+		where report_id = #{reportId}
+	</delete>
+	
+	<!-- 전체 신고 대상 목록 조회 & 관리자 - 페이징 -->
+	<select id="selectAdminReport" resultType="ReportsDto" parameterType="java.util.HashMap">
+		select *
+		from reports
+		order by report_id desc
+		limit #{start}, #{end}
+	</select>
+	<select id="selectAdminCnt" resultType="int">
+		select count(*) from reports
+	</select>
+	
+	<!-- 신고 대상 유형별 목록 조회 - MEETUP & REVIEW -->
+	<select id="selectAdminType" resultType="ReportsDto" parameterType="java.util.HashMap">
+		select *
+		from reports
+		where target_type = #{targetType}
+		order by report_id desc
+		limit #{start}, #{end}
+	</select>
+
+	<!-- 전체 신고 목록 상세 조회 -->
+	<select id="selectAdminDetail" resultType="ReportsDto" parameterType="int">
+		select *
+		from reports
+		where report_id = #{reportId}
+	</select>
+	
+	
+	
+	<!-- 신고 검색(작성자) - 관리자 -->
+	<select id="selectAdminMember" resultType="ReportsDto" parameterType="int">
+		select *
+		from reports
+		where member_id = #{memberId}
+		order by report_id desc
+	</select>
+	<!-- 신고 검색(사유) - 관리자 -->
+	<select id="selectAdminReason" resultType="ReportsDto" parameterType="String">
+		select *
+		from reports
+		where reason_code = #{reasonCode}
+		order by report_id desc
+	</select>
+	<!-- 신고 검색(날짜) - 관리자 -->
+	<select id="selectAdminCreateAt" resultType="ReportsDto" parameterType="String">
+		select *
+		from reports
+		where date(created_at) = #{createdAt}
+		order by report_id desc
+	</select>
+
+	
+	
+	<!-- 유저 - 페이징 (사용자 본인이 작성한 신고 내역 조회 selectUserReport) -->
+	<!-- 관리자 - 페이징 (전체 신고 대상 목록 조회 selectAdminReport) -->
+	
+	
+	<!-- 사유별 신고 건수 집계 
+	<select id="selectReasonReportCount" resultType="ReportsDto">
+		select reason_code, count(*) as reportCount
+		from reports
+		group by reason_code;
+	</select> -->
+	
+	<!-- 회원별 누적 신고 횟수 
+	<select id="selectMemberReportCount" resultType="ReportsDto">
+		select member_id, count(*) as reportCount
+		from reports
+		group by member_id;
+	</select> -->
+		
+	<!-- 대상별 신고 현황 (모임/후기) 
+	<select id="selectTargetReportCount" resultType="ReportsDto">
+		select target_type, target_id, count(*) as reportCounts
+		from reports
+		group by target_type, target_id;
+	</select> -->
+	
+	 
+</mapper>
