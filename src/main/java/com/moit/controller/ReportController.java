@@ -1,6 +1,7 @@
 package com.moit.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -114,7 +115,6 @@ public class ReportController { // test lcy
 
 		rttr.addFlashAttribute("result", result);
 		return "redirect:/report/user/detail.do?reportId=" + dto.getReportId();
-		
 	}
 	
 	// 신고 삭제 처리 delete
@@ -137,9 +137,15 @@ public class ReportController { // test lcy
 	// 관리자 리스트 목록
 	@RequestMapping("/report/admin/adminList.do")
 	public String adminList(@RequestParam(value="pstartno", defaultValue="1") int pstartno,
+							@RequestParam(value="targetType", required=false) String targetType,
+							@RequestParam(value="status", required=false) String status,
 							Model model) {
 		
 		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("targetType", targetType);
+		map.put("status", status);
+		
 		map.put("start", (pstartno-1)*10);
 		map.put("end", 10);
 	
@@ -151,14 +157,49 @@ public class ReportController { // test lcy
 	
 	// 관리자 리스트 목록 상세보기
 	@RequestMapping("/report/admin/adminDetail.do")
-	public String adminDetail( @RequestParam("reportId") int reportId, Model model) {
+	public String adminDetail(	@RequestParam("reportId") int reportId,
+								Model model) {
 		
-		HashMap<String, Object> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>(); // 조회 조건 reportId 설정
 		map.put("reportId", reportId);
+//		model.addAttribute("dto", service.selectAdminReports(map));
 		
-		model.addAttribute(map);
+		List<ReportsDto> list = service.selectAdminReports(map); // 조회 결과
+		
+		if (list != null & !list.isEmpty()) {
+			model.addAttribute("dto", list.get(0));
+		}
 		
 		return "report/admin/adminDetail";
+	}
+	
+	// 관리자 APPROVED 수정
+	@RequestMapping( value="/report/admin/update.do", method=RequestMethod.POST )
+	public String reportUpdateAdmin_post(ReportsDto dto, RedirectAttributes rttr) {
+		
+		String result="APPROVED 수정 실패";
+		
+		if( service.updateAdmin(dto) > 0 ) {
+			result="APPROVED 수정 성공";
+		}
+		
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/report/admin/adminList.do";
+	}
+	
+	// 관리자 신고 삭제
+	@RequestMapping( value="/report/admin/delete.do", method=RequestMethod.POST )
+	public String reportDeleteAdmin_post(	@RequestParam("reportId") int reportId,
+											ReportsDto dto, RedirectAttributes rttr) {
+		
+		String result="신고삭제 실패";
+		
+		if( service.deleteAdmin(reportId) > 0 ) {
+			result="신고삭제 성공";
+		}
+		
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/report/admin/adminList.do";
 	}
 	
 }

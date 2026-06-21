@@ -74,26 +74,27 @@
 	<select id="selectAdminReports" resultType="ReportsDto" parameterType="java.util.HashMap">
 	    select *
 	    from reports
-	    <where>
-	        <if test="reportId != null">
-	            and report_id = #{reportId}
-	        </if>
-	        <if test="status != null and status != ''">
-	            and status = #{status}
-	        </if>
-	        <if test="targetType != null and targetType != ''">
-	            and target_type = #{targetType}
-	        </if>
-	        <if test="memberId != null">
-	            and member_id = #{memberId}
-	        </if>
-	        <if test="reasonCode != null and reasonCode != ''">
-	            and reason_code = #{reasonCode}
-	        </if>
-	        <if test="createdAt != null and createdAt != ''">
-	            and date(created_at) = #{createdAt}
-	        </if>
-	    </where>
+	    where delete_yn = 'N'
+	    
+        <if test="reportId != null">
+            and report_id = #{reportId}
+        </if>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="targetType != null and targetType != ''">
+            and target_type = #{targetType}
+        </if>
+        <if test="memberId != null">
+            and member_id = #{memberId}
+        </if>
+        <if test="reasonCode != null and reasonCode != ''">
+            and reason_code = #{reasonCode}
+        </if>
+        <if test="createdAt != null and createdAt != ''">
+            and date(created_at) = #{createdAt}
+        </if>
+        
 	    order by report_id desc
 	    <if test="start != null and end != null">
 	        limit #{start}, #{end}
@@ -104,23 +105,24 @@
 	<select id="selectAdminReportsCnt" resultType="int" parameterType="java.util.HashMap">
 	    select count(*)
 	    from reports
-	    <where>
-	        <if test="status != null and status != ''">
-	            and status = #{status}
-	        </if>
-	        <if test="targetType != null and targetType != ''">
-	            and target_type = #{targetType}
-	        </if>
-	        <if test="memberId != null">
-	            and member_id = #{memberId}
-	        </if>
-	        <if test="reasonCode != null and reasonCode != ''">
-	            and reason_code = #{reasonCode}
-	        </if>
-	        <if test="createdAt != null and createdAt != ''">
-	            and date(created_at) = #{createdAt}
-	        </if>
-	    </where>
+	    where delete_yn = 'N'
+	    
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="targetType != null and targetType != ''">
+            and target_type = #{targetType}
+        </if>
+        <if test="memberId != null">
+            and member_id = #{memberId}
+        </if>
+        <if test="reasonCode != null and reasonCode != ''">
+            and reason_code = #{reasonCode}
+        </if>
+        <if test="createdAt != null and createdAt != ''">
+            and date(created_at) = #{createdAt}
+        </if>
+	        
 	</select>
 
 	

@@ -62,12 +62,12 @@ public class ReportsServiceImpl implements ReportsService {
 		return dao.deleteAdmin(reportId);
 	}
 
-	@Override
+	@Override // 관리자 신고 목록 조회 (동적 조건 + 페이징 + 단건 조회까지 포함)
 	public List<ReportsDto> selectAdminReports(HashMap<String, Object> map) {
 		return dao.selectAdminReports(map);
 	}
 
-	@Override
+	@Override // 관리자 신고 목록 카운트 (동적 조건 반영)
 	public int selectAdminReportsCnt(HashMap<String, Object> map) {
 		return dao.selectAdminReportsCnt(map);
 	}
