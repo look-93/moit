@@ -19,22 +19,6 @@
     --shadow:0 5px 15px rgba(0,0,0,.07);
 }
 
-/* *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-} */
-
-body{
-    font-family:sans-serif;
-    background:var(--bg);
-}
-
-.container{
-    width:1400px;
-    max-width:95%;
-    margin:auto;
-}
 
 /* PAGE */
 
@@ -93,7 +77,7 @@ body{
 
     display:flex;
     gap:10px;
-    flex-wrap:wrap;
+    flex-wrap:wrap;    
 }
 
 .filter-box input,
@@ -109,6 +93,8 @@ body{
     border:none;
     padding:12px 20px;
     border-radius:12px;
+    
+	cursor:pointer; 
 }
 
 /* CARD */
@@ -182,11 +168,12 @@ body{
 
 /* PAGINATION */
 
-.pagination{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-top:20px;
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;    /* 💡 카드 리스트와의 간격도 살짝 넓힘 (기존 20px) */
+    margin-bottom: 40px; /* 💡 푸터와 부딪히지 않도록 아래쪽 여백 추가! */
 }
 
 .pagination a{
@@ -313,48 +300,77 @@ a {
 	text-decoration: none;
 	color:inherit;
 }
+
+.write-btn{
+    margin-left:auto;
+
+    background:linear-gradient(
+        135deg,
+        var(--c4),
+        var(--c3)
+    );
+
+    color:white;
+    text-decoration:none;
+
+    padding:12px 22px;
+    border-radius:12px;
+
+    font-weight:600;
+    transition:.3s;
+
+    display:flex;
+    align-items:center;
+}
+
+.write-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(104,126,255,.25);
+}
+
 </style>
+<div class="main-content">
+	<div class="container">
 
-<div class="container">
+		<div class="page">
 
-	<div class="page">
+			<!-- LEFT -->
 
-		<!-- LEFT -->
+			<aside class="sidebar">
 
-		<aside class="sidebar">
+				<h3>카테고리</h3>
 
-			<h3>카테고리</h3>
-			
-			<div class="category">			
-				<a href="list.do" class="${empty param.categoryId ? 'active' : ''}">전체</a> 
-				<c:forEach var="category" items="${categoryList}">
-					<a href="?categoryId=${category.categoryId}" class="${param.categoryId == category.categoryId ? 'active' : ''}">
-						${category.categoryName}
-					</a>
-				</c:forEach> 
-			</div>
+				<div class="category">
+					<a href="list.do"
+						class="${empty param.categoryId || param.categoryId eq '0' ? 'active' : ''}">전체</a>
+					<c:forEach var="category" items="${categoryList}">
+						<a href="?categoryId=${category.categoryId}"
+							class="${param.categoryId eq category.categoryId ? 'active' : ''}">
+							${category.categoryName} </a>
+					</c:forEach>
+				</div>
 
-			<div class="sidebar-ad">
+				<div class="sidebar-ad">
 
-				<div class="ad-tag">ADVERTISEMENT</div>
+					<div class="ad-tag">ADVERTISEMENT</div>
 
-				<h3>
-					신규 회원<br> 특별 혜택
-				</h3>
+					<h3>
+						신규 회원<br> 특별 혜택
+					</h3>
 
-				<p>
-					가입만 해도<br> 할인 쿠폰 지급
-				</p>
+					<p>
+						가입만 해도<br> 할인 쿠폰 지급
+					</p>
 
-				<a href="#"> 지금 확인하기 </a>
+					<a href="#"> 지금 확인하기 </a>
 
-			</div>
+				</div>
 
-		</aside>
+			</aside>
 
-		<!-- RIGHT -->
+			<!-- RIGHT -->
 
-		<section class="content">
+			<section class="content">
 
 
 
@@ -371,18 +387,17 @@ a {
 				<form action="${pageContext.request.contextPath}/meetup/user/list.do" method="get">
 					<div class="filter-box">
 						<!-- 검색 -->
-						<input type="hidden" name="categoryId" value="${param.categoryId}">
+						<input type="hidden" name="categoryId"
+							value="${empty param.categoryId ? 0 : param.categoryId}">
 						<input type="text" name="searchText" class="form-control" placeholder="모임명 검색">
 						<!-- 시도 -->
 						<select id="sidoId" name="sidoId" class="form-select">
-							<option value="0">전체 지역</option>
+							<option value="0" selected>전체 지역</option>
 							<c:forEach var="sido" items="${sidoList}" varStatus="status">
 								<option value="${sido.sidoId}">${sido.name}</option>
 							</c:forEach>
-
-						</select> 
-						<select id="orderType" name="orderType" class="form-select">
-							<option value="createAt">최신순</option>
+						</select> <select id="orderType" name="orderType" class="form-select">
+							<option value="createAt" selected>최신순</option>
 							<option value="like">인기순</option>
 							<option value="meetupAt">마감임박순</option>
 						</select>
@@ -390,6 +405,10 @@ a {
 						<div class="col-md-2">
 							<button type="submit" class="btn btn-primary">검색</button>
 						</div>
+
+						<!-- 여기 추가 -->
+						<a href="${pageContext.request.contextPath}/meetup/user/write.do"
+							class="write-btn"> ✏️ 모임 만들기 </a>
 
 					</div>
 				</form>
@@ -400,7 +419,9 @@ a {
 
 					<!-- CARD -->
 					<c:forEach var="meetupList" items="${serchList}" varStatus="status">
-						<a href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${meetupList.meetupId}" action="get">
+						<a
+							href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${meetupList.meetupId}"
+							action="get">
 							<div class="card">
 								<div class="card-img"></div>
 								<div class="card-body">
@@ -416,7 +437,7 @@ a {
 
 									<h4>${meetupList.title}</h4>
 
-									<p>🏃 운동/스포츠</p>
+									<p>${meetupList.categoryName}</p>
 									<!-- 수정 카테고리추가 -->
 									<p>${meetupList.sigunguName}</p>
 									<p>👥 ${meetupList.participant} /
@@ -455,15 +476,21 @@ a {
 				</div>
 			</section>
 
-	</div>
+		</div>
 
+	</div>
 </div>
 <script>
 	window.onload = function() {
 	    const sidoId = document.getElementById("sidoId");
 	    const orderType = document.getElementById("orderType");
-	    sidoId.value = '${param.sidoId}';
-	    orderType.value = '${param.orderType}';
+	    if ('${param.sidoId}' !== '') {
+	        sidoId.value = '${param.sidoId}';
+	    }
+
+	    if ('${param.orderType}' !== '') {
+	        orderType.value = '${param.orderType}';
+	    }
 	}
 </script>
 <%@ include file="../../inc/userFooter.jsp"%>

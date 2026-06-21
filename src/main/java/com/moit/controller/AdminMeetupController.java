@@ -34,7 +34,7 @@ public class AdminMeetupController {
 	@RequestMapping(value = "/delete.do",  method = RequestMethod.POST)
 	public String deleteByAdmin(int meetupId) {
 	
-		adminMeetupService.deleteByMeetup(meetupId);
+		adminMeetupService.deleteMeetup(meetupId);
 		return "redirect:/meetup/admin/list.do";
 	}	
 	

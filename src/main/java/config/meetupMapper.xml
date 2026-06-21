@@ -26,7 +26,7 @@
            AND B.nickname LIKE CONCAT('%', #{searchText}, '%')
         </if>        
 		 ORDER BY A.created_at DESC
-		 LIMIT #{start}, ${end}		 
+		 LIMIT #{start}, #{end}		 
  	</select> 	
  	<select id="selectMeetupTotalCnt" resultType="int" parameterType="MeetupSearchDto">
 		SELECT COUNT(*) 
@@ -65,13 +65,15 @@
 			 WHERE F.meetup_id = A.meetup_id
 			 ORDER BY E.image_id ASC
 			 LIMIT 1
-		   ) AS image_path		   
+		   ) AS image_path,
+		   D.category_name		   
 		   
 		   <!-- 좋아요 수 추가-->
 	  FROM meetups AS A
       LEFT OUTER JOIN sigungus 	 AS B ON B.sigungu_id = A.sigungu_id
       LEFT OUTER JOIN sidos 	 AS C ON C.sido_id = B.sido_id 
-      LEFT OUTER JOIN categories AS D ON D.parent_id = A.category_id
+	  LEFT OUTER JOIN categories AS D ON D.category_id = A.category_id
+	  LEFT OUTER JOIN categories AS P ON P.category_id = D.parent_id
 	 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
        AND A.status != 'DELETED' <!-- 삭제 제외 -->
 	 <if test="sidoId != null and sidoId != 0">
@@ -81,12 +83,12 @@
            AND A.title LIKE CONCAT('%', #{searchText}, '%')
      </if>
 	 <if test="categoryId != null and categoryId != 0">
-          AND D.parent_id = #{categoryId}
+          AND P.parent_id = #{categoryId}
      </if> 
 	 ORDER BY
 	<choose>
 		<when test="orderType == 'createAt' and orderType != ''"> 
-			A.created_at ASC
+			A.created_at DESC
 		</when>
 		<when test="orderType == 'list' and orderType != ''">
 			(SELECT COUNT(*) 
@@ -95,20 +97,21 @@
 			  GROUP BY A.meetup_id) DESC
 		</when>
 		<when test="orderType == 'meetupAt' and orderType != ''">
-			A.meetup_At DESC
+			A.meetup_At ASC
 		</when>		
-		<otherwise>
+ 		<otherwise>
 			A.created_at DESC
 		</otherwise>
 	</choose>
-		 LIMIT #{start}, ${end}
+		 LIMIT #{start}, #{end}
  	</select>	
   	<select id="selectUserMeetupTotalCnt" resultType="int" parameterType="MeetupSearchDto">
 		SELECT COUNT(*)
 		  FROM meetups AS A
 	      LEFT OUTER JOIN sigungus 	 AS B ON B.sigungu_id = A.sigungu_id
 	      LEFT OUTER JOIN sidos 	 AS C ON C.sido_id = B.sido_id
-	      LEFT OUTER JOIN categories AS D ON D.parent_id = A.category_id    
+	  	  LEFT OUTER JOIN categories AS D ON D.category_id = A.category_id
+	      LEFT OUTER JOIN categories AS P ON P.category_id = D.parent_id
 		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
 	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		 <if test="sidoId != null and sidoId != 0">
@@ -118,12 +121,12 @@
 	           AND A.title LIKE CONCAT('%', #{searchText}, '%')
 	     </if>
 		 <if test="categoryId != null and categoryId != 0">
-	          AND D.parent_id = #{categoryId}
+	          AND P.parent_id = #{categoryId}
 	     </if> 	     
 		 ORDER BY
 		<choose> <!--  -->
 			<when test="orderType == 'createAt' and orderType != ''"> 
-				A.created_at ASC
+				A.created_at DESC
 			</when>
 			<when test="orderType == 'list' and orderType != ''">
 				(SELECT COUNT(*) 
@@ -132,7 +135,7 @@
 				  GROUP BY A.meetup_id) DESC
 			</when>
 			<when test="orderType == 'meetupAt' and orderType != ''">
-				A.meetup_At DESC
+				A.meetup_At ASC
 			</when>		
 			<otherwise>
 				A.created_at DESC
@@ -182,20 +185,15 @@
  		UPDATE meetups
  		   SET title 			 = #{title},
  		   	   content 			 = #{content},
- 		   	   max_participants  = #{max_participants},
- 		   	   min_participants  = #{min_participants},
+ 		   	   max_participants  = #{maxParticipants},
+ 		   	   min_participants  = #{minParticipants},
  		   	   address 		 	 = #{address},
- 		   	   meetup_datetime 	 = #{meetup_datetime},
+ 		   	   category_id 		 = #{categoryId},
+ 		   	   meetup_at 	 	 = #{meetupAt},
  		   	   status			 = #{status} 		   	   
- 		 WHERE meetup_id = #{meetup_id}
- 	</update>
- 	
- 	<!-- 논리삭제 -->
-  	<update id="deleteMeetup" parameterType="int">
- 		UPDATE meetups
- 		   SET delete_yn = 'Y' 		   	   
- 		 WHERE meetup_id = #{meetup_id}
- 	</update>	
+ 		 WHERE meetup_id = #{meetupId}
+ 	</update> 	
+	
  	
   	<!-- 모집 신청 -->
  	<insert id="insertApplication">
@@ -203,6 +201,67 @@
 		 VAEUE (#{meetup_id}, #{member_id}, #{status}) 	
  	</insert> 
  	
+
+  	<!-- 논리삭제(공통) -->
+  	<update id="deleteMeetup" parameterType="int">
+ 		UPDATE meetups
+ 		   SET delete_yn = 'Y' 		   	   
+ 		 WHERE meetup_id = #{meetup_id}
+ 	</update>	
+ 
+ 	<!-- 마이페이지 내 모집글 조회 + paging-->
+ 	<select id="selectMyMeetup" resultType="MeetupDto" parameterType="MeetupDto">
+		SELECT A.*,					   
+			   (SELECT COUNT(*) 
+			      FROM meetup_applications 
+			     WHERE meetup_id = A.meetup_id
+			   ) AS participant,
+			   
+			   DATE_FORMAT(meetup_At, '%Y.%m.%d') as fomatMeetupAt,
+			   DATE_FORMAT(created_at, '%Y.%m.%d') as fomatcreatedAt,
+			   
+			   (SELECT COUNT(*) 
+			      FROM meetups 
+			     WHERE member_id = A.member_id
+			   ) AS meetupTotalCount		   
+
+		  FROM meetups AS A
+		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
+	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
+	       AND A.member_id = #{memberId}
+	     ORDER BY A.created_at DESC
+ 	</select>
+  	<select id="selectMyMeetupTotalCnt" resultType="int" parameterType="MeetupDto">
+		SELECT COUNT(*)
+		  FROM meetups AS A
+		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
+	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
+	       AND A.member_id = #{memberId}
+	     ORDER BY A.created_at DESC
+	     LIMIT #{start}, #{end}
+ 	</select> 	
+ 	
+ 	<!-- 내모집글 통계 -->
+	<select id="selectMyPageStats" resultType="MeetupDto" parameterType="int">
+	    SELECT 
+	        (SELECT COUNT(*) 
+	           FROM meetups 
+	          WHERE member_id = #{memberId} 
+	            AND delete_yn = 'N' 
+	            AND status != 'DELETED'
+	         ) AS meetupCount,
+	        (SELECT COUNT(*) 
+	           FROM reviews 
+	          WHERE member_id = #{memberId} 
+	            AND delete_yn = 'N') AS reviewCount,
+	        (SELECT COUNT(*) 
+	           FROM meetup_likes   
+	          WHERE member_id = #{memberId}) AS likeCount,
+	        (SELECT COUNT(*) 
+	           FROM meetup_applications 
+	          WHERE member_id = #{memberId} 
+	            AND status = 'APPROVED') AS applicationCount
+	</select>
  	
  	<!-- 시도 조회 -->
  	<select id="findAllSido" resultType="SidoDto">
@@ -219,6 +278,11 @@
 	 	SELECT *
 		  FROM categories AS A
 		 WHERE parent_id IS NULL
+ 	</select>
+ 	<select id="findAllChildCategory" resultType="CategoryDto">
+	 	SELECT *
+		  FROM categories AS A
+		 WHERE parent_id IS NOT NULL
  	</select>
 </mapper>
 

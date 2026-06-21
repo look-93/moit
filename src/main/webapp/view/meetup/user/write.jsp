@@ -17,28 +17,30 @@
     --radius:20px;
 }
 
-/* *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-} */
-
 body{
     background:var(--bg);
     font-family:sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* container */
-.detail-container{
+/* 💡 본문 영역 - fixed 헤더 밑으로 배치 및 푸터와의 하단 숨통 트이는 여백 확보 */
+.main-content {
+    flex: 1;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    box-sizing: border-box;
+}
+
+/* 💡 헤더 .container와 충돌하지 않도록 write 전용 컨테이너 생성 */
+.write-container{
     width:1300px;
     max-width:95%;
     margin:auto;
 }
 
-
-
 /* ================= LAYOUT ================= */
-
 .detail-wrap{
     margin-top:30px;
     display:grid;
@@ -64,7 +66,7 @@ body{
     height:450px;
     border-radius:20px;
     overflow:hidden;
-    background:white;
+    background:#f5f5f5;
 }
 
 .thumb-list{
@@ -86,6 +88,7 @@ body{
     padding:30px;
     border-radius:20px;
     box-shadow:var(--shadow);
+    margin-bottom:30px;
 }
 
 .detail-badge{
@@ -151,8 +154,7 @@ body{
     color:var(--c4);
 }
 
-/* ================= TABS (복구 완료) ================= */
-
+/* ================= TABS ================= */
 .tabs{
     background:white;
     border-radius:20px;
@@ -282,7 +284,8 @@ body{
     margin-bottom:5px;
 }
 
-.inquiry-btn{
+/* 💡 [명칭 변경] 헤더의 .inquiry-btn과의 충돌 우려로 고유 이름 부여 */
+.form-inquiry-btn{
     width:100%;
     margin-top:12px;
     border:none;
@@ -295,7 +298,6 @@ body{
 }
 
 /* SIDEBAR AD */
-
 .sidebar-ad{
     margin-top:25px;
     min-height:450px;
@@ -352,24 +354,24 @@ body{
 }
 
 .form-input{
-	width:100%;
-	padding:14px;
-	border:1px solid #ddd;
-	border-radius:12px;
-	margin-top:8px;
-	font-size:14px;
-	box-sizing:border-box;
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    margin-top:8px;
+    font-size:14px;
+    box-sizing:border-box;
 }
 
 .form-input:focus{
-	outline:none;
-	border-color:var(--c4);
-	box-shadow:0 0 0 3px rgba(104,126,255,.15);
+    outline:none;
+    border-color:var(--c4);
+    box-shadow:0 0 0 3px rgba(104,126,255,.15);
 }
 
 textarea.form-input{
-	resize:vertical;
-	min-height:200px;
+    resize:vertical;
+    min-height:200px;
 }
 
 .form-select {
@@ -392,121 +394,131 @@ textarea.form-input{
 </style>
 
 <%@ include file="../../inc/userHeader.jsp"%>
+<div class="main-content">
+    <div class="write-container"> 
+    <form action="${empty meetup ? pageContext.request.contextPath.concat('/meetup/user/write.do') : pageContext.request.contextPath.concat('/meetup/mypage/update.do')}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
+        	<div class="detail-wrap">
+    		<input type="hidden" name="meetupId" value="${!empty meetup ? meetup.meetupId:''}" />
+                <div class="left-panel">
+    
+                    <div class="image-box">
+                        <div class="main-image" style="display:flex;align-items:center;justify-content:center;">
+                            <span style="color:#999;">대표 이미지를 등록해주세요</span>
+                        </div>
+    
+                        <div class="thumb-list">
+                            <input type="file" name="images" multiple style="width:100%;">
+                        </div>
+                    </div>
+    
+                    <div class="content-box">
+                        <div class="content-top">
+                            <div class="detail-badge">새 모임 등록</div>
+                        </div>
+    
+                        <div style="margin-bottom:20px;">
+                            <label>모임 제목</label>
+                            <input type="text" name="title" class="form-input" placeholder="모임 제목을 입력하세요" 
+                            value="${!empty meetup ? meetup.title : ''}">
+                        </div>
+    
+                        <div style="margin-bottom:20px;">
+                            <label>카테고리</label>
+                            <select id="categoryId" name="categoryId" class="form-input">
+                                <option value="">선택</option>
+                                <c:forEach var="category" items="${childCategoryList}" varStatus="status">
+                                <option value="${category.categoryId}">${category.categoryName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+    
+                        <div>
+                            <label>모임 소개</label>
+                            <textarea name="content" rows="10" class="form-input" placeholder="모임에 대한 설명을 작성해주세요">${!empty meetup ? meetup.content : ''}</textarea>
+                        </div>
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="side-box">
+                        <h3>모집 정보</h3>
+    
+                        <div style="margin-bottom:15px;">
+                            <label>최소 인원</label>
+                            <input type="number" name="minParticipants" class="form-input" min="1" max="100" value="${!empty meetup ? meetup.minParticipants : 0}">
+                        </div>
+    
+                        <div style="margin-bottom:15px;">
+                            <label>최대 인원</label>
+                            <input type="number" name="maxParticipants" class="form-input" min="1" max="100" value="${!empty meetup ? meetup.maxParticipants : 0}">
+                        </div>  
+    
+                        <div style="margin-bottom:15px;">
+                            <label>지역</label>
+                            <select id="sigunguId" name="sigunguId" class="form-select">
+                                <option value="">지역 선택</option>
+                                <c:forEach var="sigungu" items="${sigunguList}" varStatus="status">
+                                <option value="${sigungu.sigunguId}">${sigungu.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-bottom:15px;">
+                            <label>모임 일시</label>
+                            <input type="datetime-local" name="meetupAt" class="form-input" value="${!empty meetup ? meetup.meetupAt : ''}">
+                        </div>
 
-<div class="container detail-container">
-
-	<form action="${pageContext.request.contextPath}/meetup/user/write.do" method="post" enctype="multipart/form-data">
-	<input  type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" /> <!-- 보안 -->
-
-		<div class="detail-wrap">
-
-			<!-- LEFT -->
-			<div class="left-panel">
-
-				<!-- 이미지 등록 -->
-				<div class="image-box">
-
-					<div class="main-image"
-						style="display:flex;align-items:center;justify-content:center;background:#f5f5f5;">
-						<span style="color:#999;">대표 이미지를 등록해주세요</span>
-					</div>
-
-					<div class="thumb-list">
-						<input type="file" name="images" multiple
-							style="width:100%;">
-					</div>
-
-				</div>
-
-				<!-- 모임 정보 -->
-				<div class="content-box">
-
-					<div class="content-top">
-						<div class="detail-badge">새 모임 등록</div>
-					</div>
-
-					<div style="margin-bottom:20px;">
-						<label>모임 제목</label>
-						<input type="text" name="title" class="form-input" placeholder="모임 제목을 입력하세요">
-					</div>
-
-					<div style="margin-bottom:20px;">
-						<label>카테고리</label>
-						<select name="categoryId" class="form-input">
-							<option value="">선택</option>
-							<option value="1">운동</option>
-							<option value="2">스터디</option>
-							<option value="3">취미</option>
-						</select>
-					</div>
-
-					<div>
-						<label>모임 소개</label>
-						<textarea name="content" rows="10" class="form-input"
-							placeholder="모임에 대한 설명을 작성해주세요"></textarea>
-					</div>
-
-				</div>
-
-			</div>
-
-			<!-- RIGHT -->
-			<div>
-
-				<div class="side-box">
-
-					<h3>모집 정보</h3>
-
-						<div style="margin-bottom:15px;">
-							<label>최소 인원</label>
-							<input type="number" name="minParticipants" class="form-input" min="1" max="100" value="0">
-						</div>
-	
-						<div style="margin-bottom:15px;">
-							<label>최대 인원</label>
-							<input type="number" name="maxParticipants" class="form-input" min="1" max="100" value="0">
-						</div>	
-
-						<div style="margin-bottom:15px;">
-						    <label>지역</label>
-						    <select name="sigunguId" class="form-select">
-						        <option value="">지역 선택</option>
-						        <c:forEach var="sigungu" items="${sigunguList}" varStatus="status">
-						        <option value="${sigungu.sigunguId}">${sigungu.name}</option>
-						        </c:forEach>
-						    </select>
-						</div>
-						
-						<div style="margin-bottom:15px;">
-							<label>모임 일시</label>
-							<input type="datetime-local" name="meetupAt" class="form-input">
-						</div>
-	
-						<button type="submit" class="btn btn-primary">
-							모임 등록하기
-						</button>
-
-				</div>
-				
-
-				<div class="side-box">
-					<h3>작성 가이드</h3>
-
-					<p style="line-height:1.8;color:#666;">
-						• 모임 목적을 명확히 작성해주세요.<br>
-						• 장소와 시간을 정확히 입력해주세요.<br>
-						• 참가 조건이 있다면 소개글에 작성해주세요.
-					</p>
-				</div>
-
-			</div>
-
-		</div>
-
-	</form>
-
+                        <div style="margin-bottom:15px;">
+                            <label>상태</label>
+                            <select id="status" name="status" class="form-select">
+                                <option value="RECRUITING">모집중</option>
+     							<option value="CLOSED">종료됨</option>
+     							<!-- <option value="CANCELED">취소</option> -->
+     							<!-- <option value="DELETED">삭제됨</option> -->
+                            </select>
+                        </div>
+    
+                        <button type="submit" class="btn btn-primary">
+                            ${meetup != null ? '모임 수정하기' : '모임 등록하기'}
+                        </button>
+                    </div>
+                    
+                    <div class="side-box">
+                        <h3>작성 가이드</h3>
+                        <p style="line-height:1.8;color:#666;">
+                            • 모임 목적을 명확히 작성해주세요.<br>
+                            • 장소와 시간을 정확히 입력해주세요.<br>
+                            • 참가 조건이 있다면 소개글에 작성해주세요.
+                        </p>
+                    </div>
+                </div>
+    
+            </div>
+    
+        </form>
+    
+    </div>
 </div>
+<script>
+	window.onload = function(){
+		const sigunguId = document.getElementById("sigunguId");
+		const categoryId = document.getElementById("categoryId");
+		const status = document.getElementById("status");
+		
+		if(${!empty meetup}){
+			status.value = "${meetup.status}"
+		}	
+		
+		if(${!empty meetup}){
+			sigunguId.value = "${meetup.sigunguId}"
+		}	
+		
+		if(${!empty meetup}){
+			categoryId.value = "${meetup.categoryId}"
+		}		
+	}
 
-
+</script>
 
 <%@ include file="../../inc/userFooter.jsp"%>

@@ -30,8 +30,8 @@ public class AdminMeetupServiceImpl implements AdminMeetupService{
 	}
 
 	@Override
-	public int deleteByMeetup(int meetupId) {		
-		return meetupMapper.deleteByMeetup(meetupId);
+	public int deleteMeetup(int meetupId) {		
+		return meetupMapper.deleteMeetup(meetupId);
 	}	
 	
 	

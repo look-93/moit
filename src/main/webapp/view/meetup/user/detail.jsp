@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../../inc/userHeader.jsp"%>
 
-
-
- <style>
-
+<style>
 :root{
     --c1:#B6FFFA;
     --c2:#98E4FF;
@@ -20,15 +17,20 @@
     --radius:20px;
 }
 
-/* *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-} */
-
 body{
     background:var(--bg);
     font-family:sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 💡 헤더/푸터 사이 본문 영역 - 푸터 완전히 밀어내고 하단 숨통 트이는 여백 80px 확보 */
+.main-content {
+    flex: 1;
+    padding-top: 80px; 
+    padding-bottom: 80px; /* ✨ [핵심] 푸터와 절대 붙지 않도록 여백 지정 */
+    box-sizing: border-box;
 }
 
 /* container */
@@ -38,10 +40,7 @@ body{
     margin:auto;
 }
 
-
-
 /* ================= LAYOUT ================= */
-
 .detail-wrap{
     margin-top:30px;
     display:grid;
@@ -154,8 +153,7 @@ body{
     color:var(--c4);
 }
 
-/* ================= TABS (복구 완료) ================= */
-
+/* ================= TABS ================= */
 .tabs{
     background:white;
     border-radius:20px;
@@ -285,7 +283,8 @@ body{
     margin-bottom:5px;
 }
 
-.inquiry-btn{
+/* 💡 [명칭 변경] 헤더의 관리자 1:1문의 버튼 레이아웃을 해치지 않도록 클래스 이름 분리 */
+.detail-inquiry-btn{
     width:100%;
     margin-top:12px;
     border:none;
@@ -298,7 +297,6 @@ body{
 }
 
 /* SIDEBAR AD */
-
 .sidebar-ad{
     margin-top:25px;
     min-height:450px;
@@ -353,236 +351,176 @@ body{
 
     font-weight:bold;
 }
-
 </style>
 
-
-
-<div class="container detail-container">
-
-<div class="detail-wrap">
-
-<!-- LEFT -->
-<div class="left-panel">
-
-    <div class="image-box">
-
-        <div class="main-image">
-            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=900&q=80"
-                 style="width:100%;height:100%;object-fit:cover;">
-        </div>
-
-        <div class="thumb-list">
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
-            <div class="thumb"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
-        </div>
-
-    </div>
-
-    <div class="content-box">
-        <div class="content-top">
-            <div class="detail-badge">모집중</div>
-            <button class="report-btn">🚨 모임 신고</button>
-        </div>
-        <h1 class="title">${detailList.title}</h1>
-
-<!--         <div class="tags">
-            <div class="tag">운동</div>
-            <div class="tag">등산</div>
-            <div class="tag">서울</div>
-        </div> -->
-
-<!--         <div class="description">
-            주말마다 함께 등산할 분들을 모집합니다.
-        </div> -->
-    </div>
-
-    <!-- ✅ TABS 복구 -->
-    <div class="tabs">
-
-        <div class="tab-header">
-            <div class="tab-btn active" onclick="showTab(0)">상세정보</div>
-            <div class="tab-btn" onclick="showTab(1)">신청자</div>
-            <div class="tab-btn" onclick="showTab(2)">후기</div>
-            <div class="tab-btn" onclick="showTab(3)">Q&A</div>
-        </div>
-
-        <div class="tab-content">
-
-            <div class="tab-panel active">
-                <h3>모임 안내</h3>
-                <div class="description">${detailList.content}</div>
-            </div>
-
-            <div class="tab-panel">
-                <p>홍길동 외 7명</p>
-            </div>
-
-            <div class="tab-panel">
-
-                <div class="rating-box">
-                    <div class="rating-score">
-                        <h1>4.8</h1>
-                        <div class="stars">★★★★★</div>
-                        <p>총 후기 12개</p>
-                    </div>
-
-                    <div>
-                        <div class="bar">
-                            <span>5점</span>
-                            <div class="bar-line">
-                                <div class="bar-fill" style="width:80%"></div>
-                            </div>
-                            <span>10</span>
-                        </div>
-
-                        <div class="bar">
-                            <span>4점</span>
-                            <div class="bar-line">
-                                <div class="bar-fill" style="width:20%"></div>
-                            </div>
-                            <span>2</span>
-                        </div>
-
-                        <div class="bar">
-                            <span>3점</span>
-                            <div class="bar-line">
-                                <div class="bar-fill" style="width:0%"></div>
-                            </div>
-                            <span>0</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- COMMENTS -->
-                <div class="comment">
-                    <div class="comment-top">
-                        <div>
-                            <div class="comment-name">김모잇</div>
-                            <div class="comment-date">2026.06.15</div>
-                        </div>
-
-                        <button class="report-btn">신고</button>
-                    </div>
-
-                    <div class="comment-images">
-                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
-                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
-                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
-                    </div>
-
-                    <p>분위기 너무 좋았어요!</p>
-                </div>
-
-                <div class="comment">
-                    <div class="comment-top">
-                        <div>
-                            <div class="comment-name">이모임</div>
-                            <div class="comment-date">2026.06.12</div>
-                        </div>
-
-                        <button class="report-btn">신고</button>
-                    </div>
-                    <p>초보도 부담 없이 참여 가능</p>
-                </div>
-
-            </div>
-
-            <div class="tab-panel">
-
-                <h3>Q&A</h3>
-
-                <div class="comment">
-                    <div class="comment-name">익명</div>
-                    <div class="comment-date">2026.06.18</div>
-                    <p>초보인데 참여 가능할까요?</p>
-                </div>
-
-                <div class="comment">
-                    <div class="comment-name">작성자</div>
-                    <div class="comment-date">2026.06.18</div>
-                    <p>네 초보도 환영입니다!</p>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- RIGHT -->
-<div>
-
-    <div class="side-box">
-        <h3>모집 정보</h3>
-        <div class="info-row"><span>인원</span><span>${detailList.participant}/${detailList.maxParticipants}</span></div>
-        <div class="info-row"><span>지역</span><span>${detailList.sidoName}</span></div>
-
-        <button class="btn btn-primary">신청하기</button>
-        <!-- <button class="btn btn-outline">♡ 관심</button> -->
-    </div>
-
-    <div class="side-box">
-        <h3>작성자</h3>
-        <p>${detailList.nickname}</p>
-
-        <button class="inquiry-btn">
-            💬 모임글 문의하기
-        </button>
-    </div>
-
-    <!-- ✅ 추천모임 복구 -->
-    <div class="side-box">
-        <h3>추천 모임</h3>
-
-        <div class="recommend-card">
-            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b">
-            <div>
-                <div class="recommend-title">북한산 등산</div>
-                <div class="recommend-tag">서울</div>
-            </div>
-        </div>
-
-        <div class="recommend-card">
-            <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6">
-            <div>
-                <div class="recommend-title">트레킹</div>
-                <div class="recommend-tag">경기</div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="sidebar-ad">
-
-        <div class="ad-tag">
-            ADVERTISEMENT
-        </div>
-
-        <h3>
-            프리미엄<br>
-            모임 홍보
-        </h3>
-
-        <p>
-            내 모임을 메인 화면에<br>
-            노출해 보세요
-        </p>
-
-        <a href="#">
-            광고 신청
-        </a>
-
-    </div>
-
-</div>
-
-</div>
-
+<div class="main-content">
+	<div class="container detail-container">
+	
+		<div class="detail-wrap">
+		
+			<div class="left-panel">
+			
+			    <div class="image-box">
+			        <div class="main-image">
+			            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=900&q=80" style="width:100%;height:100%;object-fit:cover;">
+			        </div>
+			        <div class="thumb-list">
+			            <div class="thumb"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
+			            <div class="thumb"><img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
+			            <div class="thumb"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
+			            <div class="thumb"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80" style="width:100%;height:100%;object-fit:cover;"></div>
+			        </div>
+			    </div>
+			
+			    <div class="content-box">
+			        <div class="content-top">
+			            <div class="detail-badge">모집중</div>
+			            <button class="report-btn">🚨 모임 신고</button>
+			        </div>
+			        <h1 class="title">${detailList.title}</h1>
+			    </div>
+			
+			    <div class="tabs">
+			        <div class="tab-header">
+			            <div class="tab-btn active" onclick="showTab(0)">상세정보</div>
+			            <div class="tab-btn" onclick="showTab(1)">신청자</div>
+			            <div class="tab-btn" onclick="showTab(2)">후기</div>
+			            <div class="tab-btn" onclick="showTab(3)">Q&A</div>
+			        </div>
+			
+			        <div class="tab-content">
+			            <div class="tab-panel active">
+			                <h3>모임 안내</h3>
+			                <div class="description">${detailList.content}</div>
+			            </div>
+			
+			            <div class="tab-panel">
+			                <p>홍길동 외 7명</p>
+			            </div>
+			
+			            <div class="tab-panel">
+			                <div class="rating-box">
+			                    <div class="rating-score">
+			                        <h1>4.8</h1>
+			                        <div class="stars">★★★★★</div>
+			                        <p>총 후기 12개</p>
+			                    </div>
+			                    <div>
+			                        <div class="bar">
+			                            <span>5점</span>
+			                            <div class="bar-line">
+			                                <div class="bar-fill" style="width:80%"></div>
+			                            </div>
+			                            <span>10</span>
+			                        </div>
+			                        <div class="bar">
+			                            <span>4점</span>
+			                            <div class="bar-line">
+			                                <div class="bar-fill" style="width:20%"></div>
+			                            </div>
+			                            <span>2</span>
+			                        </div>
+			                        <div class="bar">
+			                            <span>3점</span>
+			                            <div class="bar-line">
+			                                <div class="bar-fill" style="width:0%"></div>
+			                            </div>
+			                            <span>0</span>
+			                        </div>
+			                    </div>
+			                </div>
+			
+			                <div class="comment">
+			                    <div class="comment-top">
+			                        <div>
+			                            <div class="comment-name">김모잇</div>
+			                            <div class="comment-date">2026.06.15</div>
+			                        </div>
+			                        <button class="report-btn">신고</button>
+			                    </div>
+			                    <div class="comment-images">
+			                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
+			                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
+			                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
+			                    </div>
+			                    <p>분위기 너무 좋았어요!</p>
+			                </div>
+			
+			                <div class="comment">
+			                    <div class="comment-top">
+			                        <div>
+			                            <div class="comment-name">이모임</div>
+			                            <div class="comment-date">2026.06.12</div>
+			                        </div>
+			                        <button class="report-btn">신고</button>
+			                    </div>
+			                    <p>초보도 부담 없이 참여 가능</p>
+			                </div>
+			            </div>
+			
+			            <div class="tab-panel">
+			                <h3>Q&A</h3>
+			                <div class="comment">
+			                    <div class="comment-name">익명</div>
+			                    <div class="comment-date">2026.06.18</div>
+			                    <p>초보인데 참여 가능할까요?</p>
+			                </div>
+			                <div class="comment">
+			                    <div class="comment-name">작성자</div>
+			                    <div class="comment-date">2026.06.18</div>
+			                    <p>네 초보도 환영입니다!</p>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			
+			</div>
+			
+			<div>
+			    <div class="side-box">
+			        <h3>모집 정보</h3>
+			        <div class="info-row"><span>인원</span><span>${detailList.participant}/${detailList.maxParticipants}</span></div>
+			        <div class="info-row"><span>지역</span><span>${detailList.sidoName}</span></div>
+			        <button class="btn btn-primary">신청하기</button>
+			    </div>
+			
+			    <div class="side-box">
+			        <h3>작성자</h3>
+			        <p>${detailList.nickname}</p>
+			        <button class="detail-inquiry-btn">
+			            💬 모임글 문의하기
+			        </button>
+			    </div>
+			
+			    <div class="side-box">
+			        <h3>추천 모임</h3>
+			        <div class="recommend-card">
+			            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b">
+			            <div>
+			                <div class="recommend-title">북한산 등산</div>
+			                <div class="recommend-tag">서울</div>
+			            </div>
+			        </div>
+			        <div class="recommend-card">
+			            <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6">
+			            <div>
+			                <div class="recommend-title">트레킹</div>
+			                <div class="recommend-tag">경기</div>
+			            </div>
+			        </div>
+			    </div>
+			
+			    <div class="sidebar-ad">
+			        <div class="ad-tag">ADVERTISEMENT</div>
+			        <h3>프리미엄<br>모임 홍보</h3>
+			        <p>내 모임을 메인 화면에<br>노출해 보세요</p>
+			        <a href="#">광고 신청</a>
+			    </div>
+			</div>
+		
+		</div>
+	
+	</div>
 </div>
 
 <script>

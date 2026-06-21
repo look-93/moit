@@ -16,8 +16,15 @@ public interface UserMeetupService {
 	public MeetupImageDto selectMeetupImage(int meetupId);
 	public int insertMeetup(MeetupDto meetupDto);
 	
+	//마이페이지 내 모집글
+	public List<MeetupDto> selectMyMeetup(int pstartno,MeetupDto meetupDto);
+	public int selectMyMeetupTotalCnt(MeetupDto meetupDto);
+	public MeetupDto selectMyPageStats(int memberId);
+	public int updateMeetup(MeetupDto meetupDto);
+	
 	public List<SidoDto> findAllSido();
 	public List<SigunguDto> findAllSigungu();
 	public List<CategoryDto> findAllCategory();
+	public List<CategoryDto> findAllChildCategory();
 	public int findByMamberId(String loginId);	
 }

@@ -18,7 +18,7 @@ public class MeetupDto {
 	private String createdAt;
 	private String updatedAt;
 	private String status;
-
+	private String categoryName;
 	
 	private int meetupNo;
 	private int totalParticipants; 	
@@ -27,5 +27,15 @@ public class MeetupDto {
 	private String sigunguName;		
 	private int participant; 		
 	private String fomatMeetupAt;
+	private String fomatcreatedAt;
+
+	private int meetupCount; //내모집수
+	private int reviewCount; //후기수
+	private int likeCount;   //좋아요수
+	private int applicationCount; //신청수 
+	
 	private String nickname;
+    private int start;
+    private int end;
+	
 }

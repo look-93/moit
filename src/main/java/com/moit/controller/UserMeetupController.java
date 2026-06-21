@@ -17,11 +17,10 @@ import com.moit.service.UserMeetupService;
 import com.moit.util.PagingUtil;
 
 @Controller
-@RequestMapping("/meetup/user")
 public class UserMeetupController {
 	@Autowired UserMeetupService userMeetupService;
 	
-	@RequestMapping("/list.do")
+	@RequestMapping("/meetup/user/list.do")
 	public String serchByUser(Model model, MeetupSearchDto meetupSerchDto, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
 		//System.out.println(meetupSerchDto);
 		model.addAttribute("menu", "meetup");
@@ -32,20 +31,21 @@ public class UserMeetupController {
 		return "meetup/user/list";
 	}
 	
-	@RequestMapping("/detail.do")
+	@RequestMapping("/meetup/user/detail.do")
 	public String write(Model model, int meetupId) {
 		model.addAttribute("detailList", userMeetupService.selectMeetupDetail(meetupId));
 		return "meetup/user/detail";
 	}
 	
-	@RequestMapping(value="/write.do", method = RequestMethod.GET)
+	@RequestMapping(value="/meetup/user/write.do", method = RequestMethod.GET)
 	public String write(Model model) {
+		model.addAttribute("childCategoryList", userMeetupService.findAllChildCategory());
 		model.addAttribute("sigunguList", userMeetupService.findAllSigungu());
 		return "meetup/user/write";
 	}
 	
-	@RequestMapping(value="/write.do", method = RequestMethod.POST)
-	public String write_post(Model model, MeetupDto meetupdto, RedirectAttributes rttr, Authentication authentication) {
+	@RequestMapping(value="/meetup/user/write.do", method = RequestMethod.POST)
+	public String createMeetup(Model model, MeetupDto meetupdto, RedirectAttributes rttr, Authentication authentication) {
 		// 멤버완료 취합 후 적용
 //		CustomUser user = (CustomUser) authentication.getPrincipal();		
 //		int memberId = userMeetupService.findByMamberId(user.getUsername());		
@@ -58,6 +58,42 @@ public class UserMeetupController {
 	}
 	
 	
+	@RequestMapping(value="/meetup/mypage/update.do", method = RequestMethod.GET)
+	public String update(Model model, int meetupId) {
+		model.addAttribute("meetup", userMeetupService.selectMeetupDetail(meetupId));
+		model.addAttribute("childCategoryList", userMeetupService.findAllChildCategory());		
+		model.addAttribute("sigunguList", userMeetupService.findAllSigungu());
+		return "meetup/user/write";
+	}	
 	
+	@RequestMapping(value="/meetup/mypage/update.do", method = RequestMethod.POST)
+	public String updateMeetup(Model model, MeetupDto meetupdto, RedirectAttributes rttr, Authentication authentication) {
+		// 멤버완료 취합 후 적용
+//		CustomUser user = (CustomUser) authentication.getPrincipal();		
+//		int memberId = userMeetupService.findByMamberId(user.getUsername());		
+//		meetupdto.setMemberId(memberId);
+		
+		meetupdto.setMemberId(1);
+		boolean result = userMeetupService.updateMeetup(meetupdto) > 0;		
+		model.addAttribute("result", result);		
+		return "redirect:/meetup/mypage/meetup.do";
+	}	
+	
+	///////////////////////////////마이페이지///////////////////////////////////
+	@RequestMapping("/meetup/mypage/meetup.do")
+	public String myMeetupList(Model model, MeetupDto meetupdto, RedirectAttributes rttr, Authentication authentication, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
+		// 멤버완료 취합 후 적용
+//		CustomUser user = (CustomUser) authentication.getPrincipal();		
+//		int memberId = userMeetupService.findByMamberId(user.getUsername());		
+//		meetupdto.setMemberId(memberId);
+		
+		meetupdto.setMemberId(1);		
+		model.addAttribute("meetupStats", userMeetupService.selectMyPageStats(1));
+		model.addAttribute("meetupList", userMeetupService.selectMyMeetup(pstartno,meetupdto));
+		model.addAttribute("paging", new PagingUtil(userMeetupService.selectMyMeetupTotalCnt(meetupdto), pstartno));
+		model.addAttribute("menu", "meetup");
+		
+		return "meetup/user/myMeetupList";
+	}
 	
 }

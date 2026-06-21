@@ -48,6 +48,33 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 	public int insertMeetup(MeetupDto meetupDto) {
 		return meetupMapper.insertMeetup(meetupDto);
 	}
+	
+	
+	//모집수정
+	@Override
+	public int updateMeetup(MeetupDto meetupDto) {
+		return meetupMapper.updateMeetup(meetupDto);
+	}
+
+	//마이페이지 내 모집글 조회 + paging
+	@Override
+	public List<MeetupDto> selectMyMeetup(int pstartno,MeetupDto meetupDto) {
+		meetupDto.setEnd(4);
+		meetupDto.setStart((pstartno-1)*4);		
+		return meetupMapper.selectMyMeetup(meetupDto);
+	}	
+	
+	//마이페이지 내 모집글 조회 + paging
+	@Override
+	public int selectMyMeetupTotalCnt(MeetupDto meetupDto) {
+		return meetupMapper.selectMyMeetupTotalCnt(meetupDto);
+	}
+
+	//마이페이지 내 모집글 통계
+	@Override
+	public MeetupDto selectMyPageStats(int memberId) {
+		return meetupMapper.selectMyPageStats(memberId);
+	}
 
 	// 시도
 	@Override
@@ -65,6 +92,11 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 	@Override
 	public List<CategoryDto> findAllCategory() {
 		return meetupMapper.findAllCategory();
+	}
+	
+	@Override
+	public List<CategoryDto> findAllChildCategory() {
+		return meetupMapper.findAllChildCategory();
 	}
 
 	//login_id로 member_id 찾기

@@ -9,6 +9,6 @@ import com.moit.dto.MeetupSearchDto;
 public interface AdminMeetupService {
 	public List<MeetupDto> searchByAdmin(int pstartno, MeetupSearchDto meetupSerchDto);
 	public int selectMeetupTotalCnt(MeetupSearchDto meetupSerchDto);
-	public int deleteByMeetup(int meetupId);
+	public int deleteMeetup(int meetupId);
 }
 
