@@ -141,12 +141,14 @@ public class ReportController { // test lcy
 	public String adminList(@RequestParam(value="pstartno", defaultValue="1") int pstartno,
 							@RequestParam(value="targetType", required=false) String targetType,
 							@RequestParam(value="status", required=false) String status,
+							@RequestParam(value="deleteYn", required=false) String deleteYn,
 							Model model) {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("targetType", targetType);
 		map.put("status", status);
+		map.put("deleteYn", deleteYn);
 		
 		map.put("start", (pstartno-1)*10);
 		map.put("end", 10);

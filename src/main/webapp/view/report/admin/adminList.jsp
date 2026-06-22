@@ -144,22 +144,22 @@ body {
 							</a>
 
 							<a href="${pageContext.request.contextPath}/report/admin/adminList.do?targetType=MEETUP"
-								class="admin-list-filter-btn ${param.targetType eq 'MEETUP' ? 'active' : ''}">
+								class="admin-list-filter-btn ${param.targetType == 'MEETUP' ? 'active' : ''}">
 								MEETUP
 							</a>
 
 							<a href="${pageContext.request.contextPath}/report/admin/adminList.do?targetType=REVIEW"
-								class="admin-list-filter-btn ${param.targetType eq 'REVIEW' ? 'active' : ''}">
+								class="admin-list-filter-btn ${param.targetType == 'REVIEW' ? 'active' : ''}">
 								REVIEW
 							</a>
 
 							<a href="${pageContext.request.contextPath}/report/admin/adminList.do?status=PENDING"
-								class="admin-list-filter-btn ${param.status eq 'PENDING' ? 'active' : ''}">
+								class="admin-list-filter-btn ${param.status == 'PENDING' ? 'active' : ''}">
 								PENDING
 							</a>
 
 							<a href="${pageContext.request.contextPath}/report/admin/adminList.do?deleteYn=Y"
-								class="admin-list-filter-btn ${param.deleteYn eq 'Y' ? 'active' : ''}">
+								class="admin-list-filter-btn ${param.deleteYn == 'Y' ? 'active' : ''}">
 								DELETE
 							</a>
 
@@ -185,51 +185,32 @@ body {
 							</thead>
 
 							<tbody>
-
 								<c:forEach var="dto" items="${list}">
-
 									<tr>
 										<td>${dto.reportId}</td>
 										<td>${dto.targetType}</td>
 										<td>${dto.targetId}</td>
 										<td>${dto.memberId}</td>
 										<td>${dto.reasonCode}</td>
-
 										<td>
 											<c:choose>
-
-												<c:when test="${dto.status eq 'PENDING'}">
-													<span class="admin-list-status pending">
-														${dto.status}
-													</span>
+												<c:when test="${dto.status == 'PENDING'}">
+													<span class="admin-list-status pending">${dto.status}</span>
 												</c:when>
-
-												<c:when test="${dto.status eq 'APPROVED'}">
-													<span class="admin-list-status approved">
-														${dto.status}
-													</span>
-												</c:when>
-
 												<c:otherwise>
-													${dto.status}
+													<span class="admin-list-status approved">${dto.status}</span>
 												</c:otherwise>
-
 											</c:choose>
 										</td>
-
 										<td>${dto.createdAt}</td>
-
 										<td>
 											<a class="admin-list-link"
 												href="${pageContext.request.contextPath}/report/admin/adminDetail.do?reportId=${dto.reportId}">
 												보기
 											</a>
 										</td>
-
 									</tr>
-
 								</c:forEach>
-
 							</tbody>
 
 							<tfoot>
@@ -241,7 +222,7 @@ body {
 											<c:if test="${paging.start > paging.bottomlist}">
 												<li>
 													<a class="admin-list-page-btn"
-														href="?pstartno=${paging.start-1}&targetType=${param.targetType}&status=${param.status}">
+														href="?pstartno=${paging.start-1}&targetType=${param.targetType}&status=${param.status}&deleteYn=${param.deleteYn}">
 														이전
 													</a>
 												</li>
@@ -252,7 +233,7 @@ body {
 												end="${paging.end}">
 
 												<li>
-													<a href="?pstartno=${i}&targetType=${param.targetType}&status=${param.status}"
+													<a href="?pstartno=${i}&targetType=${param.targetType}&status=${param.status}&deleteYn=${param.deleteYn}"
 														class="admin-list-page-btn ${i == paging.current ? 'active' : ''}">
 														${i}
 													</a>
@@ -263,7 +244,7 @@ body {
 											<c:if test="${paging.end < paging.pagetotal}">
 												<li>
 													<a class="admin-list-page-btn"
-														href="?pstartno=${paging.end+1}&targetType=${param.targetType}&status=${param.status}">
+														href="?pstartno=${paging.end+1}&targetType=${param.targetType}&status=${param.status}&deleteYn=${param.deleteYn}">
 														다음
 													</a>
 												</li>

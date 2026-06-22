@@ -51,7 +51,7 @@
 					<div class="admin-detail-summary-value">
 						<c:choose>
 							<c:when test="${dto.status == 'PENDING'}">
-								<span class="admin-detail-status pending">PENDING</span>
+								<span class="admin-detail-status pending">${dto.status}</span>
 							</c:when>
 							<c:otherwise>
 								<span class="admin-detail-status approved">${dto.status}</span>
@@ -117,9 +117,6 @@
 	<div class="admin-detail-review-modal-bg" id="adminReviewModal">
 		<div class="admin-detail-review-modal-box">
 			<div class="admin-detail-review-modal-icon">💬</div>
-
-			<h2>해당 글 내용</h2>
-			<p>신고 대상 원문 내용을 확인하는 모달창입니다.</p>
 
 			<div class="admin-detail-review-content-box">
 				${dto.reasonDetail} - 나중에 수정

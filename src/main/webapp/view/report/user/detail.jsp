@@ -16,9 +16,6 @@
 			<h1>내 신고 상세</h1>
 			<p>내 신고내역에서 상세를 클릭했을 때 나오는 화면</p>
 		</div>
-		<div class="detail-url-chip">
-			test 후 삭제바람 /report/detail?report_id=${dto.reportId}&amp;target_type=${dto.targetType}
-		</div>
 	</section>
 
 	<section class="detail-card">
@@ -64,10 +61,9 @@
 							<c:when test="${dto.status == 'PENDING'}">
 								<span class="detail-status pending">${dto.status}</span>
 							</c:when>
-
-							<c:when test="${dto.status == 'APPROVED'}">
+							<c:otherwise>
 								<span class="detail-status approved">${dto.status}</span>
-							</c:when>
+							</c:otherwise>
 						</c:choose>
 					</div>
 				</div>
@@ -81,7 +77,20 @@
 
 		<div class="detail-actions">
 			<a href="${pageContext.request.contextPath}/report/user/mylist.do" class="detail-btn detail-btn-white">목록</a>
-			<a href="${pageContext.request.contextPath}/meetup/user/#" class="detail-btn detail-btn-soft-blue">해당 글 보기</a>
+			<c:choose>
+			    <%-- 1. targetType이 meetup인 경우 --%>
+			    <c:when test="${dto.targetType == 'MEETUP'}">
+			        <a href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${dto.targetId}" 
+			           class="detail-btn detail-btn-soft-blue">해당 글 보기</a>
+			    </c:when>
+			    
+			    <%-- 2. targetType이 후기(review 등)인 경우 --%>
+			    <c:when test="${dto.targetType == 'REVIEW'}">
+			        <a href="${pageContext.request.contextPath}/review/user/#" 
+			           class="detail-btn detail-btn-soft-blue">해당 글 보기</a>
+			    </c:when>
+			</c:choose>
+			<%-- <a href="${pageContext.request.contextPath}/meetup/user/#" class="detail-btn detail-btn-soft-blue">해당 글 보기</a> --%>
 			<a href="${pageContext.request.contextPath}/report/user/update.do?reportId=${dto.reportId}" class="detail-btn detail-btn-blue">수정</a>
 			<button type="button" class="detail-btn detail-btn-red" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
 		</div>
