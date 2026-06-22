@@ -7,72 +7,66 @@ import com.moit.dto.ReportsDto;
 
 public interface ReportsService {
 	
-	/*
-	// ===== user =====
-	// ³» ½Å°í³»¿ª ( delete_yn = 'N' ¸¸ º¸ÀÌµµ·Ï )
-	public List<ReportsDto> selectUserReport( HashMap<String, Object> map );
+	// ì‚¬ìš©ì ë³¸ì¸ì´ ì‘ì„±í•œ ì‹ ê³  ë‚´ì—­ ì¡°íšŒ & ìœ ì € - í˜ì´ì§•
+	public List<ReportsDto> selectUserReport( int pstartno, int memberId);
 	
 	// select id="selectUserCnt" resultType="int"
 	public int selectUserCnt(int memberId);
 	
-	// ³» ½Å°í »ó¼¼
+	// ì‚¬ìš©ì ë³¸ì¸ì´ ì‘ì„±í•œ ì‹ ê³  ë‚´ì—­ ìƒì„¸ ì¡°íšŒ
 	public ReportsDto selectUserReportDetail(ReportsDto dto);
 	
-	// ½Å°í ÀÛ¼º
+	// ì‹ ê³  ì‘ì„± ê¸°ëŠ¥
 	public int insertUserReport(ReportsDto dto);
 	
-	// ½Å°í ³»¿ª ¼öÁ¤Æû
-	
-	// ½Å°í ³»¿ª ¼öÁ¤
+	// ì‹ ê³  ìˆ˜ì • ê¸°ëŠ¥ update
 	public int updateUserReport(ReportsDto dto);
-
-	// ½Å°í ³»¿ª »èÁ¦ -> update delete_yn = y
+	
+	// ì‹ ê³  ë‚´ì—­ ì‚­ì œ (update delete_yn = 'Y')
 	public int deleteUserReport(ReportsDto dto);
-
 	
-
 	
-
 	
 	// ===== admin =====
 	// ===== admin =====
-	// °ü¸®ÀÚ - ½Å°í »óÅÂ º¯°æ - PENDING(Ã³¸®´ë±â) - APPROVED(½Å°í¿Ï·á)
 	public int updateAdmin(ReportsDto dto);
-
-	// °ü¸®ÀÚ - ½Å°í °­Á¦ »èÁ¦ ¡æ delete
-	public int deleteAdmin(int reportId);
 	
-	// °ü¸®ÀÚ - ÀüÃ¼ ½Å°í ´ë»ó ¸ñ·Ï Á¶È¸
+    public int deleteAdmin(int reportId);
+
+    // ê´€ë¦¬ì ì‹ ê³  ëª©ë¡ ì¡°íšŒ (ë™ì  ì¡°ê±´ + í˜ì´ì§• + ë‹¨ê±´ ì¡°íšŒê¹Œì§€ í¬í•¨)
+    public List<ReportsDto> selectAdminReports(HashMap<String, Object> map);
+
+    // ê´€ë¦¬ì ì‹ ê³  ëª©ë¡ ì¹´ìš´íŠ¸ (ë™ì  ì¡°ê±´ ë°˜ì˜)
+    public int selectAdminReportsCnt(HashMap<String, Object> map);
+	
+	
+/*	// ï¿½ï¿½Ã¼ ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	public List<ReportsDto> selectAdminReport( HashMap<String, Object> map );
 	
 	// <select id="selectAdminCnt" resultType="int">
 	public int selectAdminCnt();
 	
-	// °ü¸®ÀÚ - ½Å°í ´ë»ó À¯Çüº° ¸ñ·Ï Á¶È¸ - MEETUP & REVIEW
-	public List<ReportsDto> selectAdminType( HashMap<String, Object> map );
+	// ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ - MEETUP & REVIEW
+	public List<ReportsDto> selectAdminTargetType( HashMap<String, Object> map );
 
-	// °ü¸®ÀÚ - ÀüÃ¼ ½Å°í ¸ñ·Ï »ó¼¼ Á¶È¸
+	// ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ - PENDING
+	public List<ReportsDto> selectAdminStatus( HashMap<String, Object> map );
+		
+	// ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸ ( delete_yn = 'Y' ï¿½ï¿½ï¿½ï¿½ )
 	public ReportsDto selectAdminDetail(int reportId);
 
-	// °ü¸®ÀÚ - ½Å°í °Ë»ö(ÀÛ¼ºÀÚ) - °ü¸®ÀÚ
+	// ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ - PENDING(Ã³ï¿½ï¿½ï¿½ï¿½ï¿½) - APPROVED(ï¿½Å°ï¿½Ï·ï¿½)
+	public int updateAdmin(ReportsDto dto);
+
+	// ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ delete
+	public int deleteAdmin(int reportId);
+	
+
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½Å°ï¿½ ï¿½Ë»ï¿½(ï¿½Û¼ï¿½ï¿½ï¿½)
 	public List<ReportsDto> selectAdminMember(int memberId);
-	// °ü¸®ÀÚ - ½Å°í °Ë»ö(»çÀ¯) - °ü¸®ÀÚ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½Å°ï¿½ ï¿½Ë»ï¿½(ï¿½ï¿½ï¿½ï¿½)
 	public List<ReportsDto> selectAdminReason(String reasonCode);
-	// °ü¸®ÀÚ - ½Å°í °Ë»ö(³¯Â¥) - °ü¸®ÀÚ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - ï¿½Å°ï¿½ ï¿½Ë»ï¿½(ï¿½ï¿½Â¥)
 	public List<ReportsDto> selectAdminCreateAt(String createdAt);
-	
-	
-	// À¯Àú - ÆäÀÌÂ¡ 
-	// °ü¸®ÀÚ - ÆäÀÌÂ¡
-	
-	
-	// »çÀ¯º° ½Å°í °Ç¼ö Áı°è
-	public List<ReportsDto> selectReasonReportCount();
-	
-	// È¸¿øº° ´©Àû ½Å°í È½¼ö
-	public List<ReportsDto> selectMemberReportCount();
-	
-	// ´ë»óº° ½Å°í ÇöÈ² (¸ğÀÓ/ÈÄ±â)
-	public List<ReportsDto> selectTargetReportCount();
-	*/
+*/	
 }

@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor 
-public class PagingUtil {
-	
+public class PagingUtil {	
 	private int listtotal; 		//#1) 전체글 토탈
 	private int onepagelist;	//#2) 한페이지에 보여줄 게시물의 수 10
 	private int pagetotal; 		//#3) 총 페이지 수 ex)256/10=26, 123/10=13 (하단)
@@ -35,9 +34,3 @@ public class PagingUtil {
 		if(this.end > this.pagetotal) {this.end = this.pagetotal;} // 전체페이지 갯수가 256 -> 마지막은 30이 아니라 26
 	}	
 }
-
-
-
-
-
-

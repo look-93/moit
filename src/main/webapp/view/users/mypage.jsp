@@ -16,6 +16,7 @@
     
     
   </table>
+  
 </div>
 
 <%@include file="../inc/footer.jsp" %>

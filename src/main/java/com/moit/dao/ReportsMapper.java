@@ -10,65 +10,38 @@ public interface ReportsMapper {
 
 	// ===== user =====
 	// ===== user =====
-	// À¯Àú - ½Å°í ÀÛ¼º /     ¼­ºñ½º¿¡¼­  - target_type  (MEETUP , REVIEW )
+	// ì‹ ê³  ì‘ì„±  /     ì„œë¹„ìŠ¤ì—ì„œ  - target_type  (MEETUP , REVIEW )
 	public int insertUserReport(ReportsDto dto);
 	
-	// À¯Àú - »ç¿ëÀÚ º»ÀÎÀÌ ÀÛ¼ºÇÑ ½Å°í ³»¿ª ¼öÁ¤
+	// ì‚¬ìš©ì ë³¸ì¸ì´ ì‘ì„±í•œ ì‹ ê³  ë‚´ì—­ ìˆ˜ì •
 	public int updateUserReport(ReportsDto dto);
 
-	// À¯Àú - »ç¿ëÀÚ º»ÀÎÀÌ ÀÛ¼ºÇÑ ½Å°í ³»¿ª »èÁ¦ -> update delete_yn = y
+	// ì‚¬ìš©ì ë³¸ì¸ì´ ì‘ì„±í•œ ì‹ ê³  ë‚´ì—­ ì‚­ì œ (update delete_yn = 'Y')
 	public int deleteUserReport(ReportsDto dto);
 
-	// À¯Àú - »ç¿ëÀÚ º»ÀÎÀÌ ÀÛ¼ºÇÑ ½Å°í ¸ñ·Ï Á¶È¸ ( delete_yn = 'N' )
+	// ì‚¬ìš©ì ë³¸ì¸ì´ ì‘ì„±í•œ ì‹ ê³  ë‚´ì—­ ì¡°íšŒ & ìœ ì € - í˜ì´ì§•
 	public List<ReportsDto> selectUserReport( HashMap<String, Object> map );
 
 	// select id="selectUserCnt" resultType="int"
 	public int selectUserCnt(int memberId);
 	
-	// À¯Àú - »ç¿ëÀÚ º»ÀÎÀÌ ÀÛ¼ºÇÑ ½Å°í ³»¿ª »ó¼¼ Á¶È¸
+	// ì‚¬ìš©ì ë³¸ì¸ì´ ì‘ì„±í•œ ì‹ ê³  ë‚´ì—­ ìƒì„¸ ì¡°íšŒ
 	public ReportsDto selectUserReportDetail(ReportsDto dto);
 
 	
-	// ===== admin =====
-	// ===== admin =====
-	// °ü¸®ÀÚ - ½Å°í »óÅÂ º¯°æ - PENDING(Ã³¸®´ë±â) - APPROVED(½Å°í¿Ï·á)
-	public int updateAdmin(ReportsDto dto);
+    // ===== admin =====
+    public int updateAdmin(ReportsDto dto);
+    public int deleteAdmin(int reportId);
 
-	// °ü¸®ÀÚ - ½Å°í °­Á¦ »èÁ¦ ¡æ delete
-	public int deleteAdmin(int reportId);
-	
-	// °ü¸®ÀÚ - ÀüÃ¼ ½Å°í ´ë»ó ¸ñ·Ï Á¶È¸
-	public List<ReportsDto> selectAdminReport( HashMap<String, Object> map );
-	
-	// <select id="selectAdminCnt" resultType="int">
-	public int selectAdminCnt();
-	
-	// °ü¸®ÀÚ - ½Å°í ´ë»ó À¯Çüº° ¸ñ·Ï Á¶È¸ - MEETUP & REVIEW
-	public List<ReportsDto> selectAdminType( HashMap<String, Object> map );
+    // ê´€ë¦¬ì ì‹ ê³  ëª©ë¡ ì¡°íšŒ (ë™ì  ì¡°ê±´ + í˜ì´ì§• + ë‹¨ê±´ ì¡°íšŒê¹Œì§€ í¬í•¨)
+    public List<ReportsDto> selectAdminReports(HashMap<String, Object> map);
 
-	// °ü¸®ÀÚ - ÀüÃ¼ ½Å°í ¸ñ·Ï »ó¼¼ Á¶È¸
-	public ReportsDto selectAdminDetail(int reportId);
+    // ê´€ë¦¬ì ì‹ ê³  ëª©ë¡ ì¹´ìš´íŠ¸ (ë™ì  ì¡°ê±´ ë°˜ì˜)
+    public int selectAdminReportsCnt(HashMap<String, Object> map);
 
-	// °ü¸®ÀÚ - ½Å°í °Ë»ö(ÀÛ¼ºÀÚ) - °ü¸®ÀÚ
-	public List<ReportsDto> selectAdminMember(int memberId);
-	// °ü¸®ÀÚ - ½Å°í °Ë»ö(»çÀ¯) - °ü¸®ÀÚ
-	public List<ReportsDto> selectAdminReason(String reasonCode);
-	// °ü¸®ÀÚ - ½Å°í °Ë»ö(³¯Â¥) - °ü¸®ÀÚ
-	public List<ReportsDto> selectAdminCreateAt(String createdAt);
-	
-	
-	// À¯Àú - ÆäÀÌÂ¡ 
-	// °ü¸®ÀÚ - ÆäÀÌÂ¡
-	
-	
-	// »çÀ¯º° ½Å°í °Ç¼ö Áı°è
-	public List<ReportsDto> selectReasonReportCount();
-	
-	// È¸¿øº° ´©Àû ½Å°í È½¼ö
-	public List<ReportsDto> selectMemberReportCount();
-	
-	// ´ë»óº° ½Å°í ÇöÈ² (¸ğÀÓ/ÈÄ±â)
-	public List<ReportsDto> selectTargetReportCount();
-	
+    // ===== í†µê³„ =====
+    public List<ReportsDto> selectReasonReportCount();
+    public List<ReportsDto> selectMemberReportCount();
+    public List<ReportsDto> selectTargetReportCount();
 	
 }

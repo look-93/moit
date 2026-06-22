@@ -18,9 +18,9 @@
 		<typeAlias type="com.moit.dto.common.SidoDto" alias="SidoDto" />
 		<typeAlias type="com.moit.dto.common.SigunguDto" alias="SigunguDto" />
 		<typeAlias type="com.moit.dto.common.CategoryDto" alias="CategoryDto" />	
-		
-				
+    <typeAlias type="com.moit.dto.ReportsDto" alias="ReportsDto" />
 	</typeAliases>
 </configuration>
+
 
 

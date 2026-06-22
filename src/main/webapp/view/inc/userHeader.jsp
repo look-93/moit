@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MOIT</title>
-
 <style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
@@ -33,6 +32,7 @@
 
 
 
+
 body {
     min-height: 100vh;
     display: flex;
@@ -48,25 +48,6 @@ body {
 }
 
 /* ================= HEADER (로고+메뉴 좌측 밀집 버전) ================= */
-
-header {
-    background: white;
-    height: 80px;
-    box-shadow: var(--shadow);
-    position: fixed; /* 💡 상단 완전히 고정 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-}
-
-/* 💡 헤더가 fixed되면서 컨텐츠가 파묻히는 것을 방지하기 위해 body 아래에 추가할 컨테이너 스타일 */
-.main-content {
-    flex: 1; /* 💡 남은 공간을 모두 차지하여 푸터를 아래로 밀어냄 */
-    padding-top: 80px; /* 💡 헤더 높이(80px)만큼 띄워줍니다 */
-    display: flex;
-    flex-direction: column;
-}
 
 .header-inner{
     height:100%;
@@ -231,6 +212,7 @@ nav a:hover::after, nav a.active::after {
 /* ==================
 FOOTER
 ================== */
+
 footer {
     margin-top: auto; /* 💡 flex 구조에서 자동으로 최하단에 배치됨 */
     background: white;
@@ -238,8 +220,6 @@ footer {
     text-align: center;
     color: var(--gray);
     border-top: 1px solid #edf2f7;
-    width: 100%;
-}
 
 /* ================= 헤더 깨짐 방지 반응형 코드 추가 ================= */
 @media (max-width: 1024px) {
