@@ -20,6 +20,8 @@
          <list> 
          	<value>classpath:config/user-mapper.xml</value>
          	<value>classpath:config/reportsMapper.xml</value>
+         	<value>classpath:config/meetupMapper.xml</value>
+
          </list>
       </property>
    </bean>

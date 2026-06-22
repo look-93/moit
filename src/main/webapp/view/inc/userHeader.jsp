@@ -5,8 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOIT | 모집글 상세</title>
-
+<title>MOIT</title>
 <style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
@@ -31,10 +30,15 @@
     box-sizing:border-box;
 }
 
-body{
-    background:var(--bg);
-    font-family: 'Pretendard', sans-serif;
-    color: var(--text);
+
+
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    margin: 0; /* 기본 마진 제거 */
 }
 
 .container{
@@ -44,15 +48,6 @@ body{
 }
 
 /* ================= HEADER (로고+메뉴 좌측 밀집 버전) ================= */
-
-header{
-    background:white;
-    height:80px;
-    box-shadow:var(--shadow);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
 
 .header-inner{
     height:100%;
@@ -217,13 +212,51 @@ nav a:hover::after, nav a.active::after {
 /* ==================
 FOOTER
 ================== */
-footer{
-    margin-top: 50px;
+
+footer {
+    margin-top: auto; /* 💡 flex 구조에서 자동으로 최하단에 배치됨 */
     background: white;
     padding: 30px;
     text-align: center;
     color: var(--gray);
     border-top: 1px solid #edf2f7;
+
+/* ================= 헤더 깨짐 방지 반응형 코드 추가 ================= */
+@media (max-width: 1024px) {
+    /* 1. 화면이 좁아지면 자리를 많이 차지하는 슬로건을 숨깁니다 */
+    .header-slogan {
+        display: none !important;
+    }
+    
+    /* 2. 로고와 메뉴, 유저박스 사이의 간격을 좁혀 여유 공간을 만듭니다 */
+    .left-group {
+        gap: 20px;
+    }
+    nav {
+        gap: 15px;
+    }
+    .right-group {
+        gap: 15px;
+    }
+    .user-box {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* 3. 모바일 환경에서 글자가 절대 세로로 찢어지지 않도록 강제 고정 */
+    nav a, .logo, .profile-info strong {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+    }
+    
+    /* 4. 프로필의 등급(일반회원) 텍스트를 숨겨 공간을 확보합니다 */
+    .profile-info span {
+        display: none;
+    }
+    .profile {
+        padding: 4px 10px 4px 4px;
+    }
 }
 </style>
 </head>
