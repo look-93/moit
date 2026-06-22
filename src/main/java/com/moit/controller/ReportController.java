@@ -150,7 +150,8 @@ public class ReportController { // test lcy
 		
 		map.put("start", (pstartno-1)*10);
 		map.put("end", 10);
-	
+		
+		model.addAttribute("menu", "report");
 		model.addAttribute("paging", new PagingUtil( service.selectAdminReportsCnt(map), pstartno));
 		model.addAttribute("list", service.selectAdminReports(map));
 

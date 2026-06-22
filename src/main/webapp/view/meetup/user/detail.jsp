@@ -376,7 +376,8 @@ body{
 			    <div class="content-box">
 			        <div class="content-top">
 			            <div class="detail-badge">모집중</div>
-			            <button class="report-btn">🚨 모임 신고</button>
+			             <a	href="${pageContext.request.contextPath}/report/user/write.do?targetType=MEETUP&amp;targetId=${detail.meetupId}"
+							class="report-btn"> 모임 신고</a>
 			        </div>
 			        <h1 class="title">${detail.title}</h1>
 			    </div>
