@@ -33,7 +33,7 @@ public class UserMeetupController {
 //		int memberId = userMeetupService.findByMamberId(user.getUsername());		
 //		meetupdto.setMemberId(memberId);
 		
-		meetupSerchDto.setMemberId(3);
+		meetupSerchDto.setMemberId(3); 
 		
 		model.addAttribute("menu", "meetup");
 		model.addAttribute("sidoList", userMeetupService.findAllSido());
