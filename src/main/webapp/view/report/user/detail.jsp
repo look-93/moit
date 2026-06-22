@@ -58,7 +58,7 @@
 				</div>
 
 				<div class="detail-row">
-					<div class="detail-label">처리 상태</div>
+					<div class="detail-label">처리 상태</div> 
 					<div class="detail-value">
 						<c:choose>
 							<c:when test="${dto.status == 'PENDING'}">
