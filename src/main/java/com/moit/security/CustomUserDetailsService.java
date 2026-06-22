@@ -19,6 +19,7 @@ public class CustomUserDetailsService   implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Map<String,Object> map = new HashMap<>();
+		
 		map.put("loginId", username);
 		
 		AuthUserDto  dto = service.readAuth(map);  // loginId, bpass, auth(s)

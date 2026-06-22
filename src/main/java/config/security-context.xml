@@ -41,20 +41,20 @@
       
    </security:http>
    
-    <bean id="customAuthenticationProvider" class="com.moit.security.CustomAuthenticationProvider">
+<!--     <bean id="customAuthenticationProvider" class="com.moit.security.CustomAuthenticationProvider">
 	    <property name="userDetailsService" ref="customUserDetailsService"/>
 	    <property name="passwordEncoder" ref="passwordEncoder"/>
 	</bean>
 
 	<security:authentication-manager>
 	    <security:authentication-provider ref="customAuthenticationProvider"/>
-	</security:authentication-manager>
+	</security:authentication-manager> -->
     
-<!--    <security:authentication-manager>
+   <security:authentication-manager>
       <security:authentication-provider   user-service-ref="customUserDetailsService">
          <security:password-encoder      ref="passwordEncoder"/>
       </security:authentication-provider>
-   </security:authentication-manager> -->
+   </security:authentication-manager> 
 
 </beans>
 

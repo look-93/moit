@@ -11,4 +11,6 @@ public class AuthUserDto {
 	private String nickname;
 	private String typeName;
 	private String profileUrl;
+
+	private  List<AuthDto> authList;  
 }

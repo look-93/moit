@@ -23,6 +23,19 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		String loginType = request.getParameter("loginType");
 		
+		if (roles.contains("ROLE_ADMIN")) {
+
+			response.sendRedirect( request.getContextPath() + "/admin/admininfo");
+        }
+
+		else if (roles.contains("ROLE_MEMBER")) {
+
+			response.sendRedirect( request.getContextPath() + "/");
+        }else {
+        	response.sendRedirect( request.getContextPath() + "/");
+        }
+		
+		/*
 		if ("ADMIN".equals(loginType)) {
 
 	        if (!roles.contains("ROLE_ADMIN")) {
@@ -50,9 +63,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		        return;
 		    }
 
-		}
-		
-		response.sendRedirect( request.getContextPath() + "/main");
+		}	response.sendRedirect( request.getContextPath() + "/main");
+		*/
+	
 		
 	}
 

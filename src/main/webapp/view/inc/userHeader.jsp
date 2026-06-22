@@ -652,7 +652,26 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
                 <div class="profile-img">J</div>
                 <div class="profile-info">
                     <strong>${loginUser.nickname}님</strong>
-                    <span>${loginUser.typeName}</span>
+                    <%-- <span>${loginUser.typeName}</span> --%>
+                    <span>
+					    <c:choose>
+					        <c:when test="${loginUser.typeName eq 'ROLE_MEMBER'}">  
+					            일반회원
+					        </c:when>
+					
+					        <c:when test="${loginUser.typeName eq 'ROLE_PARTNER'}">
+					            제휴업체
+					        </c:when>
+					
+					        <c:when test="${loginUser.typeName eq 'ROLE_ADMIN'}">
+					            관리자
+					        </c:when>
+					
+					        <c:otherwise>
+					            ${loginUser.typeName}
+					        </c:otherwise>
+					    </c:choose>
+					</span>
                 </div>
             </div>
             <form action="${pageContext.request.contextPath}/users/logout" method="post">

@@ -14,7 +14,7 @@
         SELECT m.login_id, m.password, mt.type_name, m.nickname,m.profile_url
         FROM members m
         JOIN member_type mt ON m.member_type_id = mt.member_type_id
-        WHERE m.login_id = #{loginId} AND m.delete_yn = 'N' AND status_id=1
+        WHERE m.login_id = #{loginId} AND m.delete_yn = 'N' 
     </select>
 
     <select id="findMember" parameterType="map" resultType="UserDto">
