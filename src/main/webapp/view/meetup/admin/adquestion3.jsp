@@ -117,81 +117,39 @@
 </style>
 
 <div class="inquiry-wrap">
-
-
-<h1 class="page-title">관리자 1:1 문의글 수정</h1>
-
-<div class="breadcrumb">
-    1:1 문의 &gt; 문의 수정
-</div>
-
-<div class="page-desc">
-    작성한 문의 내용을 수정 후 저장해 주세요.
-</div>
-
-<div class="form-card">
-
-    <div class="form-group">
-        <label class="form-label">
-            제목 <span class="required">*</span>
-        </label>
-
-        <input type="text"
-               class="form-input"
-               value="이벤트 참여 방법이 궁금합니다.">
-    </div>
-
-    <div class="form-group">
-
-        <label class="form-label">
-            문의 공개 여부
-        </label>
-
-        <div class="radio-group">
-
-            <label class="radio-item">
-                <input type="radio" name="secret" checked>
-                공개
-            </label>
-
-            <label class="radio-item">
-                <input type="radio" name="secret">
-                비공개
-            </label>
-
-        </div>
-
-        <div class="guide-text">
-            비공개로 설정 시, 관리자만 확인할 수 있습니다.
-        </div>
-
-    </div>
-
-    <div class="form-group">
-
-        <label class="form-label">
-            문의 내용 <span class="required">*</span>
-        </label>
-
-        <textarea class="form-textarea">이벤트 참여 방법이 궁금합니다.
-
-자세한 안내 부탁드립니다.
-
-감사합니다!</textarea>
-
-    </div>
-
-    <div class="btn-area">
-        <button type="submit" class="btn btn-save" onclick="history.back()">
-            저장
-        </button>
-
-        <button type="button" class="btn btn-cancel" onclick="history.back()">
-            취소
-        </button>
-    </div>
-
-</div>
+	<h1 class="page-title">관리자 1:1 문의글 수정</h1>
+	<div class="breadcrumb"> 1:1 문의 > 문의 수정 </div>
+	<div class="page-desc"> 작성한 문의 내용을 수정 후 저장해 주세요. </div>
+	
+	<div class="form-card">
+	    <div class="form-group">
+	        <label class="form-label"> 제목 <span class="required">*</span> </label>
+	        <input type="text" class="form-input" value="이벤트 참여 방법이 궁금합니다.">
+	    </div>
+	
+	    <div class="form-group">
+	        <label class="form-label"> 문의 공개 여부 </label>
+	        <div class="radio-group">
+	            <label class="radio-item"> <input type="radio" name="secret" checked> 공개 </label>
+	            <label class="radio-item"> <input type="radio" name="secret"> 비공개 </label>
+	        </div>
+	        <div class="guide-text"> 비공개로 설정 시, 관리자만 확인할 수 있습니다. </div>
+	    </div>
+	
+	    <div class="form-group">
+	        <label class="form-label"> 문의 내용 <span class="required">*</span> </label>
+	        <textarea class="form-textarea">이벤트 참여 방법이 궁금합니다.
+	
+	자세한 안내 부탁드립니다.
+	
+	감사합니다!</textarea>
+	    </div>
+	
+	    <div class="btn-area">
+	        <button type="submit" class="btn btn-save" onclick="history.back()">저장</button>
+	        <button type="button" class="btn btn-cancel" onclick="history.back()">취소</button>
+	    </div>
+	</div>
 
 </div>
 

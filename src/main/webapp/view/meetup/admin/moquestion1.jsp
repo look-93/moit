@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../../inc/userHeader.jsp" %>
 
 <style>
@@ -27,35 +28,44 @@ padding:12px 28px;border-radius:8px;border:1px solid #d9dfea;cursor:pointer;
 <div class="inquiry-wrap">
     <div class="page-card">
         <h1 class="page-title">모임 1:1 문의 등록</h1>
-        <div class="breadcrumb">1:1 문의 > 문의 등록</div>
-
-        <div class="form-box">
-            <h3>문의 정보 입력</h3>
-
-            <div class="form-group">
-                <label>제목 <span class="required">*</span></label>
-                <input type="text" placeholder="제목을 입력하세요">
-            </div>
-
-            <div class="form-group">
-                <label>문의 내용 <span class="required">*</span></label>
-                <textarea placeholder="문의 내용을 입력하세요."></textarea>
-            </div>
-
-            <div class="form-group">
-			    <label class="checkbox-label">
-			        <input type="checkbox">
-			        비공개 문의
-			    </label>
-			</div>
-
-            <div class="btn-area">
-                <button class="btn-primary"
-                onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moquestion2.jsp'">등록하기</button>
-                <button class="btn-cancel"
-                onclick="history.back()">취소</button>
-            </div>
-        </div>
+	        <div class="breadcrumb">1:1 문의 > 문의 등록</div>
+	
+	        <form action="${pageContext.request.contextPath}/questions/write" method="post"
+	        	  onsubmit="return ck()">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+		    <!-- 임시 -->
+		    <input type="hidden" name="memberId" value="1">
+		    <input type="hidden" name="parentId" value="1">
+		    <input type="hidden" name="category" value="MEETUP">
+		    <input type="hidden" name="deleteYn" value="N">
+		
+		    <div class="form-group">
+		        <label> 제목 <span class="required">*</span> </label>
+		        <input type="text" name="title" placeholder="제목을 입력하세요" required>
+		    </div>
+		    <div class="form-group">
+		        <label> 문의 내용 <span class="required">*</span> </label>
+		        <textarea name="content" placeholder="문의 내용을 입력하세요." required></textarea>
+		    </div>
+		    <div class="form-group">
+		        <label class="checkbox-label">
+		        <input type="checkbox" id="privateChk">  비공개 문의  </label>
+		        <input type="hidden" name="isPublic" id="isPublic" value="Y">
+		    </div>
+		    <div class="btn-area">
+		        <button type="submit" class="btn-primary"> 등록하기 </button>
+		        <button type="button" class="btn-cancel" onclick="history.back()"> 취소 </button>
+		    </div>
+		
+		</form>
+		<script>
+			document.getElementById("privateChk")
+			    .addEventListener("change", function(){
+			
+			    document.getElementById("isPublic").value =
+			        this.checked ? "N" : "Y";
+			});
+		</script>
     </div>
 </div>
 

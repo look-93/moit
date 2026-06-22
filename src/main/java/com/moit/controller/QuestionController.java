@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.moit.dao.QuestionMapper;
 import com.moit.dto.AnswerDto;
@@ -52,7 +53,16 @@ public class QuestionController {
         model.addAttribute("todayCnt", questionService.getTodayCnt());
         return "question/list";
     }
+    
+    // 모임글 문의 등록
+    @PostMapping("/write")
+    public String write(QuestionDto dto, RedirectAttributes rttr) {
 
+        questionService.register(dto);
+        rttr.addFlashAttribute("msg", "문의가 등록되었습니다.");
+        return "redirect:/questions/myQuestion";
+    }
+    
     // 문의 상세 화면 + 답변 조회
     @GetMapping("/{id}")
     public String detail(@PathVariable int id, Model model) {
@@ -95,7 +105,8 @@ public class QuestionController {
             HttpSession session,Model model) {
         QuestionDto loginUser = (QuestionDto)session.getAttribute("loginUser");
         
-        int memberId = loginUser.getMemberId();
+        //int memberId = loginUser.getMemberId();
+        int memberId = 1; // 임시
         int pageSize = 10;
         int start = (page - 1) * pageSize;
         List<QuestionDto> list =
@@ -112,6 +123,6 @@ public class QuestionController {
         model.addAttribute("page", page);
         model.addAttribute("totalPage", totalPage);
 
-        return "question/myQuestionList";
+        return "meetup/admin/moquestion2";
     }
 }

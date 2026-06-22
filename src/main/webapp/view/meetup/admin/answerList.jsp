@@ -190,9 +190,6 @@
 }
 
 </style>
-</head>
-
-<body>
 
 <main class="container inquiry-wrap">
 
@@ -202,8 +199,7 @@
             <p>내가 모임 글 작성자에게 문의한 내역을 확인할 수 있습니다.</p>
         </div>
 
-        <a href="${pageContext.request.contextPath}/meetupInquiry/write"
-           class="write-btn">
+        <a href="${pageContext.request.contextPath}/meetupInquiry/write" class="write-btn">
             ✎ 문의 등록
         </a>
     </div>
@@ -216,21 +212,16 @@
     </div>
 
     <div class="content-layout">
-
         <!-- 목록 영역 -->
         <div class="list-section">
-
             <!-- 검색 -->
             <form class="search-box">
-
                 <select name="type">
                     <option>제목</option>
                     <option>모임명</option>
                 </select>
 
-                <input type="text"
-                       name="keyword"
-                       placeholder="검색어를 입력하세요">
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요">
 
                 <select name="status">
                     <option>전체 상태</option>
@@ -239,12 +230,10 @@
                 </select>
 
                 <button type="submit">검색</button>
-
             </form>
 
             <!-- 목록 -->
             <table class="inquiry-table">
-
                 <thead>
                     <tr>
                         <th width="80">번호</th>
@@ -258,7 +247,6 @@
                 </thead>
 
                 <tbody>
-
                     <tr>
                         <td>8</td>
                         <td>등산모임 서울/경기</td>
@@ -308,31 +296,23 @@
                         <td>-</td>
                         <td>›</td>
                     </tr>
-
                 </tbody>
-
             </table>
 
             <!-- 페이징 -->
             <div class="paging">
-
                 <a href="#">‹</a>
-
                 <a href="#" class="active">1</a>
                 <a href="#">2</a>
                 <a href="#">3</a>
-
                 <a href="#">›</a>
-
             </div>
 
         </div>
 
         <!-- 우측 가이드 -->
         <aside class="guide-box">
-
             <h3>이용 가이드</h3>
-
             <div class="guide-item">
                 <div class="icon">📎</div>
                 <div>
@@ -356,9 +336,7 @@
                     <p>답변 전까지 수정/삭제가 가능합니다.</p>
                 </div>
             </div>
-
         </aside>
-
     </div>
 
 </main>

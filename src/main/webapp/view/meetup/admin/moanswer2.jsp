@@ -123,23 +123,13 @@
 </style>
 
 <div class="answer-wrap">
-
     <h1 class="page-title">모임글 답변 수정</h1>
-
-    <div class="breadcrumb">
-        1:1 문의 &nbsp; &gt; &nbsp; 답변 수정
-    </div>
-
-    <div class="page-desc">
-        작성한 답변 내용을 수정 후 저장해 주세요.
-    </div>
+    <div class="breadcrumb">1:1 문의&nbsp;&gt;&nbsp;답변 수정</div>
+    <div class="page-desc"> 작성한 답변 내용을 수정 후 저장해 주세요. </div>
 
     <div class="form-card">
-
         <div class="info-box">
-
             <div class="info-title">문의 정보</div>
-
             <div class="info-row">
                 <div class="info-label">제목</div>
                 <div class="info-value">이벤트 참여 방법이 궁금합니다.</div>
@@ -147,9 +137,7 @@
 
             <div class="info-row">
                 <div class="info-label">작성자</div>
-                <div class="info-value">
-                    user01 &nbsp;&nbsp; | &nbsp;&nbsp; 2026-06-01
-                </div>
+                <div class="info-value">user01&nbsp;&nbsp; | &nbsp;&nbsp;2026-06-01</div>
             </div>
 
         </div>
@@ -157,25 +145,15 @@
         <label class="answer-label">
             답변 내용 <span class="required">*</span>
         </label>
-
         <textarea class="answer-textarea">
 안녕하세요. 관리자입니다.
 
-이벤트 참여는 메인 페이지의 행사관리 > 진행중 이벤트 메뉴에서 신청하실 수 있습니다.
-
-이벤트 상세 페이지에서 ‘참여하기’ 버튼을 클릭하시면 참여가 완료됩니다.
-
-추가 문의사항이 있으시면 언제든지 다시 문의해 주세요.
-
 감사합니다.
         </textarea>
-
         <div class="btn-area">
             <button type="button" class="btn btn-save">저장</button>
-            <button type="button" class="btn btn-cancel"
-            	onclick="history.back()">취소</button>
+            <button type="button" class="btn btn-cancel" onclick="history.back()">취소</button>
         </div>
-
     </div>
 
 </div>

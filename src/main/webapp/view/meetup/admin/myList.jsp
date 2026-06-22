@@ -194,7 +194,6 @@ td{
 
 <aside class="sidebar">
     <div class="logo">MOIT</div>
-
     <ul>
         <li><a href="#">회원관리</a></li>
         <li><a href="#">관리자관리</a></li>
@@ -209,14 +208,12 @@ td{
 </aside>
 
 <section class="content">
-
     <h1 class="page-title">관리자 1:1 문의</h1>
     <div class="page-desc">
         사용자가 관리자에게 등록한 문의를 조회하고 답변합니다.
     </div>
 
     <div class="stat-wrap">
-
         <div class="stat-box">
             <div class="stat-title">전체 문의</div>
             <div class="stat-value">${allCnt}</div>
@@ -236,44 +233,32 @@ td{
             <div class="stat-title">오늘 등록</div>
             <div class="stat-value">${todayCnt}</div>
         </div>
-
     </div>
 
     <div class="search-box">
-
         <form action="" method="get">
-
             <div class="search-row">
-
                 <select name="type">
                     <option>제목</option>
                     <option>내용</option>
                 </select>
-
-                <input type="text" name="keyword"
-                       placeholder="검색어를 입력하세요">
-
+                
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요">
                 <select name="status">
                     <option>전체 문의</option>
                     <option>답변 대기</option>
                     <option>답변 완료</option>
                 </select>
-
+                
                 <input type="date" name="startDate">
                 <input type="date" name="endDate">
-
                 <button class="btn-search">검색</button>
-
             </div>
-
         </form>
-
     </div>
 
     <div class="table-box">
-
         <table>
-
             <thead>
             <tr>
                 <th>번호</th>
@@ -287,30 +272,22 @@ td{
             </thead>
 
             <tbody>
-
             <c:forEach items="${list}" var="q">
-
                 <tr>
-
                     <td>${q.questionId}</td>
-
                     <td>
                         <a href="${pageContext.request.contextPath}/questions/${q.questionId}">
                             ${q.title}
                         </a>
                     </td>
-
                     <td>
                         <c:if test="${q.isPublic eq 'N'}">
                             🔒
                         </c:if>
                     </td>
-
                     <td>${q.memberName}</td>
-
                     <td>
                         <c:choose>
-
                             <c:when test="${q.status eq 'PENDING'}">
                                 <span class="status pending">답변 대기</span>
                             </c:when>
@@ -318,7 +295,6 @@ td{
                             <c:otherwise>
                                 <span class="status answered">답변 완료</span>
                             </c:otherwise>
-
                         </c:choose>
                     </td>
 

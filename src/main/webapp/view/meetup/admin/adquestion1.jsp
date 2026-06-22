@@ -43,10 +43,7 @@ padding:12px 28px;border-radius:8px;border:1px solid #d9dfea;cursor:pointer;
             </div>
 
             <div class="form-group">
-			    <label class="checkbox-label">
-			        <input type="checkbox">
-			        비공개 문의
-			    </label>
+			    <label class="checkbox-label"> <input type="checkbox"> 비공개 문의 </label>
 			</div>
 
             <div class="btn-area">

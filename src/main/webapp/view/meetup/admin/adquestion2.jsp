@@ -143,13 +143,12 @@
 </style>
 
 <div class="inquiry-wrap">
-
     <h1 class="page-title">관리자 1:1 문의 상세보기</h1>
-    <div class="breadcrumb">1:1 문의 &gt; 문의 상세보기</div>
+    <div class="breadcrumb">1:1 문의 > 문의 상세보기</div>
 
     <div class="top-btn-area">
         <button class="btn btn-answer"
-        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/adanswer1.jsp'">답변달기</button>
+        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/adanswer1.jsp'">답변등록</button>
         <button class="btn btn-edit"
         		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/adquestion3.jsp'">수정</button>
         <button class="btn btn-delete"
@@ -157,44 +156,35 @@
     </div>
 
     <div class="card">
-
         <div class="card-title">문의 정보</div>
-
         <table class="info-table">
             <tr>
                 <th>제목</th>
                 <td>이벤트 참여 방법이 궁금합니다.</td>
             </tr>
-
             <tr>
                 <th>작성자</th>
                 <td>user01</td>
             </tr>
-
             <tr>
                 <th>등록일</th>
                 <td>2026-06-01</td>
             </tr>
-
             <tr>
                 <th>답변상태</th>
                 <td>
                     <span class="status">답변 완료</span>
                 </td>
             </tr>
-
             <tr>
                 <th>공개여부</th>
                 <td>비공개 상태입니다. 🔒</td>
             </tr>
         </table>
-
     </div>
-
+    
     <div class="card">
-
         <div class="card-title">문의 내용</div>
-
         <div class="content-box">
             이벤트 참여 방법이 궁금합니다.<br><br>
 
@@ -202,14 +192,11 @@
 
             감사합니다!
         </div>
-
     </div>
 
     <div class="card">
-
         <div class="answer-header">
             <div class="card-title" style="margin-bottom:0;">답변 내용</div>
-
             <div class="answer-btns">
                 <button class="btn btn-answer-edit"
         		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/adanswer2.jsp'">답변수정</button>
@@ -228,16 +215,12 @@
 
             감사합니다.
         </div>
-
-        <div class="answer-date">
-            답변일&nbsp;&nbsp;&nbsp;2026-06-02 14:35
-        </div>
-
+        <div class="answer-date">답변일&nbsp;&nbsp;&nbsp;2026-06-02 14:35</div>
     </div>
 
     <div class="list-btn-area">
-        <button class="btn btn-list"
-        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/list.jsp'">목록으로</button>
+        <button class="btn btn-list"onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/list.jsp'"
+        	>목록으로</button>
     </div>
 
 </div>

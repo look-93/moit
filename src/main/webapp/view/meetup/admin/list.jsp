@@ -432,8 +432,6 @@ nav a{
 
 </style>
 
-
-
 <div class="container">
 
 <div class="detail-wrap">
@@ -635,7 +633,6 @@ nav a{
     </div>
 
     <div class="sidebar-ad">
-
         <div class="ad-tag">
             ADVERTISEMENT
         </div>
@@ -653,7 +650,6 @@ nav a{
         <a href="#">
             광고 신청
         </a>
-
     </div>
 
 </div>

@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../../inc/userHeader.jsp" %>
+
+<c:if test="${not empty msg}">
+<script>
+    alert("${msg}");
+</script>
+</c:if>
 
 <style>
 .inquiry-wrap{
@@ -149,7 +156,7 @@
 
     <div class="top-btn-area">
         <button class="btn btn-answer"
-        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer1.jsp'">답변달기</button>
+        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer1.jsp'">답변등록</button>
         <button class="btn btn-edit"
         		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moquestion3.jsp'">수정</button>
         <button class="btn btn-delete"
@@ -157,86 +164,61 @@
     </div>
 
     <div class="card">
-
         <div class="card-title">문의 정보</div>
-
         <table class="info-table">
             <tr>
                 <th>제목</th>
                 <td>이벤트 참여 방법이 궁금합니다.</td>
             </tr>
-
             <tr>
                 <th>작성자</th>
                 <td>user01</td>
             </tr>
-
             <tr>
                 <th>등록일</th>
                 <td>2026-06-01</td>
             </tr>
-
             <tr>
                 <th>답변상태</th>
                 <td>
                     <span class="status">답변 완료</span>
                 </td>
             </tr>
-
             <tr>
                 <th>공개여부</th>
                 <td>비공개 상태입니다. 🔒</td>
             </tr>
         </table>
-
     </div>
 
     <div class="card">
-
         <div class="card-title">문의 내용</div>
-
         <div class="content-box">
             이벤트 참여 방법이 궁금합니다.<br><br>
-
             자세한 안내 부탁드립니다.<br><br>
-
             감사합니다!
         </div>
-
     </div>
 
     <div class="card">
-
         <div class="answer-header">
             <div class="card-title" style="margin-bottom:0;">답변 내용</div>
-
             <div class="answer-btns">
                 <button class="btn btn-answer-edit"
                 onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer2.jsp'">답변수정</button>
                 <button class="btn btn-answer-delete">답변삭제</button>
             </div>
         </div>
-
         <div class="answer-content">
             안녕하세요. 관리자입니다.<br><br>
-
             이벤트 참여는 메인 페이지의 행사관리 &gt; 진행중 이벤트 메뉴에서 신청하실 수 있습니다.<br><br>
-
             이벤트 상세 페이지에서 ‘참여하기’ 버튼을 클릭하시면 참여가 완료됩니다.<br><br>
-
             추가 문의사항이 있으시면 언제든지 다시 문의해 주세요.<br><br>
-
             감사합니다.
         </div>
-
-        <div class="answer-date">
-            답변일&nbsp;&nbsp;&nbsp;2026-06-02 14:35
-        </div>
-
+        <div class="answer-date">답변일&nbsp;&nbsp;&nbsp;2026-06-02 14:35</div>
     </div>
-
-    <div class="list-btn-area"
-        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/list.jsp'">
+    <div class="list-btn-area" onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/answerList.jsp'">
         <button class="btn btn-list">목록으로</button>
     </div>
 

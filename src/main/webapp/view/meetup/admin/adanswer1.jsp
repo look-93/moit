@@ -137,9 +137,7 @@ textarea{
 </style>
 
 <div class="answer-wrap">
-
     <h1 class="page-title">관리자 1:1 문의 답변 등록</h1>
-
     <div class="breadcrumb">
         1:1 문의
         <span>></span>
@@ -150,81 +148,52 @@ textarea{
 
     <!-- 문의 정보 -->
     <div class="card">
-
         <div class="card-title">문의 정보</div>
-
         <div class="inquiry-info">
-
             <div class="info-row">
                 <div class="info-label">제목</div>
-                <div class="info-value">
-                    이벤트 참여 방법이 궁금합니다.
-                </div>
+                <div class="info-value"> 이벤트 참여 방법이 궁금합니다. </div>
             </div>
 
             <div class="info-row">
                 <div class="info-label">작성자</div>
-                <div class="info-value">
-                    user01
-                </div>
+                <div class="info-value"> user01 </div>
             </div>
 
             <div class="info-row">
                 <div class="info-label">등록일</div>
-                <div class="info-value">
-                    2026-06-01
-                </div>
+                <div class="info-value"> 2026-06-01 </div>
             </div>
 
             <div class="info-row">
                 <div class="info-label">문의 내용</div>
-                <div class="info-value">
-                    이벤트 참여 방법이 궁금합니다.<br>
-                    자세한 안내 부탁드립니다.
-                </div>
+                <div class="info-value">이벤트 참여 방법이 궁금합니다.<br>자세한 안내 부탁드립니다.</div>
             </div>
 
             <div class="info-row">
                 <div class="info-label">비공개 여부</div>
-                <div class="info-value">
-                    비공개
-                    <span class="lock">🔒</span>
-                </div>
+                <div class="info-value"> 비공개 <span class="lock">🔒</span> </div>
             </div>
-
         </div>
-
     </div>
 
     <!-- 답변 입력 -->
     <div class="card">
-
         <div class="card-title">답변 정보 입력</div>
-
         <div class="form-group">
-            <label>
-                답변 내용
-                <span class="required">*</span>
-            </label>
-
-            <textarea
-                placeholder="답변 내용을 입력하세요."></textarea>
-
-            <div class="text-count">
-                0 / 1000
-            </div>
+            <label> 답변 내용 <span class="required">*</span> </label>
+            <textarea placeholder="답변 내용을 입력하세요."></textarea>
+            <div class="text-count"> 0 / 1000 </div>
         </div>
 
         <div class="btn-area">
             <button type="button" class="btn btn-submit" onclick="history.back()">
                 등록하기
             </button>
-
             <button type="button" class="btn btn-cancel" onclick="history.back()">
                 취소
             </button>
         </div>
-
     </div>
 
 </div>
