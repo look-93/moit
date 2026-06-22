@@ -25,7 +25,7 @@
 
 			<div class="admin-list-filters">
 				<a href="${pageContext.request.contextPath}/report/admin/adminList.do"
-				   class="admin-list-filter-btn ${param.targetType == status ? 'active' : ''}">
+				   class="admin-list-filter-btn ${empty param.targetType && empty param.status && empty param.deleteYn ? 'active' : ''}">
 					전체
 				</a>
 			
@@ -79,9 +79,9 @@
 									<c:when test="${dto.status == 'PENDING'}">
 										<span class="admin-list-status pending">${dto.status}</span>
 									</c:when>
-									<c:when test="${dto.status == 'APPROVED'}">
+									<c:otherwise>
 										<span class="admin-list-status approved">${dto.status}</span>
-									</c:when>
+									</c:otherwise>
 								</c:choose>
 							</td>
 							<td>${dto.createdAt}</td>
@@ -99,10 +99,11 @@
 					<tr>
 						<td colspan="8">
 							<ul class="admin-list-pagination">
+							
 								<!-- 이전 -->
 								<c:if test="${paging.start > paging.bottomlist}">
 									<li>
-										<a href="?pstartno=${paging.start - 1}&targetType=${param.targetType}&status=${param.status}"
+										<a href="?pstartno=${paging.start - 1}&targetType=${param.targetType}&status=${param.status}&deleteYn=${param.deleteYn}"
 											class="admin-list-page-btn">이전</a>
 									</li>
 								</c:if>
@@ -110,7 +111,7 @@
 								<!-- 페이지 번호 -->
 								<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
 									<li>
-										<a href="?pstartno=${i}&targetType=${param.targetType}&status=${param.status}"
+										<a href="?pstartno=${i}&targetType=${param.targetType}&status=${param.status}&deleteYn=${param.deleteYn}"
 										   class="admin-list-page-btn <c:if test='${i == paging.current}'>active</c:if>">
 											${i}
 										</a>
@@ -120,10 +121,11 @@
 								<!-- 다음 -->
 								<c:if test="${paging.end < paging.pagetotal}">
 									<li>
-										<a href="?pstartno=${paging.end + 1}&targetType=${param.targetType}&status=${param.status}"
+										<a href="?pstartno=${paging.end + 1}&targetType=${param.targetType}&status=${param.status}&deleteYn=${param.deleteYn}"
 											class="admin-list-page-btn">다음</a>
 									</li>
 								</c:if>
+								
 							</ul>
 						</td>
 					</tr>

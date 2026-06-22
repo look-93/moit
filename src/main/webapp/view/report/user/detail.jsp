@@ -64,10 +64,9 @@
 							<c:when test="${dto.status == 'PENDING'}">
 								<span class="detail-status pending">${dto.status}</span>
 							</c:when>
-
-							<c:when test="${dto.status == 'APPROVED'}">
+							<c:otherwise>
 								<span class="detail-status approved">${dto.status}</span>
-							</c:when>
+							</c:otherwise>
 						</c:choose>
 					</div>
 				</div>

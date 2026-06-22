@@ -48,10 +48,9 @@
 									<c:when test="${dto.status == 'PENDING'}">
 										<span class="mylist-status pending">${dto.status}</span>
 									</c:when>
-									
-									<c:when test="${dto.status == 'APPROVED'}">
+									<c:otherwise>
 										<span class="mylist-status approved">${dto.status}</span>
-									</c:when>
+									</c:otherwise>
 								</c:choose>
 							</td>
 							<td>${dto.createdAt}</td>
@@ -68,17 +67,20 @@
 					<tr>
 						<td colspan="7">
 							<ul class="mylist-pagination">
+							
 								<!-- 이전 -->
 								<c:if test="${paging.start > paging.bottomlist}">
 									<li>
-										<a href="?pstartno=${paging.start - 1}" class="mylist-page-btn">이전</a>
+										<a href="?pstartno=${paging.start - 1}"
+											class="mylist-page-btn">이전</a>
 									</li>
 								</c:if>
 
 								<!-- 페이지 번호 -->
 								<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
 									<li>
-										<a href="?pstartno=${i}" class="mylist-page-btn <c:if test='${i == paging.current}'>active</c:if>">
+										<a href="?pstartno=${i}"
+											class="mylist-page-btn <c:if test='${i == paging.current}'>active</c:if>">
 											${i}
 										</a>
 									</li>
@@ -87,9 +89,11 @@
 								<!-- 다음 -->
 								<c:if test="${paging.end < paging.pagetotal}">
 									<li>
-										<a href="?pstartno=${paging.end + 1}" class="mylist-page-btn">다음</a>
+										<a href="?pstartno=${paging.end + 1}"
+											class="mylist-page-btn">다음</a>
 									</li>
 								</c:if>
+								
 							</ul>
 						</td>
 					</tr>
