@@ -3,6 +3,7 @@ package moit;
 import java.util.HashMap;
 import java.util.List;
 
+
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,10 +21,11 @@ import com.moit.dto.ReportsDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={
-		"classpath:config/root-context.xml"   , 
-		"classpath:config/security-context.xml" 
+        "classpath:config/root-context.xml",
+        "classpath:config/security-context.xml" 
 })
 public class UserTest {
+
 	@Autowired   ApplicationContext context;
 	@Autowired   DataSource         ds;
 	@Autowired   SqlSession         sqlSession;
@@ -135,4 +137,5 @@ public class UserTest {
 		System.out.println(".............2. " + ds);
 		System.out.println(".............1. " + context);
 	}
+
 }

@@ -34,3 +34,4 @@ public class PagingUtil {
 		if(this.end > this.pagetotal) {this.end = this.pagetotal;} // 전체페이지 갯수가 256 -> 마지막은 30이 아니라 26
 	}	
 }
+
