@@ -1,5 +1,6 @@
 package com.moit.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,9 +23,10 @@ public class ReportController { // test lcy
 	// 내 신고내역 화면 mylist
 	@RequestMapping("/report/user/mylist.do")
 	public String reportMylist( @RequestParam(value="pstartno", defaultValue="1") int pstartno,
-								Model model ) {
+								Model model,
+								Principal principal) {
 		
-		int memberId = 1; 
+		int memberId = 1;
 		
 //		HashMap<String, Object> map = new HashMap<>();
 //		map.put("start", 0);

@@ -13,7 +13,7 @@ import com.moit.dto.ReportsDto;
 public class ReportsServiceImpl implements ReportsService {
 	@Autowired ReportsMapper dao;
 
-	@Override // �� �Ű��� ( delete_yn = 'N' �� ���̵��� )
+	@Override // 사용자 본인이 작성한 신고 내역 조회 & 유저 - 페이징
 	public List<ReportsDto> selectUserReport(int pstartno, int memberId) {
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("start", (pstartno-1)*10);  
@@ -28,7 +28,7 @@ public class ReportsServiceImpl implements ReportsService {
 		return dao.selectUserCnt(memberId);
 	}
 
-	@Override // �� �Ű� ��(���� �󼼺���) / ���� ������ / ���� ������
+	@Override // 사용자 본인이 작성한 신고 내역 상세 조회
 	public ReportsDto selectUserReportDetail(ReportsDto dto) {
 		return dao.selectUserReportDetail(dto);
 	}
@@ -43,7 +43,7 @@ public class ReportsServiceImpl implements ReportsService {
 		return dao.updateUserReport(dto);
 	}
 
-	@Override // �Ű� ���� ���� ó�� -> update delete_yn = y
+	@Override // 신고 내역 삭제 (update delete_yn = 'Y')
 	public int deleteUserReport(ReportsDto dto) {
 		return dao.deleteUserReport(dto);
 	}

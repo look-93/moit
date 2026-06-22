@@ -21,7 +21,6 @@
 			  method="post">
 
 			<div class="write-card-title">
-				<span class="write-step">3</span>
 				<h2 class="write-heading">신고하기</h2>
 			</div>
 

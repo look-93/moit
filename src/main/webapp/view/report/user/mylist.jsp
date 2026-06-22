@@ -18,7 +18,7 @@
 	<section class="mylist-card">
 		<div class="mylist-card-head">
 			<div class="mylist-card-title">
-				<span class="mylist-step">4</span>내 신고내역
+				내 신고내역
 			</div>
 		</div>
 
@@ -56,12 +56,12 @@
 									<td>
 										<c:choose>
 											<c:when test="${dto.status == 'PENDING'}">
-												<span class="mylist-status pending">PENDING</span>
+												<span class="mylist-status pending">${dto.status}</span>
 											</c:when>
-
-											<c:otherwise>
+											
+											<c:when test="${dto.status == 'APPROVED'}">
 												<span class="mylist-status approved">${dto.status}</span>
-											</c:otherwise>
+											</c:when>
 										</c:choose>
 									</td>
 									<td>${dto.createdAt}</td>
@@ -88,7 +88,7 @@
 								</c:if>
 
 								<!-- 페이지 번호 -->
-								<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
+							s	<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
 									<li>
 										<a href="?pstartno=${i}" class="mylist-page-btn <c:if test='${i == paging.current}'>active</c:if>">
 											${i}
@@ -106,6 +106,7 @@
 						</td>
 					</tr>
 				</tfoot>
+				
 			</table>
 		</div>
 	</section>

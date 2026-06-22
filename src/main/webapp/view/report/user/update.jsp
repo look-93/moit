@@ -22,7 +22,7 @@
 	<section class="update-card">
 		<div class="update-card-head">
 			<div class="update-card-title">
-				<span class="update-step">4-3</span>신고 수정
+				신고 수정
 			</div>
 		</div>
 

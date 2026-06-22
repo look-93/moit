@@ -20,7 +20,7 @@
 	<section class="admin-list-card">
 		<div class="admin-list-card-head">
 			<div class="admin-list-card-title">
-				<span class="admin-list-step">5</span>관리자 신고목록
+				관리자 신고목록
 			</div>
 
 			<div class="admin-list-filters">
@@ -123,6 +123,7 @@
 						</td>
 					</tr>
 				</tfoot>
+				
 			</table>
 		</div>
 	</section>

@@ -25,7 +25,7 @@
 	<section class="admin-detail-card">
 		<div class="admin-detail-card-head">
 			<div class="admin-detail-card-title">
-				<span class="admin-detail-step">5-1</span>관리자 신고 상세
+				관리자 신고 상세
 			</div>
 		</div>
 
@@ -140,9 +140,7 @@
 
 				<div class="modal-body admin-detail-delete-modal-body">
 					<div class="admin-detail-delete-modal-icon">!</div>
-
 					<h2 class="admin-detail-delete-modal-title">삭제하시겠습니까?</h2>
-
 					<p class="admin-detail-delete-modal-text">
 						선택한 신고 내역이 삭제 처리됩니다.<br>
 						삭제 후에는 목록에서 보이지 않습니다.

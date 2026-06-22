@@ -7,13 +7,13 @@ import com.moit.dto.ReportsDto;
 
 public interface ReportsService {
 	
-	// �� �Ű��� ( delete_yn = 'N' �� ���̵��� )
+	// 사용자 본인이 작성한 신고 내역 조회 & 유저 - 페이징
 	public List<ReportsDto> selectUserReport( int pstartno, int memberId);
 	
 	// select id="selectUserCnt" resultType="int"
 	public int selectUserCnt(int memberId);
 	
-	// �� �Ű� ��(���� �󼼺���) / ���� ������ / ���� ������
+	// 사용자 본인이 작성한 신고 내역 상세 조회
 	public ReportsDto selectUserReportDetail(ReportsDto dto);
 	
 	// 신고 작성 기능
@@ -22,7 +22,7 @@ public interface ReportsService {
 	// 신고 수정 기능 update
 	public int updateUserReport(ReportsDto dto);
 	
-	// �Ű� ���� ���� ó�� -> update delete_yn = y
+	// 신고 내역 삭제 (update delete_yn = 'Y')
 	public int deleteUserReport(ReportsDto dto);
 	
 	
