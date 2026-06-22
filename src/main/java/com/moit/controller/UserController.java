@@ -23,7 +23,7 @@ public class UserController {
 	@Autowired  UserService service;
 	
 	@RequestMapping( "/" )
-	public String index() {  return "redirect:/users/login"; }
+	public String index() {  return "main"; }
 
 	 
 	///////////////////////////////////////
@@ -33,11 +33,54 @@ public class UserController {
 	@RequestMapping( value="/users/join" , method=RequestMethod.POST  )
 	public String join_post(UserDto dto, RedirectAttributes rttr) {  
 		
-		boolean result = service.insert(dto) == 1;
+		int result = service.insert(dto);
 		
-		rttr.addAttribute("result", result);
+		if(result==1) {
+			rttr.addFlashAttribute("msg", "회원가입이 완료되었습니다.");
+			return "redirect:/users/login"; 
+		}
+		else if(result==0) {
+			rttr.addFlashAttribute("msg", "이미 사용중인 아이디입니다.");
+			return "redirect:/users/join"; 
+		}
+		else if(result==-1){
+			rttr.addFlashAttribute("msg", "이미 사용중인 닉네임입니다.");
+			return "redirect:/users/join"; 
+		}
 		
-		return "redirect:/users/login"; 
+		rttr.addFlashAttribute("msg", "회원가입에 실패했습니다.");	
+		return "redirect:/users/join"; 
+	}
+	// 아이디 중복검사
+	@ResponseBody
+	@RequestMapping(value="/users/checkLoginId",method=RequestMethod.GET)
+	public Map<String,Object> checkLoginId(@RequestParam String loginId){
+		
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("loginId", loginId);
+		
+		UserDto dto = service.findMember(map);
+		
+		Map<String,Object> result = new HashMap<>();
+		result.put("exists", dto != null);
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/users/checkNickname", method=RequestMethod.GET)
+	public Map<String,Object> checkNickname(@RequestParam String nickname){
+
+	    Map<String,Object> map=new HashMap<>();
+	    map.put("nickname",nickname);
+
+	    UserDto dto=service.findMember(map);
+
+	    Map<String,Object> result=new HashMap<>();
+	    result.put("exists", dto!=null);
+
+	    return result;
 	}
 	
 	@RequestMapping( value="/users/login" , method=RequestMethod.GET  )
@@ -45,7 +88,7 @@ public class UserController {
 
 	@RequestMapping(value="/users/mypage", method = RequestMethod.GET)
 	public String mypage(Model model, Principal principal) {
-		model.addAttribute("dto",service.findByEmailUserInfo(principal.getName()));
+		model.addAttribute("dto",service.findByLoginId(principal.getName()));
 		return "users/mypage";
 	}			
 }

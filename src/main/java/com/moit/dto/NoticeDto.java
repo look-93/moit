@@ -1,5 +1,6 @@
 package com.moit.dto;
 
+
 import lombok.Data;
 
 @Data
@@ -11,8 +12,7 @@ public class NoticeDto {
     private int view_count;
     private boolean is_fixed;
     private boolean delete_yn;
-    private int created_by;
-    private int updated_by;
-    private java.sql.Timestamp createdAt;
-    private java.sql.Timestamp updatedAt;
+    private String created_by;
+    private String updated_by;
+    private String updated_at;
 }

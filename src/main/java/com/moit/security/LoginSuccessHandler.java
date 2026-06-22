@@ -20,11 +20,52 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	 
 		List<String>  roles = new ArrayList<>(); 
 		authentication.getAuthorities().forEach(auth->{ roles.add(auth.getAuthority()); });
- 
-		// if(roles.contains("ROLE_ADMIN"))
-		// { response.sendRedirect( request.getContextPath() + "/security/admin"   );}
 		
-		response.sendRedirect( request.getContextPath() + "/users/mypage"   );
+		String loginType = request.getParameter("loginType");
+		
+		if (roles.contains("ROLE_ADMIN")) {
+
+			response.sendRedirect( request.getContextPath() + "/admin/admininfo");
+        }
+
+		else if (roles.contains("ROLE_MEMBER")) {
+
+			response.sendRedirect( request.getContextPath() + "/");
+        }else {
+        	response.sendRedirect( request.getContextPath() + "/");
+        }
+		
+		/*
+		if ("ADMIN".equals(loginType)) {
+
+	        if (!roles.contains("ROLE_ADMIN")) {
+
+	            request.getSession().invalidate();
+
+	            response.sendRedirect( request.getContextPath() + "/users/login?error=admin");
+
+	            return;
+	        }
+
+	        response.sendRedirect( request.getContextPath() + "/admin/admininfo");
+
+	        return;
+	    }
+		
+		if("USER".equals(loginType)){
+
+		    if(roles.contains("ROLE_ADMIN")){
+
+		        request.getSession().invalidate();
+
+		        response.sendRedirect( request.getContextPath()+"/users/login?error=user" );
+
+		        return;
+		    }
+
+		}	response.sendRedirect( request.getContextPath() + "/main");
+		*/
+	
 		
 	}
 
