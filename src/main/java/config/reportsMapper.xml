@@ -74,31 +74,32 @@
 	<select id="selectAdminReports" resultType="ReportsDto" parameterType="java.util.HashMap">
 	    select *
 	    from reports
-	    where delete_yn = 'N'
+	    where delete_yn='N'
 	    
-        <if test="reportId != null">
-            and report_id = #{reportId}
-        </if>
-        <if test="status != null and status != ''">
-            and status = #{status}
-        </if>
-        <if test="targetType != null and targetType != ''">
-            and target_type = #{targetType}
-        </if>
-        <if test="memberId != null">
-            and member_id = #{memberId}
-        </if>
-        <if test="reasonCode != null and reasonCode != ''">
-            and reason_code = #{reasonCode}
-        </if>
-        <if test="createdAt != null and createdAt != ''">
-            and date(created_at) = #{createdAt}
-        </if>
-        
-	    order by report_id desc
-	    <if test="start != null and end != null">
-	        limit #{start}, #{end}
-	    </if>
+	        <if test="reportId != null">
+	            and report_id = #{reportId}
+	        </if>
+	        <if test="status != null and status != ''">
+	            and status = #{status}
+	        </if>
+	        <if test="targetType != null and targetType != ''">
+	            and target_type = #{targetType}
+	        </if>
+	        <if test="memberId != null">
+	            and member_id = #{memberId}
+	        </if>
+	        <if test="reasonCode != null and reasonCode != ''">
+	            and reason_code = #{reasonCode}
+	        </if>
+	        <if test="createdAt != null and createdAt != ''">
+	            and date(created_at) = #{createdAt}
+	        </if>
+	        
+		    order by report_id desc
+		    <if test="start != null and end != null">
+		        limit #{start}, #{end}
+		    </if>
+
 	</select>
 
 	<!-- 관리자 신고 목록 카운트 (동적 조건 반영) -->

@@ -37,43 +37,31 @@
 				</thead>
 
 				<tbody>
-					<c:choose>
-						<c:when test="${empty list}">
-							<tr>
-								<td colspan="7" class="mylist-empty">
-									작성한 신고 내역이 없습니다.
-								</td>
-							</tr>
-						</c:when>
-
-						<c:otherwise>
-							<c:forEach var="dto" items="${list}" varStatus="status">
-								<tr>
-									<td>${status.count}</td>
-									<td>${dto.targetType}</td>
-									<td>${dto.targetId}</td>
-									<td>${dto.reasonCode}</td>
-									<td>
-										<c:choose>
-											<c:when test="${dto.status == 'PENDING'}">
-												<span class="mylist-status pending">${dto.status}</span>
-											</c:when>
-											
-											<c:when test="${dto.status == 'APPROVED'}">
-												<span class="mylist-status approved">${dto.status}</span>
-											</c:when>
-										</c:choose>
-									</td>
-									<td>${dto.createdAt}</td>
-									<td>
-										<a class="mylist-link" href="${pageContext.request.contextPath}/report/user/detail.do?reportId=${dto.reportId}">
-											상세
-										</a>
-									</td>
-								</tr>
-							</c:forEach>
-						</c:otherwise>
-					</c:choose>
+					<c:forEach var="dto" items="${list}" varStatus="status">
+						<tr>
+							<td>${status.count}</td>
+							<td>${dto.targetType}</td>
+							<td>${dto.targetId}</td>
+							<td>${dto.reasonCode}</td>
+							<td>
+								<c:choose>
+									<c:when test="${dto.status == 'PENDING'}">
+										<span class="mylist-status pending">${dto.status}</span>
+									</c:when>
+									
+									<c:when test="${dto.status == 'APPROVED'}">
+										<span class="mylist-status approved">${dto.status}</span>
+									</c:when>
+								</c:choose>
+							</td>
+							<td>${dto.createdAt}</td>
+							<td>
+								<a class="mylist-link" href="${pageContext.request.contextPath}/report/user/detail.do?reportId=${dto.reportId}">
+									상세
+								</a>
+							</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 
 				<tfoot>
@@ -88,7 +76,7 @@
 								</c:if>
 
 								<!-- 페이지 번호 -->
-							s	<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
+								<c:forEach var="i" begin="${paging.start}" end="${paging.end}">
 									<li>
 										<a href="?pstartno=${i}" class="mylist-page-btn <c:if test='${i == paging.current}'>active</c:if>">
 											${i}

@@ -25,7 +25,7 @@
 
 			<div class="admin-list-filters">
 				<a href="${pageContext.request.contextPath}/report/admin/adminList.do"
-				   class="admin-list-filter-btn ${empty param.targetType and empty param.status ? 'active' : ''}">
+				   class="admin-list-filter-btn ${param.targetType == param.status ? 'active' : ''}">
 					전체
 				</a>
 			
@@ -72,11 +72,11 @@
 							<td>
 								<c:choose>
 									<c:when test="${dto.status == 'PENDING'}">
-										<span class="admin-list-status pending">PENDING</span>
+										<span class="admin-list-status pending">${dto.status}</span>
 									</c:when>
-									<c:otherwise>
+									<c:when test="${dto.status == 'APPROVED'}">
 										<span class="admin-list-status approved">${dto.status}</span>
-									</c:otherwise>
+									</c:when>
 								</c:choose>
 							</td>
 							<td>${dto.createdAt}</td>
