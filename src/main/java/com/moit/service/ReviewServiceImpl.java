@@ -41,8 +41,8 @@ public class ReviewServiceImpl  implements ReviewService {
 	}
 
 	@Override
-	public List<ReviewDto> adminSelectReviewList() {		
-		return reviewmapper.adminSelectReviewList() ;
+	public List<ReviewDto> adminSelectReviewList(int memberId) {		
+		return reviewmapper.adminSelectReviewList(memberId) ;
 	}
 
 	@Override
@@ -68,6 +68,12 @@ public class ReviewServiceImpl  implements ReviewService {
 	@Override
 	public int updateUserReviewHide(ReviewDto dto) {
 		return reviewmapper.updateUserReviewHide(dto);
+	}
+
+	@Override
+	public List<ReviewDto> selectReviewsByMemberId(int memberId, String sort) { 
+		
+		return reviewmapper.selectReviewsByMemberId(memberId, sort);
 	}
 
 }

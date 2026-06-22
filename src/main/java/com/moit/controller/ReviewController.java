@@ -18,30 +18,44 @@ import com.moit.service.ReviewService;
 public class ReviewController {
 	@Autowired ReviewService reviewservice;
 	//후기작성 화면 요청
-	@RequestMapping( value="/review/insert" , method=RequestMethod.GET  )
-	public String insertUserReview() {
-		return "review/insert";
-	}
-	//후기작성 처리 후
-	@RequestMapping(value="/review/insert",method=RequestMethod.POST)
+//	@RequestMapping( value="/review/test" , method=RequestMethod.GET  )
+//	public String insertUserReview() {
+//		return "review/test";
+//	}
+	//후기작성 처리 후 (마이페이지에서 모달로 후기작성 처리)
+	@RequestMapping(value="/review/test",method=RequestMethod.POST)
 	public String insertUserReview_post(ReviewDto dto, RedirectAttributes rttr) {
-		boolean result= reviewservice.insertUserReview(dto) == 1;
-		rttr.addAttribute("result",result);
-		return "review/list";
+		 reviewservice.insertUserReview(dto);
+		rttr.addAttribute("meetupId", dto.getMeetupId());
+		return "redirect:/review/test";
 	}
 	//특정모임의 후기목록 조회
-	@RequestMapping(value="/review/list",method=RequestMethod.GET)
+	@RequestMapping(value="/review/test",method=RequestMethod.GET)
 	public String selectUserReview(@RequestParam("meetupId") int meetupId,Model model) {
-		List<ReviewDto> reviewList = reviewservice.selectUserReview(meetupId);
-		model.addAttribute("reviewList", reviewList);
-		return "redirect:/review/list";
+		List<ReviewDto> selectUserReview = reviewservice.selectUserReview(meetupId);
+		model.addAttribute("selectUserReview", selectUserReview);
+		return "review/test";
+	}
+	
+
+	@RequestMapping(value="/review/mypage", method=RequestMethod.GET)
+	public String selectMyReviewTest(
+			Model model, 
+			// 💡 @RequestParam("memberId")를 붙여서 주소창의 ?memberId= 값이 여기로 들어오도록 이름을 강제로 매핑합니다!
+			@RequestParam(value="memberId", required=false, defaultValue="10") int memberId,
+			@RequestParam(value="sort", required=false, defaultValue="latest") String sort) {		
+		
+		List<ReviewDto> selectUserReview = reviewservice.selectReviewsByMemberId(memberId, sort);
+		
+		model.addAttribute("selectUserReview", selectUserReview);
+		return "review/mypage"; 
 	}
 	//인기 후기 조회
 	@RequestMapping(value="/review/popular",method=RequestMethod.GET)
 	public String selectReviewPopular(Model model) {
 		List<ReviewDto> popularList=reviewservice.selectReviewPopular();
 		model.addAttribute("popularList",popularList);
-		return "review/popular";
+		return "review/test";
 	}
 	//후기 수정 처리
 	@RequestMapping(value="/review/update",method=RequestMethod.POST)
@@ -49,17 +63,17 @@ public class ReviewController {
 		boolean result=reviewservice.updateUserReview(dto) == 1;
 		rttr.addAttribute("meetupId", dto.getMeetupId());
 		rttr.addAttribute("updateResult", result);
-        return "redirect:/review/list?meetupId=";
+        return "redirect:/review/test?meetupId=";
 	}
 	//후기 삭제 처리
-	@RequestMapping(value="/review/",method=RequestMethod.POST)
+	@RequestMapping(value="/review/delete",method=RequestMethod.POST)
 	public String deleteUserReview(ReviewDto dto,RedirectAttributes rttr) {
+		dto.setMemberId(10);  //// 로그인후 유저 멤버아이디 세션에서 불러오기
 		boolean result=reviewservice.deleteUserReview(dto)==1;
 		rttr.addAttribute("deleteResult",result);
-		return "redirect:/review/list?meetupId=" +dto.getMeetupId();
-		
-		
+		return "redirect:/review/test?meetupId=" +dto.getMeetupId();
 	}
+	
 	
 	// 후기 비공개 처리 
 	@RequestMapping(value="/review/hide", method=RequestMethod.POST) 
@@ -80,8 +94,8 @@ public class ReviewController {
 	
 	// 전체 후기 조회 목록
     @RequestMapping(value = "/admin/review/list", method = RequestMethod.GET)
-    public String adminSelectReviewList(Model model) {
-        List<ReviewDto> adminReviewList = reviewservice.adminSelectReviewList();
+    public String adminSelectReviewList(Model model,int memberId) {
+        List<ReviewDto> adminReviewList = reviewservice.adminSelectReviewList(memberId);
         model.addAttribute("adminReviewList", adminReviewList);
         return "admin/reviews/list";
     }
@@ -105,9 +119,18 @@ public class ReviewController {
    
     
     //관리자 기능
+    
+    //후기 목록조회 (검색기능)
+    @RequestMapping("/review/admin/list.do")
+    public String adminListReview (Model model){
+    	model.addAttribute("menu", "review");
+        return "review/admin/list";
+    }
+
+    
 
     // 후기 비공개 처리 
-    @RequestMapping(value = "/admin/review/hide", method = RequestMethod.POST)
+    @RequestMapping(value = "/review/admin/hide", method = RequestMethod.POST)
     @ResponseBody
     public String adminHideReview(@RequestParam("id") int id) {
         int result = reviewservice.adminHideReview(id);

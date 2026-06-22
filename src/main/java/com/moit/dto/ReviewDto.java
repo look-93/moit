@@ -8,7 +8,8 @@ public class ReviewDto {
 	private int meetupId;
 	private int memberId;
 	private String content;
-	private boolean isPublic;
+	private int rating;
+	private String isPublic;
 	private boolean deleteYn;
 	private String createdAt;
 	private int createdBy;

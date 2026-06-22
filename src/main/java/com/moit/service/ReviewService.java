@@ -5,19 +5,22 @@ import java.util.List;
 import com.moit.dto.ReviewDto;
 
 public interface ReviewService {
-	//»ç¿ëÀÚ
+	//ì‚¬ìš©ì
 		public int insertUserReview (ReviewDto dto);
 		public List<ReviewDto>selectUserReview (int meetupId);
 		public List<ReviewDto>selectReviewPopular();
 		public int updateUserReview(ReviewDto dto);
 		public int deleteUserReview(ReviewDto dto);
 		public int updateUserReviewHide(ReviewDto dto);
+		public List<ReviewDto> selectReviewsByMemberId(int memberId,String sort);
 		
-		//°ü¸®ÀÚ
-		public List<ReviewDto>adminSelectReviewList();
+		//ê´€ë¦¬ì
+		public List<ReviewDto>adminSelectReviewList(int memberId);
 		public List<ReviewDto>adminSearchReviewByContent(String keyword);
 		public List<ReviewDto>adminSearchReviewByWriter (int memberId);
 		public int adminHideReview(int id);
 		public int adminDeleteReview(int id);
+		
+	
 		
 }

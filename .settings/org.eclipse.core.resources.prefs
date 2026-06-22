@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/moit/controller/ReviewController.java=UTF-8
 encoding//src/main/webapp/view/review/detail.jsp=UTF-8
+encoding//src/main/webapp/view/review/insert.jsp=UTF-8
+encoding//src/main/webapp/view/review/mypage.jsp=UTF-8

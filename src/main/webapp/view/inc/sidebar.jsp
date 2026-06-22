@@ -23,6 +23,10 @@
 				href="/moit/admin/notice/list.do">공지사항</a> <a
 				href="/moit/admin/event/list.do">행사관리</a> <a
 				href="/moit/admin/advertisement/list.do">광고관리</a>
+				
+				 <a
+				href="${pageContext.request.contextPath}/review/admin/list.do"
+				class="<c:if test='${menu eq \"review\"}'>active</c:if>">후기관리</a>
 		</div>
 
 	</div>
