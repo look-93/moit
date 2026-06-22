@@ -37,7 +37,7 @@ public class QuestionService {
     public QuestionDto getDetail(int id) {
     	// 문의 정보 조회
         QuestionDto question = questionMapper.findById(id);
-     // 해당 문의의 답변 조회
+        // 해당 문의의 답변 조회
         AnswerDto answer = answerMapper.findByQuestionId(id);
         
         question.setAnswer(answer);

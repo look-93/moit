@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.moit.dao.QuestionMapper;
 import com.moit.dto.AnswerDto;
 import com.moit.dto.QuestionDto;
 import com.moit.service.AnswerService;

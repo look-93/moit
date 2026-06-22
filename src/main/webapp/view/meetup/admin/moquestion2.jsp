@@ -107,7 +107,6 @@
 .answer-header{
     display:flex;
     justify-content:space-between;
-    align-items:center;
     margin-bottom:20px;
 }
 
@@ -152,7 +151,7 @@
 <div class="inquiry-wrap">
 
     <h1 class="page-title">모임 1:1 문의 상세보기</h1>
-    <div class="breadcrumb">1:1 문의 &gt; 문의 상세보기</div>
+    <div class="breadcrumb">1:1 문의 > 문의 상세보기</div>
 
     <div class="top-btn-area">
         <button class="btn btn-answer"
@@ -168,25 +167,41 @@
         <table class="info-table">
             <tr>
                 <th>제목</th>
-                <td>이벤트 참여 방법이 궁금합니다.</td>
+                <td>${data.title}</td>
             </tr>
             <tr>
                 <th>작성자</th>
-                <td>user01</td>
+                <td>${data.memberId}</td>
             </tr>
             <tr>
                 <th>등록일</th>
-                <td>2026-06-01</td>
+                <td>${data.createAt}</td>
             </tr>
             <tr>
                 <th>답변상태</th>
                 <td>
-                    <span class="status">답변 완료</span>
+                	<c:choose>
+                		<c:when test="${data.status eq 'ANSWERED'}">
+	                   		<span class="status">답변 완료</span>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<span class="status">답변 대기</span>
+	                    </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
             <tr>
                 <th>공개여부</th>
-                <td>비공개 상태입니다. 🔒</td>
+                <td>
+				    <c:choose>
+				        <c:when test="${data.isPublic eq 'N'}">
+				            비공개 상태입니다. 🔒
+				        </c:when>
+				        <c:otherwise>
+				            공개 상태입니다.
+				        </c:otherwise>
+				    </c:choose>
+				</td>
             </tr>
         </table>
     </div>
@@ -194,34 +209,30 @@
     <div class="card">
         <div class="card-title">문의 내용</div>
         <div class="content-box">
-            이벤트 참여 방법이 궁금합니다.<br><br>
-            자세한 안내 부탁드립니다.<br><br>
-            감사합니다!
+        	${data.content}
         </div>
     </div>
-
-    <div class="card">
-        <div class="answer-header">
-            <div class="card-title" style="margin-bottom:0;">답변 내용</div>
-            <div class="answer-btns">
-                <button class="btn btn-answer-edit"
-                onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer2.jsp'">답변수정</button>
-                <button class="btn btn-answer-delete">답변삭제</button>
-            </div>
-        </div>
-        <div class="answer-content">
-            안녕하세요. 관리자입니다.<br><br>
-            이벤트 참여는 메인 페이지의 행사관리 &gt; 진행중 이벤트 메뉴에서 신청하실 수 있습니다.<br><br>
-            이벤트 상세 페이지에서 ‘참여하기’ 버튼을 클릭하시면 참여가 완료됩니다.<br><br>
-            추가 문의사항이 있으시면 언제든지 다시 문의해 주세요.<br><br>
-            감사합니다.
-        </div>
-        <div class="answer-date">답변일&nbsp;&nbsp;&nbsp;2026-06-02 14:35</div>
-    </div>
-    <div class="list-btn-area" onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/answerList.jsp'">
-        <button class="btn btn-list">목록으로</button>
-    </div>
-
+    
+	<c:if test="${not empty data.answer}">
+	    <div class="card">
+	        <div class="answer-header">
+	        <div class="card-title">답변 내용</div>
+	            <div class="card-title" style="margin-bottom:0;">${data.answer.content}</div>
+	            <div class="answer-btns">
+	                <button class="btn btn-answer-edit"
+	                onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer2.jsp'">답변수정</button>
+	                <button class="btn btn-answer-delete">답변삭제</button>
+	            </div>
+	        </div>
+	        <div class="answer-content">
+	            ${data.answer.content}
+	        </div>
+	        <div class="answer-date">답변일 ${data.answer.createdAt}</div>
+	    </div>
+	    <div class="list-btn-area" onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/answerList.jsp'">
+	        <button class="btn btn-list">목록으로</button>
+	    </div>
+	</c:if>
 </div>
 
 <%@ include file="../../inc/userFooter.jsp" %>

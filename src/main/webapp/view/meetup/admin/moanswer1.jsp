@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../../inc/userHeader.jsp" %>
 
 <style>
@@ -153,27 +153,37 @@ textarea{
 
             <div class="info-row">
                 <div class="info-label">제목</div>
-                <div class="info-value"> 이벤트 참여 방법이 궁금합니다. </div>
+                <div class="info-value">${data.title}</div>
             </div>
 
             <div class="info-row">
                 <div class="info-label">작성자</div>
-                <div class="info-value"> user01 </div>
+                <div class="info-value">${data.memberId}</div>
             </div>
 
             <div class="info-row">
                 <div class="info-label">등록일</div>
-                <div class="info-value"> 2026-06-01 </div>
+                <div class="info-value">${data.createdAt}</div>
             </div>
 
             <div class="info-row">
                 <div class="info-label">문의 내용</div>
-                <div class="info-value"> 이벤트 참여 방법이 궁금합니다.<br> 자세한 안내 부탁드립니다. </div>
+                <div class="info-value">${data.content}</div>
             </div>
 
             <div class="info-row">
                 <div class="info-label">비공개 여부</div>
-                <div class="info-value"> 비공개 <span class="lock">🔒</span> </div>
+			    <div class="info-value">
+			        <c:choose>
+			            <c:when test="${data.isPublic eq 'N'}">
+			                비공개 🔒
+			            </c:when>
+			            
+			            <c:otherwise>
+			                공개 🔓
+			            </c:otherwise>
+			        </c:choose>
+			    </div>
             </div>
 
         </div>

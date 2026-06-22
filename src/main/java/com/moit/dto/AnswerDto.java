@@ -16,6 +16,6 @@ public class AnswerDto {
     private java.sql.Timestamp createdAt;
     private java.sql.Timestamp updatedAt;
 
-    // 추가 (관리자 이름 등)
+    //
     private String memberName;
 }
