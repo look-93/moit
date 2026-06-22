@@ -29,14 +29,9 @@ public class UserMeetupController {
 	
 	@RequestMapping("/meetup/user/list.do")
 	public String serchByUser(Model model, MeetupSearchDto meetupSerchDto,Authentication authentication, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
-		// 멤버완료 취합 후 적용
-		/*
-		 * CustomUser user = (CustomUser) authentication.getPrincipal(); int memberId =
-		 * userMeetupService.findByMamberId(user.getUsername());
-		 * meetupSerchDto.setMemberId(memberId);
-		 */
-		
-		meetupSerchDto.setMemberId(21);
+		CustomUser user = (CustomUser) authentication.getPrincipal();
+		int memberId = userMeetupService.findByMamberId(user.getUsername());
+		meetupSerchDto.setMemberId(memberId);
 		
 		model.addAttribute("menu", "meetup");
 		model.addAttribute("sidoList", userMeetupService.findAllSido());
@@ -48,12 +43,9 @@ public class UserMeetupController {
 	
 	@RequestMapping("/meetup/user/detail.do")
 	public String detail(Model model,  MeetupDto meetupdto, Authentication authentication, MeetupApplicationsDto meetupApplicationsDto) {
-		// 멤버완료 취합 후 적용
-//		CustomUser user = (CustomUser) authentication.getPrincipal();		
-//		int memberId = userMeetupService.findByMamberId(user.getUsername());		
-//		meetupdto.setMemberId(memberId);
-		
-		meetupApplicationsDto.setMemberId(3);
+		CustomUser user = (CustomUser) authentication.getPrincipal();
+		int memberId = userMeetupService.findByMamberId(user.getUsername());
+		meetupApplicationsDto.setMemberId(memberId);
 		meetupApplicationsDto.setStatusList(Arrays.asList("PENDING", "APPROVED"));
 		model.addAttribute("applyInfo", userMeetupService.findApplyInfo(meetupApplicationsDto));
 		model.addAttribute("detail", userMeetupService.selectMeetupDetail(meetupApplicationsDto.getMeetupId()));
@@ -121,7 +113,7 @@ public class UserMeetupController {
 		//meetupdto.setMemberId(1);
 		//System.out.println(meetupdto.getMeetupId());
 		model.addAttribute("meetupApplyMemberList", userMeetupService.selectMeetupApplyMember(meetupdto.getMeetupId())); //신청자목록
-		model.addAttribute("meetupStats", userMeetupService.selectMyPageStats(1)); //통계
+		model.addAttribute("meetupStats", userMeetupService.selectMyPageStats(memberId)); //통계
 		model.addAttribute("meetupList", userMeetupService.selectMyMeetup(pstartno,meetupdto));
 		model.addAttribute("paging", new PagingUtil(userMeetupService.selectMyMeetupTotalCnt(meetupdto), pstartno));
 		model.addAttribute("menu", "meetup");
@@ -159,9 +151,8 @@ public class UserMeetupController {
 		
 		CustomUser user = (CustomUser) authentication.getPrincipal();		
 		int memberId = userMeetupService.findByMamberId(user.getUsername());		
-		meetupdto.setMemberId(memberId);
+		meetupApplicationsDto.setMemberId(memberId);
 		
-		//meetupApplicationsDto.setMemberId(3);	
 		meetupApplicationsDto.setStatusList(Arrays.asList("CANCELED"));
 		boolean result = userMeetupService.insertApplication(meetupApplicationsDto ) > 0;
 		rttr.addFlashAttribute("result", result);		
@@ -186,7 +177,7 @@ public class UserMeetupController {
 		meetupdto.setMemberId(memberId);
 		
 		//meetupdto.setMemberId(3);		
-		model.addAttribute("meetupStats", userMeetupService.selectMyPageStats(3));
+		model.addAttribute("meetupStats", userMeetupService.selectMyPageStats(memberId));
 		model.addAttribute("applyList", userMeetupService.selectMyMeetupApply(pstartno,meetupdto));
 		model.addAttribute("paging", new PagingUtil(userMeetupService.selectMyMeetupApplyTotalCnt(meetupdto), pstartno));
 		model.addAttribute("menu", "meetupApply");
@@ -200,7 +191,7 @@ public class UserMeetupController {
 	public Map<String, Object> meetupLike(MeetupLikeDto meetupLikeDto, Authentication authentication, MeetupDto meetupdto) {
 		CustomUser user = (CustomUser) authentication.getPrincipal();		
 		int memberId = userMeetupService.findByMamberId(user.getUsername());		
-		meetupdto.setMemberId(memberId);
+		meetupLikeDto.setMemberId(memberId);
 		Map<String, Object> result = new HashMap<>();
 		
 		//meetupLikeDto.setMemberId(3);

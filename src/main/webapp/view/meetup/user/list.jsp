@@ -299,6 +299,8 @@ a {
     box-shadow:0 8px 20px rgba(104,126,255,.25);
 }
 
+.btn-primary1{background:var(--c4);color:white;width:100%;}
+
 </style>
 <div class="main-content">
 	<div class="container">
@@ -324,8 +326,9 @@ a {
 				<div class="sidebar-ad">
 
 					<a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
-				        <img src="${pageContext.request.contextPath}${ad.imageUrl}"
-				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'">
+				        <%-- <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"> --%>
+			        	 <img src="${pageContext.request.contextPath}${ad.imageUrl}">
 				    </a>
 
 				</div>
@@ -341,8 +344,9 @@ a {
 				<div class="top-ad">
 
 					<a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
-				        <img src="${pageContext.request.contextPath}${ad.imageUrl}"
-				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'">
+				       <%--  <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"> --%>
+	        	      <img src="${pageContext.request.contextPath}${ad.imageUrl}">
 				    </a>
 
 				</div>
@@ -365,7 +369,7 @@ a {
 						</select>
 
 						<div class="col-md-2">
-							<button type="submit" class="btn btn-primary">검색</button>
+							<button type="submit" class="btn btn-primary1">검색</button>
 						</div>
 
 						<!-- 여기 추가 -->

@@ -91,7 +91,7 @@
            AND A.title LIKE CONCAT('%', #{searchText}, '%')
      </if>
 	 <if test="categoryId != null and categoryId != 0">
-          AND P.parent_id = #{categoryId}
+          AND P.category_id = #{categoryId}
      </if> 
 	 ORDER BY
 	<choose>
@@ -129,7 +129,7 @@
 	           AND A.title LIKE CONCAT('%', #{searchText}, '%')
 	     </if>
 		 <if test="categoryId != null and categoryId != 0">
-	          AND P.parent_id = #{categoryId}
+	          AND P.category_id = #{categoryId}
 	     </if> 	     
 		 ORDER BY
 		<choose> <!--  -->
@@ -197,6 +197,7 @@
  		   	   min_participants  = #{minParticipants},
  		   	   address 		 	 = #{address},
  		   	   category_id 		 = #{categoryId},
+ 		   	   sigungu_id        = #{sigunguId},
  		   	   meetup_at 	 	 = #{meetupAt},
  		   	   status			 = #{status} 		   	   
  		 WHERE meetup_id = #{meetupId}

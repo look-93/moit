@@ -691,29 +691,31 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
         <!-- 로그인한 상태 -->
         <sec:authorize access="isAuthenticated()"> 
                 <sec:authentication property="principal.dto" var="loginUser"/>
-     
-                <div class="profile">
-                    <div class="profile-img">${loginUser.nickname.substring(0,1)}</div>
-                    <div class="profile-info">
-                        <strong>${loginUser.nickname}님</strong>
-                        <span>
-                            <c:choose>
-                                <c:when test="${loginUser.typeName eq 'ROLE_MEMBER'}">  
-                                    일반회원
-                                </c:when>
-                                <c:when test="${loginUser.typeName eq 'ROLE_PARTNER'}">
-                                    제휴업체
-                                </c:when>
-                                <c:when test="${loginUser.typeName eq 'ROLE_ADMIN'}">
-                                    관리자
-                                </c:when>
-                                <c:otherwise>
-                                    ${loginUser.typeName}
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
-                    </div>
-                </div>
+     			<a href="${pageContext.request.contextPath}/meetup/mypage/meetup.do">
+	     			<div class="profile">
+	                    <div class="profile-img">${loginUser.nickname.substring(0,1)}</div>
+	                    <div class="profile-info">
+	                        <strong>${loginUser.nickname}님</strong>
+	                        <span>
+	                            <c:choose>
+	                                <c:when test="${loginUser.typeName eq 'ROLE_MEMBER'}">  
+	                                    일반회원
+	                                </c:when>
+	                                <c:when test="${loginUser.typeName eq 'ROLE_PARTNER'}">
+	                                    제휴업체
+	                                </c:when>
+	                                <c:when test="${loginUser.typeName eq 'ROLE_ADMIN'}">
+	                                    관리자
+	                                </c:when>
+	                                <c:otherwise>
+	                                    ${loginUser.typeName}
+	                                </c:otherwise>
+	                            </c:choose>
+	                        </span>
+	                    </div>
+	                </div>
+     			</a>
+                
                 
                 <!-- 로그아웃 버튼 -->
                 <form action="${pageContext.request.contextPath}/users/logout" method="post">

@@ -504,10 +504,10 @@ body{
 			
 			    <div class="side-box">
 			        <h3>작성자</h3>
-			        <p>${detail.nickname}</p>
-			        <a class="detail-inquiry-btn" href="${pageContext.request.contextPath}/questions/write?category=MEETUP">
+			        <p>${detail.nickname}</p>			        
+			        <button class="detail-inquiry-btn" onClick="gotoQna()">
 			            💬 모임글 문의하기
-			        </a>
+			        </button>
 			    </div>
 			
 			    <div class="side-box">
@@ -563,6 +563,10 @@ body{
     	}else if(result == "false") {
     		alert("관리자에게 문의하세요");	
     	}	
+    }
+    
+    function gotoQna(){
+    	location.href ="${pageContext.request.contextPath}/questions/write?category=MEETUP"
     }
     
     	

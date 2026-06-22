@@ -464,52 +464,16 @@ td:nth-child(2){
 <div class="main-content">
 	<div class="container mypage-wrap">
 
-		<div class="profile-card">
-			<div class="myProfile-img"></div>
-			<div class="myProfile-info">
-				<h2>홍길동</h2>
-				<p>hong@example.com</p>
-				<br> <span class="badge">일반회원</span>
-			</div>
-		</div>
+		<%@ include file="../../inc/myPageHeader.jsp" %>
 
 		<div class="content">
 
-			<aside class="sidebar">
-				<a href="#">내 정보</a> 
-				<a href="${pageContext.request.contextPath}/mypage/meetup.do" class="<c:if test='${menu eq \"meetup\"}'>active</c:if>">내 모집글</a> 
-				<a href="#">신청한 모임</a> 
-				<a href="#">관심 모임</a> 
-				<a href="#">작성한 후기</a> 
-				<a href="#">내 신고내역</a> 
-				<a href="#">회원정보 수정</a>
-			</aside>
+			<%@ include file="../../inc/myPageSidebar.jsp" %>
 
 			<div class="main">
 
-				<div class="stats">
-					<div class="stat-card">
-						🎉
-						<h3>${meetupStats.meetupCount}</h3>
-						<p>작성한 모집글</p>
-					</div>
-					<div class="stat-card">
-						⭐
-						<h3>${meetupStats.reviewCount}</h3>
-						<p>작성 후기</p>
-					</div>
-					<div class="stat-card">
-						❤️
-						<h3>${meetupStats.likeCount}</h3>
-						<p>관심 모임</p>
-					</div>
-					<div class="stat-card">
-						📝
-						<h3>${meetupStats.applicationCount}</h3>
-						<p>참여 기록</p>
-					</div>
-				</div>
-
+			<%@ include file="../../inc/myPageSubHeader.jsp" %>
+			
 				<div class="section">
 					<h2>내 모집글</h2>
 					<div class="table-responsive">
