@@ -196,123 +196,122 @@
     <div class="page-header">
         <div>
             <h1>모임 문의</h1>
-            <p>내가 모임 글 작성자에게 문의한 내역을 확인할 수 있습니다.</p>
+            <p>내가 작성한 문의 내역을 확인할 수 있습니다.</p>
         </div>
 
-        <a href="${pageContext.request.contextPath}/meetupInquiry/write" class="write-btn">
+        <a href="${pageContext.request.contextPath}/view/meetup/admin/moquestion.jsp"
+           class="write-btn">
             ✎ 문의 등록
         </a>
     </div>
 
-    <!-- 상태 탭 -->
     <div class="status-tab">
         <a href="#" class="active">전체</a>
-        <a href="#">답변 대기</a>
-        <a href="#">답변 완료</a>
     </div>
 
     <div class="content-layout">
-        <!-- 목록 영역 -->
         <div class="list-section">
-            <!-- 검색 -->
             <form class="search-box">
                 <select name="type">
-                    <option>제목</option>
-                    <option>모임명</option>
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
                 </select>
 
-                <input type="text" name="keyword" placeholder="검색어를 입력하세요">
-
-                <select name="status">
-                    <option>전체 상태</option>
-                    <option>답변 대기</option>
-                    <option>답변 완료</option>
-                </select>
-
+                <input type="text"
+                       name="keyword"
+                       placeholder="검색어를 입력하세요">
                 <button type="submit">검색</button>
             </form>
 
-            <!-- 목록 -->
             <table class="inquiry-table">
+
                 <thead>
                     <tr>
-                        <th width="80">번호</th>
-                        <th width="180">모임명</th>
+                        <th>번호</th>
+                        <th>문의구분</th>
                         <th>제목</th>
-                        <th width="120">답변 상태</th>
-                        <th width="120">등록일</th>
-                        <th width="120">답변일</th>
-                        <th width="60"></th>
+                        <th>답변상태</th>
+                        <th>등록일</th>
+                        <th>답변일</th>
+                        <th></th>
                     </tr>
                 </thead>
-
+                
                 <tbody>
-                    <tr>
-                        <td>8</td>
-                        <td>등산모임 서울/경기</td>
-                        <td>주차는 어디에 하나요?</td>
-                        <td><span class="badge waiting">답변 대기</span></td>
-                        <td>2026-06-18</td>
-                        <td>-</td>
-                        <td>›</td>
-                    </tr>
+                    <c:choose>
+                        <c:when test="${empty list}">
+                            <tr>
+                                <td colspan="7"> 등록된 문의가 없습니다. </td>
+                            </tr>
+                        </c:when>
 
-                    <tr>
-                        <td>7</td>
-                        <td>독서모임 책이랑</td>
-                        <td>준비물이 있나요?</td>
-                        <td><span class="badge complete">답변 완료</span></td>
-                        <td>2026-06-16</td>
-                        <td>2026-06-16</td>
-                        <td>›</td>
-                    </tr>
+                        <c:otherwise>
+                            <c:forEach var="q" items="${list}">
+                                <tr onclick="location.href='${pageContext.request.contextPath}/questions/${q.questionId}'">
+                                    <td>${q.questionId}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${q.category eq 'MEETUP'}"> 모임 문의 </c:when>
+                                            <c:otherwise> 관리자 문의 </c:otherwise>
+                                        </c:choose>
+                                    </td>
 
-                    <tr>
-                        <td>6</td>
-                        <td>러닝크루 함께 뛰자</td>
-                        <td>초보도 참여 가능한가요?</td>
-                        <td><span class="badge complete">답변 완료</span></td>
-                        <td>2026-06-15</td>
-                        <td>2026-06-15</td>
-                        <td>›</td>
-                    </tr>
+                                    <td>${q.title}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${q.status eq 'PENDING'}">
+                                                <span class="badge waiting"> 답변 대기 </span>
+                                            </c:when>
 
-                    <tr>
-                        <td>5</td>
-                        <td>사진모임 빛과 순간</td>
-                        <td>모임 장소가 변경됐나요?</td>
-                        <td><span class="badge complete">답변 완료</span></td>
-                        <td>2026-06-14</td>
-                        <td>2026-06-14</td>
-                        <td>›</td>
-                    </tr>
+                                            <c:otherwise>
+                                                <span class="badge complete"> 답변 완료 </span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
 
-                    <tr>
-                        <td>4</td>
-                        <td>캠핑모임 불멍캠프</td>
-                        <td>참여 인원 제한이 있나요?</td>
-                        <td><span class="badge waiting">답변 대기</span></td>
-                        <td>2026-06-12</td>
-                        <td>-</td>
-                        <td>›</td>
-                    </tr>
+                                    <td>${q.createdAt}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${q.status eq 'ANSWERED'}"> 완료 </c:when>
+                                            <c:otherwise> - </c:otherwise>
+                                        </c:choose>
+                                    </td>
+
+                                    <td>›</td>
+                                </tr>
+
+                            </c:forEach>
+
+                        </c:otherwise>
+
+                    </c:choose>
+
                 </tbody>
+
             </table>
 
-            <!-- 페이징 -->
             <div class="paging">
-                <a href="#">‹</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">›</a>
+                <c:if test="${page > 1}">
+                    <a href="?page=${page-1}">‹</a>
+                </c:if>
+
+                <c:forEach begin="1" end="${totalPage}" var="i">
+                    <a href="?page=${i}"
+                       class="${page eq i ? 'active' : ''}">
+                        ${i}
+                    </a>
+                </c:forEach>
+
+                <c:if test="${page < totalPage}">
+                    <a href="?page=${page+1}">›</a>
+                </c:if>
             </div>
 
         </div>
 
-        <!-- 우측 가이드 -->
         <aside class="guide-box">
             <h3>이용 가이드</h3>
+
             <div class="guide-item">
                 <div class="icon">📎</div>
                 <div>
@@ -325,7 +324,7 @@
                 <div class="icon">💬</div>
                 <div>
                     <strong>답변 확인</strong>
-                    <p>작성자의 답변을 확인할 수 있어요.</p>
+                    <p>작성자의 답변을 확인할 수 있습니다.</p>
                 </div>
             </div>
 
@@ -333,10 +332,12 @@
                 <div class="icon">🗓</div>
                 <div>
                     <strong>문의 수정/삭제</strong>
-                    <p>답변 전까지 수정/삭제가 가능합니다.</p>
+                    <p>답변 전까지 수정 및 삭제가 가능합니다.</p>
                 </div>
             </div>
+
         </aside>
+
     </div>
 
 </main>
