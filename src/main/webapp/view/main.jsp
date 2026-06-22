@@ -18,7 +18,6 @@
 
             <div class="hero-btn">
                 <button class="btn btn-primary">모임 찾기</button>
-                <button class="btn btn-light">행사 보기</button>
             </div>
 
         </div>
