@@ -50,7 +50,7 @@ public class QuestionController {
         model.addAttribute("answeredCnt", questionService.getAnsweredCnt());
         // 오늘 등록된 문의 수
         model.addAttribute("todayCnt", questionService.getTodayCnt());
-        return "question/list";
+        return "question/answerList";
     }
     
     // 모임글 문의 등록

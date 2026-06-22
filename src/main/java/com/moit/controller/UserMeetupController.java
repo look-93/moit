@@ -30,11 +30,13 @@ public class UserMeetupController {
 	@RequestMapping("/meetup/user/list.do")
 	public String serchByUser(Model model, MeetupSearchDto meetupSerchDto,Authentication authentication, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
 		// 멤버완료 취합 후 적용
-		CustomUser user = (CustomUser) authentication.getPrincipal();		
-		int memberId = userMeetupService.findByMamberId(user.getUsername());		
-		meetupSerchDto.setMemberId(memberId);
+		/*
+		 * CustomUser user = (CustomUser) authentication.getPrincipal(); int memberId =
+		 * userMeetupService.findByMamberId(user.getUsername());
+		 * meetupSerchDto.setMemberId(memberId);
+		 */
 		
-		//meetupSerchDto.setMemberId(3);
+		meetupSerchDto.setMemberId(21);
 		
 		model.addAttribute("menu", "meetup");
 		model.addAttribute("sidoList", userMeetupService.findAllSido());
@@ -47,14 +49,17 @@ public class UserMeetupController {
 	@RequestMapping("/meetup/user/detail.do")
 	public String detail(Model model,  MeetupDto meetupdto, Authentication authentication, MeetupApplicationsDto meetupApplicationsDto) {
 		// 멤버완료 취합 후 적용
-		CustomUser user = (CustomUser) authentication.getPrincipal();		
-		int memberId = userMeetupService.findByMamberId(user.getUsername());		
-		meetupdto.setMemberId(memberId);
-		
-		//meetupApplicationsDto.setMemberId(3);
+		/*
+		 * CustomUser user = (CustomUser) authentication.getPrincipal(); int memberId =
+		 * userMeetupService.findByMamberId(user.getUsername());
+		 * meetupdto.setMemberId(memberId);
+		 */
+		meetupdto.setMemberId(1);
+		meetupdto.setMeetupId(1);
+		System.out.println(meetupdto.getMeetupId());
 		meetupApplicationsDto.setStatusList(Arrays.asList("PENDING", "APPROVED"));
 		model.addAttribute("applyInfo", userMeetupService.findApplyInfo(meetupApplicationsDto));
-		model.addAttribute("detail", userMeetupService.selectMeetupDetail(meetupApplicationsDto.getMeetupId()));
+		model.addAttribute("detail", userMeetupService.selectMeetupDetail(meetupdto.getMeetupId()));
 		return "meetup/user/detail";
 	}
 	

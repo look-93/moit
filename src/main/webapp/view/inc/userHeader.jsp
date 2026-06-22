@@ -33,6 +33,7 @@
     box-sizing:border-box;
 }
 
+
 body {
     min-height: 100vh;
     display: flex;
@@ -48,6 +49,7 @@ body {
 }
 
 /* ================= HEADER (로고+메뉴 좌측 밀집 버전) ================= */
+
 
 header{
     background:white;
@@ -73,13 +75,13 @@ header{
 }
 
 .logo {
-	font-size: 24px;
-	font-weight: bold;
-	color: #4a7dff;
-	padding: 25px;
-	text-align: center;
-	border-bottom: 1px solid #eee;
-	text-decoration: none;
+   font-size: 24px;
+   font-weight: bold;
+   color: #4a7dff;
+   padding: 25px;
+   text-align: center;
+   border-bottom: 1px solid #eee;
+   text-decoration: none;
 }
 
 nav{
@@ -219,12 +221,10 @@ nav a:hover::after, nav a.active::after {
 }
 
 /* ==================
-FOOTER
-================== */
 <<<<<<< HEAD
-footer{
-    margin-top: 50px;
-=======
+HERO
+================== */
+
 .hero{
     margin-top:30px;
     background:linear-gradient(
@@ -309,25 +309,21 @@ CATEGORY
 AD
 ================== */
 
-.ad-banner {
+.ad-banner{
     margin-top:25px;
     background:white;
+
+    border:2px dashed var(--c3);
+
     border-radius:20px;
-    overflow:hidden; /* 중요 */
-    padding:0;       /* 중요 */
+
+    padding:25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
     box-shadow:var(--shadow);
-}
-
-.ad-banner a{
-    display:block;
-    width:100%;
-}
-
-.ad-banner img{
-    display:block;
-    width:100%;
-    height:300px; /* 원하는 높이 */
-    object-fit:cover; /* 비율 유지하면서 꽉 채움 */
 }
 
 .ad-left h3{
@@ -457,15 +453,10 @@ FOOTER
 
 footer {
     margin-top: auto; /* 💡 flex 구조에서 자동으로 최하단에 배치됨 */ 
-
->>>>>>> bf457620b45c51fa4b68a85344619a851dcfa915
     background: white;
     padding: 30px;
     text-align: center;
     color: var(--gray);
-<<<<<<< HEAD
-    border-top: 1px solid #edf2f7;
-=======
     border-top: 1px solid #edf2f7; 
 }
 
@@ -663,6 +654,7 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
     }
 }
 </style>
+
 </head>
 
 <body>

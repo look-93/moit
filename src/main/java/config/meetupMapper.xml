@@ -165,7 +165,7 @@
  		  JOIN members 	    AS B ON B.member_id = A.member_id
 		  JOIN sigungus 	AS E ON E.sigungu_id = A.sigungu_id
 		  JOIN sidos 		AS F ON F.sido_id = E.sido_id
-		 WHERE A.meetup_id = #{meetup_id}
+		 WHERE A.meetup_id = #{meetupId}
  	</select>	
  	
  	<!-- 모집 이미지 상세조회  detail-->
