@@ -11,6 +11,7 @@
       <property name="basePackage"      value="com.moit.dao" />
       <property name="annotationClass"  value="com.moit.dao.Mapper" />
    </bean> 
+   
    <!-- 2. Mybatis :   SqlSessionFactoryBean  / SqlSession -->
    <context:component-scan base-package="com.moit" />
    <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean" >
@@ -19,8 +20,11 @@
       <property name="mapperLocations">
          <list> 
          	<value>classpath:config/user-mapper.xml</value>
+         	<value>classpath:config/advertisementMapper.xml</value>
+         	<value>classpath:config/advertiserMapper.xml</value>
          	<value>classpath:config/reportsMapper.xml</value>
          	<value>classpath:config/meetupMapper.xml</value>
+
 
          </list>
       </property>

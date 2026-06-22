@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 
@@ -34,6 +35,7 @@
 }
 
 
+
 body {
     min-height: 100vh;
     display: flex;
@@ -49,7 +51,6 @@ body {
 }
 
 /* ================= HEADER (로고+메뉴 좌측 밀집 버전) ================= */
-
 
 header{
     background:white;
@@ -221,10 +222,8 @@ nav a:hover::after, nav a.active::after {
 }
 
 /* ==================
-<<<<<<< HEAD
-HERO
+FOOTER
 ================== */
-
 .hero{
     margin-top:30px;
     background:linear-gradient(
@@ -453,6 +452,7 @@ FOOTER
 
 footer {
     margin-top: auto; /* 💡 flex 구조에서 자동으로 최하단에 배치됨 */ 
+
     background: white;
     padding: 30px;
     text-align: center;
@@ -660,7 +660,6 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
 
 <header>
 <div class="container header-inner">
-
     <!-- 좌측 로고 + 메뉴 -->
     <div class="left-group">
         <a href="${pageContext.request.contextPath}/" class="logo">
