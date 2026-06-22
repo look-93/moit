@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 
@@ -33,8 +32,6 @@
     padding:0;
     box-sizing:border-box;
 }
-
-
 
 body {
     min-height: 100vh;
@@ -224,6 +221,10 @@ nav a:hover::after, nav a.active::after {
 /* ==================
 FOOTER
 ================== */
+<<<<<<< HEAD
+footer{
+    margin-top: 50px;
+=======
 .hero{
     margin-top:30px;
     background:linear-gradient(
@@ -453,10 +454,14 @@ FOOTER
 footer {
     margin-top: auto; /* 💡 flex 구조에서 자동으로 최하단에 배치됨 */ 
 
+>>>>>>> bf457620b45c51fa4b68a85344619a851dcfa915
     background: white;
     padding: 30px;
     text-align: center;
     color: var(--gray);
+<<<<<<< HEAD
+    border-top: 1px solid #edf2f7;
+=======
     border-top: 1px solid #edf2f7; 
 }
 
