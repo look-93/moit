@@ -669,7 +669,9 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
         <nav>
             <a href="${pageContext.request.contextPath}/meetup/user/list.do"
                class="<c:if test='${menu eq "meetup"}'>active</c:if>">모집찾기</a>
-            <a href="/inquiry/list" class="inquiry-btn">💬 관리자 1:1 문의 </a>
+			<a class="inquiry-btn" href="${pageContext.request.contextPath}/questions/adminWrite?category=ADMIN">
+			  💬 관리자 1:1 문의
+			</a>
         </nav>
     </div>
 

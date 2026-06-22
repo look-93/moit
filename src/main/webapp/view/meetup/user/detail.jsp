@@ -180,7 +180,7 @@ body{
     font-weight:bold;
 }
 
-.tab-content{padding:25px;}
+.tab-content-meetup-detail{padding:25px;}
 
 .tab-panel{display:none;}
 .tab-panel.active{display:block}
@@ -387,10 +387,10 @@ body{
 			            <div class="tab-btn active" onclick="showTab(0)">상세정보</div>
 			            <div class="tab-btn" onclick="showTab(1)">신청자</div>
 			            <div class="tab-btn" onclick="showTab(2)">후기</div>
-			            <div class="tab-btn" onclick="showTab(3)">Q&A</div>
+			            <div class="tab-btn" onclick="showTab(3)">Q&amp;A</div>
 			        </div>
 			
-			        <div class="tab-content">
+			        <div class="tab-content-meetup-detail">
 			            <div class="tab-panel active">
 			                <h3>모임 안내</h3>
 			                <div class="description">${detail.content}</div>
@@ -473,9 +473,9 @@ body{
 			                    <p>네 초보도 환영입니다!</p>
 			                </div>
 			            </div>
-			        </div>
-			    </div>
-			
+			            
+			        </div>			        
+			    </div>			
 			</div>
 			
 			<div>
@@ -505,9 +505,9 @@ body{
 			    <div class="side-box">
 			        <h3>작성자</h3>
 			        <p>${detail.nickname}</p>
-			        <button class="detail-inquiry-btn">
+			        <a class="detail-inquiry-btn" href="${pageContext.request.contextPath}/questions/write?category=MEETUP">
 			            💬 모임글 문의하기
-			        </button>
+			        </a>
 			    </div>
 			
 			    <div class="side-box">
@@ -598,6 +598,7 @@ body{
 		}
 	    
 	}
+
 </script>
 
 

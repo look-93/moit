@@ -49,17 +49,14 @@ public class UserMeetupController {
 	@RequestMapping("/meetup/user/detail.do")
 	public String detail(Model model,  MeetupDto meetupdto, Authentication authentication, MeetupApplicationsDto meetupApplicationsDto) {
 		// 멤버완료 취합 후 적용
-		/*
-		 * CustomUser user = (CustomUser) authentication.getPrincipal(); int memberId =
-		 * userMeetupService.findByMamberId(user.getUsername());
-		 * meetupdto.setMemberId(memberId);
-		 */
-		meetupdto.setMemberId(1);
-		meetupdto.setMeetupId(1);
-		System.out.println(meetupdto.getMeetupId());
+//		CustomUser user = (CustomUser) authentication.getPrincipal();		
+//		int memberId = userMeetupService.findByMamberId(user.getUsername());		
+//		meetupdto.setMemberId(memberId);
+		
+		meetupApplicationsDto.setMemberId(3);
 		meetupApplicationsDto.setStatusList(Arrays.asList("PENDING", "APPROVED"));
 		model.addAttribute("applyInfo", userMeetupService.findApplyInfo(meetupApplicationsDto));
-		model.addAttribute("detail", userMeetupService.selectMeetupDetail(meetupdto.getMeetupId()));
+		model.addAttribute("detail", userMeetupService.selectMeetupDetail(meetupApplicationsDto.getMeetupId()));
 		return "meetup/user/detail";
 	}
 	
