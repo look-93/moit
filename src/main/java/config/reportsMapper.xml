@@ -74,8 +74,11 @@
 	<select id="selectAdminReports" resultType="ReportsDto" parameterType="java.util.HashMap">
 	    select *
 	    from reports
-	    where delete_yn='N'
 	    
+	    <where>
+	    	<if test="delete_yn != null and delete_yn != ''">
+	    		and delete_yn = #{deleteYn}
+	    	</if>
 	        <if test="reportId != null">
 	            and report_id = #{reportId}
 	        </if>
@@ -94,35 +97,39 @@
 	        <if test="createdAt != null and createdAt != ''">
 	            and date(created_at) = #{createdAt}
 	        </if>
+	    </where>
 	        
-		    order by report_id desc
-		    <if test="start != null and end != null">
-		        limit #{start}, #{end}
-		    </if>
-
+	    order by report_id desc
+	    <if test="start != null and end != null">
+	        limit #{start}, #{end}
+	    </if>
 	</select>
 
 	<!-- 관리자 신고 목록 카운트 (동적 조건 반영) -->
 	<select id="selectAdminReportsCnt" resultType="int" parameterType="java.util.HashMap">
 	    select count(*)
 	    from reports
-	    where delete_yn = 'N'
 	    
-        <if test="status != null and status != ''">
-            and status = #{status}
-        </if>
-        <if test="targetType != null and targetType != ''">
-            and target_type = #{targetType}
-        </if>
-        <if test="memberId != null">
-            and member_id = #{memberId}
-        </if>
-        <if test="reasonCode != null and reasonCode != ''">
-            and reason_code = #{reasonCode}
-        </if>
-        <if test="createdAt != null and createdAt != ''">
-            and date(created_at) = #{createdAt}
-        </if>
+	    <where>
+		    <if test="delete_yn != null and delete_yn != ''">
+		    	and delete_yn = #{deleteYn}
+		    </if>
+	        <if test="status != null and status != ''">
+	            and status = #{status}
+	        </if>
+	        <if test="targetType != null and targetType != ''">
+	            and target_type = #{targetType}
+	        </if>
+	        <if test="memberId != null">
+	            and member_id = #{memberId}
+	        </if>
+	        <if test="reasonCode != null and reasonCode != ''">
+	            and reason_code = #{reasonCode}
+	        </if>
+	        <if test="createdAt != null and createdAt != ''">
+	            and date(created_at) = #{createdAt}
+	        </if>
+	    </where>
 	        
 	</select>
 

@@ -162,12 +162,11 @@ public class ReportController { // test lcy
 	public String adminDetail(	@RequestParam("reportId") int reportId,
 								Model model) {
 		
-		HashMap<String, Object> map = new HashMap<>(); // 조회 조건 reportId 설정
+		HashMap<String, Object> map = new HashMap<>(); // 조회 조건
 		map.put("reportId", reportId);
 //		model.addAttribute("dto", service.selectAdminReports(map));
 		
 		List<ReportsDto> list = service.selectAdminReports(map); // 조회 결과
-		
 		if (list != null & !list.isEmpty()) {
 			model.addAttribute("dto", list.get(0));
 		}

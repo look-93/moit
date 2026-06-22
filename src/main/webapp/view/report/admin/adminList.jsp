@@ -25,7 +25,7 @@
 
 			<div class="admin-list-filters">
 				<a href="${pageContext.request.contextPath}/report/admin/adminList.do"
-				   class="admin-list-filter-btn ${param.targetType == param.status ? 'active' : ''}">
+				   class="admin-list-filter-btn ${param.targetType == status ? 'active' : ''}">
 					전체
 				</a>
 			
@@ -42,6 +42,11 @@
 				<a href="${pageContext.request.contextPath}/report/admin/adminList.do?status=PENDING"
 				   class="admin-list-filter-btn ${param.status == 'PENDING' ? 'active' : ''}">
 					PENDING
+				</a>
+				
+				<a href="${pageContext.request.contextPath}/report/admin/adminList.do?deleteYn=Y"
+					class="admin-list-filter-btn ${param.deleteYn == 'Y' ? 'active' : ''}">
+					DELETE
 				</a>
 			</div>
 		</div>
