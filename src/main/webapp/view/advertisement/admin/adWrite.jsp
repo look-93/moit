@@ -67,7 +67,6 @@ body {
     box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 
-/* section title 복구 */
 .section-title{
     font-size:18px;
     font-weight:700;
@@ -75,19 +74,17 @@ body {
     color:#333;
 }
 
-/* preview box 복구 */
 .preview-box{
     width:100%;
-    height:180px;
-    background:#f1f3f9;
-    border-radius:12px;
+    height:200px;
+    background:#eee;
+    border-radius:10px;
+    margin-bottom: 10px;
+    overflow:hidden;
+
     display:flex;
-    align-items:center;
     justify-content:center;
-    color:#888;
-    font-size:14px;
-    margin-bottom:10px;
-    border:1px dashed #ccc;
+    align-items:center;
 }
 
 /* autocomplete */
@@ -152,9 +149,14 @@ body {
                 <div class="mb-3">
                     <label class="form-label fw-bold">광고 이미지</label>
 
-                    <div class="preview-box">이미지 미리보기</div>
+                    <div class="preview-box">
+				    	<img id="previewImg"
+					    	 src="${ctx}${dto.imageUrl}"
+					         style="max-width:100%;
+					                max-height:100%;">
+					</div>
 
-                    <input type="file" class="form-control" name="imageFile" accept="image/*">
+                    <input type="file" id="imageFile" class="form-control" name="imageFile" accept="image/*">
                 </div>
 
                 <div class="mb-3">
@@ -246,7 +248,8 @@ body {
 	    });
 	});
 
-	</script>                       
+	</script>           
+	          
                     
                 </div>
 
@@ -267,56 +270,27 @@ body {
     </div>
 </div>
 
-<!-- <script>
+ 	<script>
 
-const ctx = "${ctx}";
-
-const input = document.getElementById("memberInput");
-const suggestBox = document.getElementById("suggestBox");
-const hidden = document.getElementById("advertiserId");
-
-input.addEventListener("input", async function () {
-
-    const keyword = this.value;
-
-    if (!keyword) {
-        suggestBox.style.display = "none";
-        return;
-    }
-
-    const res = await fetch(`${ctx}/advertisers/search?keyword=${keyword}`);
-    const data = await res.json();
-
-    renderList(data);
-});
-
-function renderList(list) {
-
-    suggestBox.innerHTML = "";
-
-    if (!list || list.length === 0) {
-        suggestBox.style.display = "none";
-        return;
-    }
-
-    list.forEach(member => {
-
-        const li = document.createElement("li");
-        li.textContent = member.nickname;
-
-        li.addEventListener("click", () => {
-            input.value = member.nickname;
-            hidden.value = member.memberId;
-            suggestBox.style.display = "none";
-        });
-
-        suggestBox.appendChild(li);
-    });
-
-    suggestBox.style.display = "block";
-}
-
-</script>
- -->
+	const imageInput = document.getElementById("imageFile");
+	const previewImg = document.getElementById("previewImg");
+	
+	imageInput.addEventListener("change", function() {
+	
+	    const file = this.files[0];
+	
+	    if (!file) return;
+	
+	    const reader = new FileReader();
+	
+	    reader.onload = function(e) {
+	        previewImg.src = e.target.result;
+	        previewImg.style.display = "block";
+	    };
+	
+	    reader.readAsDataURL(file);
+	});
+		
+		</script>  
 </body>
 </html>

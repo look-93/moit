@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>테스트 페이지</h1>
+<h1>🔥 내가 수정한 test.jsp 맞음</h1>
 
 <c:if test="${not empty ad}">
 
@@ -26,6 +26,7 @@
 <c:if test="${empty ad}">
     <h2>노출 가능한 광고 없음</h2>
 </c:if>
+
 
 </body>
 </html>
