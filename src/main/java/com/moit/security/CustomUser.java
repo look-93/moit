@@ -17,14 +17,14 @@ public class CustomUser extends User{
  
 	AuthUserDto  dto;
 	
-	//1.À¯Àú¾ÆÀÌµð¿Í ºñ¹Ð¹øÈ£¸¦ ¹Þ¾Æ¼­ ±ÇÇÑÀÌ ÀÖ´ÂÁö Ã¼Å©
+	//1.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
 	public CustomUser(String username, 
 				      String password, 
 				      Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities); 
 	}
 
-	//2. username, password¿¡ ¸Â°Ô ¼ÂÆÃ
+	//2. username, passwordï¿½ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½
     public CustomUser(AuthUserDto  dto) {
     	super(  dto.getEmail() , dto.getBpass() 
     						   , dto.getAuthList()
