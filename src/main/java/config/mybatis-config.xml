@@ -18,8 +18,10 @@
 		<typeAlias type="com.moit.dto.common.SidoDto" alias="SidoDto" />
 		<typeAlias type="com.moit.dto.common.SigunguDto" alias="SigunguDto" />
 		<typeAlias type="com.moit.dto.common.CategoryDto" alias="CategoryDto" />	
-    <typeAlias type="com.moit.dto.ReportsDto" alias="ReportsDto" />
-    <typeAlias type="com.moit.dto.AdvertisementDto" alias="AdvertisementDto" />
-    <typeAlias type="com.moit.dto.AdvertiserDto" alias="AdvertiserDto" />
+	    <typeAlias type="com.moit.dto.ReportsDto" alias="ReportsDto" />
+	    <typeAlias type="com.moit.dto.AdvertisementDto" alias="AdvertisementDto" />
+	    <typeAlias type="com.moit.dto.AdvertiserDto" alias="AdvertiserDto" />
+		<typeAlias type="com.moit.dto.QuestionDto"  alias="QuestionDto" />
+		<typeAlias type="com.moit.dto.AnswerDto"    alias="AnswerDto" />
 	</typeAliases>
 </configuration>
