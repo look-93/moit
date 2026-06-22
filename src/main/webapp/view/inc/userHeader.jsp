@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -8,7 +9,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MOIT</title>
-
 <style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
@@ -33,10 +33,13 @@
     box-sizing:border-box;
 }
 
-body{
-    background:var(--bg);
-    font-family: 'Pretendard', sans-serif;
-    color: var(--text);
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    margin: 0; /* 기본 마진 제거 */
 }
 
 .container{
@@ -46,6 +49,7 @@ body{
 }
 
 /* ================= HEADER (로고+메뉴 좌측 밀집 버전) ================= */
+
 
 header{
     background:white;
@@ -217,6 +221,7 @@ nav a:hover::after, nav a.active::after {
 }
 
 /* ==================
+<<<<<<< HEAD
 HERO
 ================== */
 
@@ -444,13 +449,15 @@ BOTTOM
 /* ==================
 FOOTER
 ================== */
-footer{
-    margin-top: 50px;
+ 
+
+footer {
+    margin-top: auto; /* 💡 flex 구조에서 자동으로 최하단에 배치됨 */ 
     background: white;
     padding: 30px;
     text-align: center;
     color: var(--gray);
-    border-top: 1px solid #edf2f7;
+    border-top: 1px solid #edf2f7; 
 }
 
 /* ==================
@@ -609,6 +616,43 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
 }
 
 
+/* ================= 헤더 깨짐 방지 반응형 코드 추가 ================= */
+@media (max-width: 1024px) {
+    /* 1. 화면이 좁아지면 자리를 많이 차지하는 슬로건을 숨깁니다 */
+    .header-slogan {
+        display: none !important;
+    }
+    
+    /* 2. 로고와 메뉴, 유저박스 사이의 간격을 좁혀 여유 공간을 만듭니다 */
+    .left-group {
+        gap: 20px;
+    }
+    nav {
+        gap: 15px;
+    }
+    .right-group {
+        gap: 15px;
+    }
+    .user-box {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* 3. 모바일 환경에서 글자가 절대 세로로 찢어지지 않도록 강제 고정 */
+    nav a, .logo, .profile-info strong {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+    }
+    
+    /* 4. 프로필의 등급(일반회원) 텍스트를 숨겨 공간을 확보합니다 */
+    .profile-info span {
+        display: none;
+    }
+    .profile {
+        padding: 4px 10px 4px 4px;
+    }
+}
 </style>
 </head>
 
@@ -617,71 +661,66 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
 <header>
 <div class="container header-inner">
 
+    <!-- 좌측 로고 + 메뉴 -->
     <div class="left-group">
-       	<a href="${pageContext.request.contextPath}/" class="logo">
-       		MOIT
-   		</a>
-		<nav>
-		    <a href="${pageContext.request.contextPath}/meetup/user/list.do"
-		       class="<c:if test='${menu eq "meetup"}'>active</c:if>">모집찾기</a>
-		       
-		    <a href="/inquiry/list" class="inquiry-btn">💬 관리자 1:1 문의 </a>
-		     
-		</nav>
+        <a href="${pageContext.request.contextPath}/" class="logo">
+            MOIT
+        </a>
+        <nav>
+            <a href="${pageContext.request.contextPath}/meetup/user/list.do"
+               class="<c:if test='${menu eq "meetup"}'>active</c:if>">모집찾기</a>
+            <a href="/inquiry/list" class="inquiry-btn">💬 관리자 1:1 문의 </a>
+        </nav>
     </div>
 
+    <!-- 우측 그룹 -->
     <div class="right-group">
         <div class="header-slogan">
             <span>우리들의 취향 맞춤 소모임 플랫폼</span>
-        </div>
+        </div> 
+
         <nav>
         <!-- 로그인 안한 상태 -->
-        <sec:authorize access="isAnonymous()"  >            
+        <sec:authorize access="isAnonymous()">            
             <a class="nav-link inquiry-btn" href="${pageContext.request.contextPath}/users/login">로그인</a> 
-                      
             <a class="nav-link inquiry-btn" href="${pageContext.request.contextPath}/users/join">회원가입</a>                             
         </sec:authorize>
         
-        <!-- 현재 사용자가 인증된 상태 access="isAuthenticated()" / 특정권한 access="hasRole('ROLE_ADMIN')" -->
-        <sec:authorize access="isAuthenticated()"  >
-        
-        <sec:authentication property="principal.dto" var="loginUser"/>
-        <div class="user-box">
-            <div class="alarm">🔔</div>
-            <div class="profile">
-                <div class="profile-img">J</div>
-                <div class="profile-info">
-                    <strong>${loginUser.nickname}님</strong>
-                    <%-- <span>${loginUser.typeName}</span> --%>
-                    <span>
-					    <c:choose>
-					        <c:when test="${loginUser.typeName eq 'ROLE_MEMBER'}">  
-					            일반회원
-					        </c:when>
-					
-					        <c:when test="${loginUser.typeName eq 'ROLE_PARTNER'}">
-					            제휴업체
-					        </c:when>
-					
-					        <c:when test="${loginUser.typeName eq 'ROLE_ADMIN'}">
-					            관리자
-					        </c:when>
-					
-					        <c:otherwise>
-					            ${loginUser.typeName}
-					        </c:otherwise>
-					    </c:choose>
-					</span>
+        <!-- 로그인한 상태 -->
+        <sec:authorize access="isAuthenticated()"> 
+                <sec:authentication property="principal.dto" var="loginUser"/>
+     
+                <div class="profile">
+                    <div class="profile-img">${loginUser.nickname.substring(0,1)}</div>
+                    <div class="profile-info">
+                        <strong>${loginUser.nickname}님</strong>
+                        <span>
+                            <c:choose>
+                                <c:when test="${loginUser.typeName eq 'ROLE_MEMBER'}">  
+                                    일반회원
+                                </c:when>
+                                <c:when test="${loginUser.typeName eq 'ROLE_PARTNER'}">
+                                    제휴업체
+                                </c:when>
+                                <c:when test="${loginUser.typeName eq 'ROLE_ADMIN'}">
+                                    관리자
+                                </c:when>
+                                <c:otherwise>
+                                    ${loginUser.typeName}
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <form action="${pageContext.request.contextPath}/users/logout" method="post">
-               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-               <input type="submit" value="로그아웃" class="btn btn-danger">
-            </form>
-        </div>
+                
+                <!-- 로그아웃 버튼 -->
+                <form action="${pageContext.request.contextPath}/users/logout" method="post">
+                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                   <input type="submit" value="로그아웃" class="btn btn-danger">
+                </form> 
         </sec:authorize>
         </nav>
     </div>
 
 </div>
-</header>
+</header> 
