@@ -44,12 +44,14 @@
 
     <section class="ad-banner">
 
-        <div class="ad-left">
-            <h3>🎉 신규 제휴카페 오픈 이벤트</h3>
-            <p>모든 음료 20% 할인</p>
-        </div>
-
-        <a href="#" class="ad-btn">자세히 보기</a>
+        <!-- <div class="ad-left"> -->
+            <a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
+		        <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+		        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'">
+		    </a>
+        <!-- </div>
+ -->
+        <!-- <a href="#" class="ad-btn">자세히 보기</a> -->
 
     </section>
 

@@ -308,21 +308,25 @@ CATEGORY
 AD
 ================== */
 
-.ad-banner{
+.ad-banner {
     margin-top:25px;
     background:white;
-
-    border:2px dashed var(--c3);
-
     border-radius:20px;
-
-    padding:25px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
+    overflow:hidden; /* 중요 */
+    padding:0;       /* 중요 */
     box-shadow:var(--shadow);
+}
+
+.ad-banner a{
+    display:block;
+    width:100%;
+}
+
+.ad-banner img{
+    display:block;
+    width:100%;
+    height:300px; /* 원하는 높이 */
+    object-fit:cover; /* 비율 유지하면서 꽉 채움 */
 }
 
 .ad-left h3{
