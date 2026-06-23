@@ -141,7 +141,7 @@
 	        <textarea class="form-textarea">이벤트 참여 방법이 궁금합니다.</textarea>
 	    </div>
 	    <div class="btn-area">
-	        <button type="submit" class="btn btn-save" onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moquestion2.jsp'"> 저장 </button>
+	        <button type="submit" class="btn btn-save" onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moquestion2.jsp'"> 저장 </button>
 	        <button type="button" class="btn btn-cancel" onclick="history.back()"> 취소 </button>
 	    </div>
 	</div>

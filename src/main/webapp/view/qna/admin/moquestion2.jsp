@@ -155,11 +155,11 @@
 
     <div class="top-btn-area">
         <button class="btn btn-answer"
-        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer1.jsp'">답변등록</button>
+        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moanswer1.jsp'">답변등록</button>
         <button class="btn btn-edit"
-        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moquestion3.jsp'">수정</button>
+        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moquestion3.jsp'">수정</button>
         <button class="btn btn-delete"
-        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/list.jsp'">삭제</button>
+        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/list.jsp'">삭제</button>
     </div>
 
     <div class="card">
@@ -220,7 +220,7 @@
 	            <div class="card-title" style="margin-bottom:0;">${data.answer.content}</div>
 	            <div class="answer-btns">
 	                <button class="btn btn-answer-edit"
-	                onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moanswer2.jsp'">답변수정</button>
+	                onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moanswer2.jsp'">답변수정</button>
 	                <button class="btn btn-answer-delete">답변삭제</button>
 	            </div>
 	        </div>
@@ -229,7 +229,7 @@
 	        </div>
 	        <div class="answer-date">답변일 ${data.answer.createdAt}</div>
 	    </div>
-	    <div class="list-btn-area" onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/answerList.jsp'">
+	    <div class="list-btn-area" onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/answerList.jsp'">
 	        <button class="btn btn-list">목록으로</button>
 	    </div>
 	</c:if>

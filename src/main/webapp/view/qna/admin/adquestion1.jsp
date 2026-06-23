@@ -48,7 +48,7 @@ padding:12px 28px;border-radius:8px;border:1px solid #d9dfea;cursor:pointer;
 
             <div class="btn-area">
                 <button class="btn-primary"
-        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/adquestion2.jsp'">등록하기</button>
+        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/adquestion2.jsp'">등록하기</button>
                 <button class="btn-cancel" onclick="history.back()">취소</button>
             </div>
         </div>

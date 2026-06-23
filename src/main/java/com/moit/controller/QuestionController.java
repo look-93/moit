@@ -57,7 +57,7 @@ public class QuestionController {
     @GetMapping("/write")
     public String write(QuestionDto dto) {
         //questionService.register(dto);
-        return "meetup/admin/moquestion1";
+        return "qna/admin/moquestion1";
     }
     
     // 모임글 문의 등록
@@ -73,7 +73,7 @@ public class QuestionController {
     @GetMapping("/adminWrite")
     public String adminWrite(QuestionDto dto) {
         //questionService.register(dto);
-        return "meetup/admin/adquestion1";
+        return "qna/admin/adquestion1";
     }
     
     // 관리자 문의 등록
@@ -145,6 +145,6 @@ public class QuestionController {
         model.addAttribute("page", page);
         model.addAttribute("totalPage", totalPage);
 
-        return "meetup/admin/moquestion2";
+        return "qna/admin/moquestion2";
     }
 }

@@ -616,7 +616,7 @@ nav a{
         <p>홍길동</p>
 
         <button class="meetup-inquiry-btn"
-        onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/moquestion1.jsp'">
+        onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moquestion1.jsp'">
 	    💬 모임글 문의하기
 	</button>
     </div>
