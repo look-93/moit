@@ -3,6 +3,5 @@ package com.moit.controller;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class MoimController {
-// git test - ±èº¸¶ó
+public class EventController {
 }

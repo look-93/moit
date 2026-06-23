@@ -5,7 +5,12 @@ import lombok.Data;
 
 @Data
 public class AuthUserDto {
-	private String email;
-	private String bpass;
-	private List<AuthDto> authList;
+	private String loginId;
+	private String password;
+	
+	private String nickname;
+	private String typeName;
+	private String profileUrl;
+
+	private  List<AuthDto> authList;  
 }
