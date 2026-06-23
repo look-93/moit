@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOIT °ü¸®ÀÚ - Çà»ç°ü¸®</title>
+<title>MOIT ê´€ë¦¬ìž - í–‰ì‚¬ê´€ë¦¬</title>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -99,104 +99,104 @@ body {
 
 		<%@include file="../../inc/sidebar.jsp"  %>
 		
-			<!-- ¸ÞÀÎ -->
+			<!-- ë©”ì¸ -->
 			<div class="col-md-10 p-4">
 
-				<!-- »ó´Ü -->
+				<!-- ìƒë‹¨ -->
 				<div
 					class="topbar d-flex justify-content-between align-items-center">
-					<h3>Çà»ç°ü¸®</h3>
+					<h3>í–‰ì‚¬ê´€ë¦¬</h3>
 
-					<div>°ü¸®ÀÚ´Ô</div>
+					<div>ê´€ë¦¬ìžë‹˜</div>
 				</div>
 
-				<!-- Åë°è -->
+				<!-- í†µê³„ -->
 				<div class="row mb-4">
 
 					<div class="col-md-3">
 						<div class="card-box">
-							<h6>ÀüÃ¼ Çà»ç</h6>
+							<h6>ì „ì²´ í–‰ì‚¬</h6>
 							<div class="stat-number">25</div>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="card-box">
-							<h6>¸ðÁýÁß</h6>
+							<h6>ëª¨ì§‘ì¤‘</h6>
 							<div class="stat-number">8</div>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="card-box">
-							<h6>ÁøÇà¿¹Á¤</h6>
+							<h6>ì§„í–‰ì˜ˆì •</h6>
 							<div class="stat-number">10</div>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="card-box">
-							<h6>Á¾·áÇà»ç</h6>
+							<h6>ì¢…ë£Œí–‰ì‚¬</h6>
 							<div class="stat-number">7</div>
 						</div>
 					</div>
 
 				</div>
 
-				<!-- ÅÇ -->
+				<!-- íƒ­ -->
 				<div class="mb-4">
-					<button class="tab-btn active">Çà»ç¸ñ·Ï</button>
-					<button class="tab-btn">Çà»çµî·Ï</button>
-					<button class="tab-btn">½ÅÃ»ÀÚ¸ñ·Ï</button>
+					<button class="tab-btn active">í–‰ì‚¬ëª©ë¡</button>
+					<button class="tab-btn">í–‰ì‚¬ë“±ë¡</button>
+					<button class="tab-btn">ì‹ ì²­ìžëª©ë¡</button>
 				</div>
 
-				<!-- °Ë»ö -->
+				<!-- ê²€ìƒ‰ -->
 				<div class="table-box mb-4">
 
 					<div class="row">
 
 						<div class="col-md-4">
-							<input type="text" class="form-control" placeholder="Çà»ç¸í °Ë»ö">
+							<input type="text" class="form-control" placeholder="í–‰ì‚¬ëª… ê²€ìƒ‰">
 						</div>
 
 						<div class="col-md-3">
 							<select class="form-select">
-								<option>ÀüÃ¼</option>
-								<option>¸ðÁýÁß</option>
-								<option>ÁøÇà¿¹Á¤</option>
-								<option>Á¾·á</option>
+								<option>ì „ì²´</option>
+								<option>ëª¨ì§‘ì¤‘</option>
+								<option>ì§„í–‰ì˜ˆì •</option>
+								<option>ì¢…ë£Œ</option>
 							</select>
 						</div>
 
 						<div class="col-md-2">
-							<button class="btn btn-primary">°Ë»ö</button>
+							<button class="btn btn-primary">ê²€ìƒ‰</button>
 						</div>
 
 					</div>
 
 				</div>
 
-				<!-- ¹öÆ° -->
+				<!-- ë²„íŠ¼ -->
 				<div class="mb-3">
-					<button class="btn btn-primary">Çà»çµî·Ï</button>
-					<button class="btn btn-warning">¼öÁ¤</button>
-					<button class="btn btn-danger">»èÁ¦</button>
+					<button class="btn btn-primary">í–‰ì‚¬ë“±ë¡</button>
+					<button class="btn btn-warning">ìˆ˜ì •</button>
+					<button class="btn btn-danger">ì‚­ì œ</button>
 				</div>
 
-				<!-- Çà»ç¸ñ·Ï -->
+				<!-- í–‰ì‚¬ëª©ë¡ -->
 				<div class="table-box">
 
 					<table class="table table-hover">
 
 						<thead class="table-light">
 							<tr>
-								<th>¹øÈ£</th>
-								<th>Çà»ç¸í</th>
-								<th>Çà»çÀÏ</th>
-								<th>½ÅÃ»±â°£</th>
-								<th>¸ðÁýÀÎ¿ø</th>
-								<th>½ÅÃ»ÇöÈ²</th>
-								<th>°ü¸®</th>
+								<th>ë²ˆí˜¸</th>
+								<th>í–‰ì‚¬ëª…</th>
+								<th>í–‰ì‚¬ì¼</th>
+								<th>ì‹ ì²­ê¸°ê°„</th>
+								<th>ëª¨ì§‘ì¸ì›</th>
+								<th>ì‹ ì²­í˜„í™©</th>
+								<th>ê´€ë¦¬</th>
 							</tr>
 						</thead>
 
@@ -204,27 +204,27 @@ body {
 
 							<tr>
 								<td>1</td>
-								<td>È¯°æÁ¤È­ Ä·ÆäÀÎ</td>
+								<td>í™˜ê²½ì •í™” ìº íŽ˜ì¸</td>
 								<td>2026-07-01</td>
 								<td>06-01 ~ 06-25</td>
-								<td>50¸í</td>
-								<td>32¸í ½ÅÃ»</td>
+								<td>50ëª…</td>
+								<td>32ëª… ì‹ ì²­</td>
 								<td>
 									<button class="btn btn-sm btn-outline-primary"
 										data-bs-toggle="modal" data-bs-target="#applicantModal">
-										½ÅÃ»ÀÚ¸ñ·Ï</button>
+										ì‹ ì²­ìžëª©ë¡</button>
 								</td>
 							</tr>
 
 							<tr>
 								<td>2</td>
-								<td>ÇÃ·Î±ë Çà»ç</td>
+								<td>í”Œë¡œê¹… í–‰ì‚¬</td>
 								<td>2026-07-15</td>
 								<td>06-10 ~ 07-10</td>
-								<td>30¸í</td>
-								<td>15¸í ½ÅÃ»</td>
+								<td>30ëª…</td>
+								<td>15ëª… ì‹ ì²­</td>
 								<td>
-									<button class="btn btn-sm btn-outline-primary">½ÅÃ»ÀÚ¸ñ·Ï</button>
+									<button class="btn btn-sm btn-outline-primary">ì‹ ì²­ìžëª©ë¡</button>
 								</td>
 							</tr>
 
@@ -248,7 +248,7 @@ body {
 
 	</div>
 
-	<!-- ½ÅÃ»ÀÚ¸ñ·Ï ¸ð´Þ -->
+	<!-- ì‹ ì²­ìžëª©ë¡ ëª¨ë‹¬ -->
 	<div class="modal fade" id="applicantModal">
 
 		<div class="modal-dialog modal-xl">
@@ -256,7 +256,7 @@ body {
 			<div class="modal-content">
 
 				<div class="modal-header">
-					<h5>Çà»ç ½ÅÃ»ÀÚ ¸ñ·Ï</h5>
+					<h5>í–‰ì‚¬ ì‹ ì²­ìž ëª©ë¡</h5>
 					<button class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
 
@@ -266,36 +266,36 @@ body {
 
 						<thead>
 							<tr>
-								<th>È¸¿ø¸í</th>
-								<th>½ÅÃ»ÀÏ</th>
-								<th>Ã·ºÎÆÄÀÏ</th>
-								<th>»óÅÂ</th>
-								<th>Ã³¸®</th>
+								<th>íšŒì›ëª…</th>
+								<th>ì‹ ì²­ì¼</th>
+								<th>ì²¨ë¶€íŒŒì¼</th>
+								<th>ìƒíƒœ</th>
+								<th>ì²˜ë¦¬</th>
 							</tr>
 						</thead>
 
 						<tbody>
 
 							<tr>
-								<td>È«±æµ¿</td>
+								<td>í™ê¸¸ë™</td>
 								<td>2026-06-12</td>
 								<td>
-									<button class="btn btn-sm btn-secondary">´Ù¿î·Îµå</button>
+									<button class="btn btn-sm btn-secondary">ë‹¤ìš´ë¡œë“œ</button>
 								</td>
-								<td>´ë±â</td>
+								<td>ëŒ€ê¸°</td>
 								<td>
-									<button class="btn btn-success btn-sm">½ÂÀÎ</button>
-									<button class="btn btn-danger btn-sm">°ÅÀý</button>
+									<button class="btn btn-success btn-sm">ìŠ¹ì¸</button>
+									<button class="btn btn-danger btn-sm">ê±°ì ˆ</button>
 								</td>
 							</tr>
 
 							<tr>
-								<td>±èÃ¶¼ö</td>
+								<td>ê¹€ì² ìˆ˜</td>
 								<td>2026-06-11</td>
 								<td>
-									<button class="btn btn-sm btn-secondary">´Ù¿î·Îµå</button>
+									<button class="btn btn-sm btn-secondary">ë‹¤ìš´ë¡œë“œ</button>
 								</td>
-								<td>½ÂÀÎ</td>
+								<td>ìŠ¹ì¸</td>
 								<td>-</td>
 							</tr>
 
