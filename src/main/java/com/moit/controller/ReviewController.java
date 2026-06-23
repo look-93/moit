@@ -26,7 +26,7 @@ public class ReviewController {
 	public String insertUserReview_post(ReviewDto dto, RedirectAttributes rttr) {
 		reviewservice.insertUserReview(dto);
 		rttr.addAttribute("meetupId", dto.getMeetupId());
-		return "redirect:/review/test";
+		return "redirect:/review/mypageReview";
 	}
 	
 	// 특정모임의 후기목록 조회
@@ -46,8 +46,23 @@ public class ReviewController {
 		
 		List<ReviewDto> selectUserReview = reviewservice.selectReviewsByMemberId(memberId, sort);
 		model.addAttribute("selectUserReview", selectUserReview);
+		model.addAttribute("menu", "review");
 		return "review/mypage"; 
 	}
+	
+	// 마이페이지 나의 후기 목록 조회
+	@RequestMapping(value="/review/mypageReview", method=RequestMethod.GET)
+	public String mypageReview(
+			Model model, 
+			@RequestParam(value="memberId", required=false, defaultValue="10") int memberId,
+			@RequestParam(value="sort", required=false, defaultValue="latest") String sort) {		
+		
+		List<ReviewDto> selectUserReview = reviewservice.selectReviewsByMemberId(memberId, sort);
+		model.addAttribute("selectUserReview", selectUserReview);
+		model.addAttribute("menu", "review");
+		return "review/mypageReview"; 
+	}
+	
 	//후기 내용 검색
 	@RequestMapping(value = "/review/searchContent", method = RequestMethod.GET)
 	public String SearchReviewByContent(@RequestParam("Keyword") String Keyword, Model model) {

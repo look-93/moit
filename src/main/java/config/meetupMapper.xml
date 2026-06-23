@@ -235,7 +235,7 @@
 		SELECT COUNT(meetup_id)
 		FROM meetup_likes 
 		WHERE meetup_id = #{meetupId}
-		GROUP BY meetup_id 	 
+		<!-- GROUP BY meetup_id --> 	 
  	</select>  		
 
  
