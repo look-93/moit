@@ -4,16 +4,16 @@ import lombok.Data;
 
 @Data
 public class ReportsDto {
-	private int reportId;		//½Å°í°íÀ¯id
-	private String targetType;	//½Å°í´ë»óÀ¯Çü (¸ðÀÓ, ÈÄ±â) 'MEETUP', 'REVIEW'
-	private int targetId;		//½Å°í´ë»óid (¸ðÀÓid or ÈÄ±âid)
-	private int memberId;		//½Å°íÇÑ È¸¿øid
-	private String reasonCode;	//½Å°í »çÀ¯ ÄÚµå ('ABUSE', 'SPAM', 'FAKE_INFO', 'AD', 'ETC')
-	private String reasonDetail;//»ó¼¼ ¼³¸í (etc = ¼±ÅÃÀûÀ¸·Î ±â·Ï)
-	private String status;		//Ã³¸®»óÅÂ ('PENDING', 'APPROVED')
-	private String deleteYn;	//»èÁ¦¿©ºÎ
-	private String createdAt;	//»ý¼ºÀÏ½Ã
-	private String updatedAt;	//¼öÁ¤ÀÏ½Ã
+	private int reportId;		//ì‹ ê³  ê³ ìœ  ID
+	private String targetType;	//ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½, ï¿½Ä±ï¿½) 'MEETUP', 'REVIEW'
+	private int targetId;		//ï¿½Å°ï¿½ï¿½ï¿½id (ï¿½ï¿½ï¿½ï¿½id or ï¿½Ä±ï¿½id)
+	private int memberId;		//ï¿½Å°ï¿½ï¿½ï¿½ È¸ï¿½ï¿½id
+	private String reasonCode;	//ï¿½Å°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ('ABUSE', 'SPAM', 'FAKE_INFO', 'AD', 'ETC')
+	private String reasonDetail;//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (etc = ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
+	private String status;		//Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ('PENDING', 'APPROVED')
+	private String deleteYn;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String createdAt;	//ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½
+	private String updatedAt;	//ï¿½ï¿½ï¿½ï¿½ï¿½Ï½ï¿½
 	
-//	private int reportCount;	// ½Å°í °Ç¼ö
+//	private int reportCount;	// ï¿½Å°ï¿½ ï¿½Ç¼ï¿½
 }

@@ -166,7 +166,7 @@ public class AdvertisementController {
     public String updateAction(AdvertisementDto dto,
                                @RequestParam(value = "imageFile", required = false) MultipartFile file,
                                HttpSession session) {
-
+    	System.out.println("🔥🔥🔥 adEdit 들어옴");
         try {
 
         	// 기존 광고 조회
@@ -297,6 +297,7 @@ public class AdvertisementController {
 
         System.out.println("🔥 서비스 호출 끝");
         System.out.println("🔥 ad 결과 = " + ad);
+        System.out.println(ad.getImageUrl());
 
         model.addAttribute("ad", ad);
 

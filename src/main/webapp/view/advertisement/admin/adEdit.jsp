@@ -56,14 +56,22 @@
     padding: 30px;
     border-radius: 15px;
 }
-.preview {
-    width: 100%;
-    height: 180px;
-    background: #eee;
-    border-radius: 10px;
+.preview-box{
+    width:100%;
+    height:200px;
+    background:#eee;
+    border-radius:10px;
     margin-bottom: 10px;
-    background-size: cover;
-    background-position: center;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#previewImg{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 </style>
 
@@ -99,10 +107,14 @@
 
             <div class="mb-3">
                 <label>기존 이미지</label>
-                <div class="preview"
-                     style="background-image:url('${dto.imageUrl}')"></div>
+                <div class="preview-box">
+			    <img id="previewImg"
+			    	 src="${ctx}${dto.imageUrl}"
+			         style="max-width:100%;
+			                max-height:100%;">
+				</div>
 
-                <input type="file" name="imageFile" class="form-control">
+                <input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/*">
                 <input type="hidden" name="imageUrl" value="${dto.imageUrl}">
             </div>
 
@@ -142,8 +154,8 @@
 			            OPEN
 			        </option>
 			
-			        <option value="CLOSE"
-			            ${dto.status == 'CLOSE' ? 'selected' : ''}>
+			        <option value="CLOSED"
+			            ${dto.status == 'CLOSED' ? 'selected' : ''}>
 			            CLOSE
 			        </option>
 			    </select>
@@ -166,6 +178,28 @@
 
 </div>
 </div>
+<script>
+
+	const imageInput = document.getElementById("imageFile");
+	const previewImg = document.getElementById("previewImg");
+	
+	imageInput.addEventListener("change", function() {
+	
+	    const file = this.files[0];
+	
+	    if (!file) return;
+	
+	    const reader = new FileReader();
+	
+	    reader.onload = function(e) {
+	        previewImg.src = e.target.result;
+	        previewImg.style.display = "block";
+	    };
+	
+	    reader.readAsDataURL(file);
+	});
+
+</script>
 
 </body>
 </html>

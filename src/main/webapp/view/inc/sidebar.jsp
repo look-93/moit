@@ -24,7 +24,6 @@
 				href="/moit/admin/event/list.do">행사관리</a> <a
 				href="${pageContext.request.contextPath}/advertisement/admin/adList.do">광고관리</a>
 		</div>
-
 	</div>
 </body>
 </html>
