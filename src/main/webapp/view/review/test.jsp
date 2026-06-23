@@ -140,29 +140,35 @@
     <h3 class="fw-bold mb-2" style="color: var(--c4);">🎯 내 후기 목록 및 검증</h3>
     <p class="text-muted small">모임 번호: <span class="badge bg-primary">${meetupId}</span></p>
     
-    <form id="searchForm" action="${pageContext.request.contextPath}/review/test" method="GET" class="row g-3 my-2 align-items-center">
-      <input type="hidden" name="meetupId" value="${meetupId}">
-      
-      <div class="col-md-3">
-        <button type="button" class="btn btn-primary fw-bold w-100 py-2" data-bs-toggle="modal" data-bs-target="#myModal" style="background-color: var(--c4); border: none; border-radius: 10px;">
-          ✍️ 후기 작성하기
-        </button>
-      </div>
-      
-      <div class="col-md-5">
-        <div class="input-group">
-          <input type="text" name="searchKeyword" class="form-control" placeholder="후기 내용 검색..." value="${param.searchKeyword}" style="border-radius: 10px 0 0 10px; height: 40px;">
-          <button class="btn btn-outline-secondary" type="submit" style="border-radius: 0 10px 10px 0;">🔍 검색</button>
-        </div>
-      </div>
-      
-      <div class="col-md-4">
-        <select class="form-select text-secondary" name="sortType" onchange="this.form.submit()" style="border-radius: 10px; height: 40px; font-weight: 500;">
-          <option value="latest" ${param.sortType == 'popular' ? '' : 'selected'}>⏱️ 최신순 정렬</option>
-          <option value="popular" ${param.sortType == 'popular' ? 'selected' : ''}>⭐ 인기순 (좋아요 많은순)</option>
-        </select>
+    <div class="row g-3 my-2 align-items-center">
+  
+  <div class="col-md-3">
+    <button type="button" class="btn btn-primary fw-bold w-100 py-2" data-bs-toggle="modal" data-bs-target="#myModal" style="background-color: var(--c4); border: none; border-radius: 10px;">
+      ✍️ 후기 작성하기
+    </button>
+  </div>
+  
+  <div class="col-md-5">
+    <form action="${pageContext.request.contextPath}/review/searchContent" method="GET" class="m-0">
+      <div class="input-group">
+        <input type="text" name="Keyword" class="form-control" placeholder="후기 내용 검색..." value="${param.Keyword}" style="border-radius: 10px 0 0 10px; height: 40px;">
+        <button class="btn btn-outline-secondary" type="submit" style="border-radius: 0 10px 10px 0;">🔍 검색</button>
       </div>
     </form>
+  </div>
+  
+  <div class="col-md-4">
+    <form action="${pageContext.request.contextPath}/review/test" method="GET" class="m-0">
+      <input type="hidden" name="meetupId" value="${meetupId}">
+      
+      <select class="form-select text-secondary" name="sortType" onchange="this.form.submit()" style="border-radius: 10px; height: 40px; font-weight: 500;">
+        <option value="latest" ${param.sortType != 'popular' ? 'selected' : ''}>⏱️ 최신순 정렬</option>
+        <option value="popular" ${param.sortType == 'popular' ? 'selected' : ''}>⭐ 인기순 (좋아요 많은순)</option>
+      </select>
+    </form>
+  </div>
+
+</div>
 
     <table class="table table-hover mt-3 align-middle text-center">
       <thead class="table-light">

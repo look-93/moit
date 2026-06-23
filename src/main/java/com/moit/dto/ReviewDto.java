@@ -9,6 +9,7 @@ public class ReviewDto {
 	private int memberId;
 	private String content;
 	private int rating;
+	private int likesCount;
 	private String isPublic;
 	private boolean deleteYn;
 	private String createdAt;

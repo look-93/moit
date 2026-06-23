@@ -1,6 +1,7 @@
 package com.moit.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -17,6 +18,17 @@ public interface ReviewMapper {
 	public int deleteUserReview(ReviewDto dto);
 	public int updateUserReviewHide(ReviewDto dto);
 	public List<ReviewDto> selectReviewsByMemberId(@Param("memberId") int memberId, @Param("sort") String sort);
+	public List<ReviewDto> SearchReviewByContent(String keyword);
+	
+	
+	//좋아요 기능
+	public int checkLikeExists(Map<String, Object> params);
+	public void insertLike(Map<String, Object> params);
+	public void deleteLike(Map<String, Object> params);
+	public void incrementLikeCount(int reviewId);
+	public void decrementLikeCount(int reviewId);
+	public int getLikeCount(int reviewId);
+
 	
 	//관리자
 	public List<ReviewDto>adminSelectReviewList(int memberId);

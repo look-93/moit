@@ -91,6 +91,9 @@
         WHERE review_id = #{id}
           AND member_id = #{memberId}
     </update>
+    
+    
+    
 
     <!-- 사용자 비공개 처리 -->
     <update id="updateUserReviewHide" parameterType="ReviewDto">
@@ -107,6 +110,13 @@
         WHERE review_id = #{id}
     </update>
     
+    
+    <!-- 좋아요 증가  -->
+    <update id="updateLikeCount" parameterType="int">
+    update reviews
+    set likes_count=likes_count+1
+    where review_id=#{id}
+    </update>
     
     <select id="selectReviewsByMemberId" resultType="ReviewDto">
         SELECT
@@ -136,6 +146,52 @@
                 ORDER BY created_at DESC </otherwise>
         </choose>
     </select>
+    
+    
+    <select id="SearchReviewByContent" parameterType="string" resultType="ReviewDto">
+        SELECT
+            review_id AS id,
+            meetup_id AS meetupId,
+            member_id AS memberId,
+            content,
+            rating,
+            likes_count AS likesCount,
+            views_count AS viewsCount,
+            IF(is_public = 'Y', 1, 0) AS isPublic,
+            IF(delete_yn = 'Y', 1, 0) AS deleteYn,
+            created_at AS createdAt,
+            updated_at AS updatedAt
+        FROM reviews
+        WHERE content LIKE CONCAT('%', #{keyword}, '%')
+          AND delete_yn = 'N'
+    </select>
+    
+    
+    <!--  좋아요 기능 -->
+    <select id="checkLikeExists" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM review_likes WHERE review_id = #{reviewId} AND member_id = #{memberId}
+    </select>
+    
+    <insert id="insertLike" parameterType="map">
+        INSERT INTO review_likes (review_id, member_id, created_at) VALUES (#{reviewId}, #{memberId}, NOW())
+    </insert>
+
+    <delete id="deleteLike" parameterType="map">
+        DELETE FROM review_likes WHERE review_id = #{reviewId} AND member_id = #{memberId}
+    </delete>
+
+    <update id="incrementLikeCount" parameterType="int">
+        UPDATE reviews SET likes_count = likes_count + 1 WHERE review_id = #{reviewId}
+    </update>
+
+    <update id="decrementLikeCount" parameterType="int">
+        UPDATE reviews SET likes_count = IF(likes_count > 0, likes_count - 1, 0) WHERE review_id = #{reviewId}
+    </update>
+
+    <select id="getLikeCount" parameterType="int" resultType="int">
+        SELECT likes_count FROM reviews WHERE review_id = #{reviewId}
+    </select>
+    
 
     <!-- 관리자용 전체 후기 조회 -->
     <select id="adminSelectReviewList" resultType="ReviewDto">
