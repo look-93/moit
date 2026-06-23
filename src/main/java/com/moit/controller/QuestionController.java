@@ -50,17 +50,40 @@ public class QuestionController {
         model.addAttribute("answeredCnt", questionService.getAnsweredCnt());
         // 오늘 등록된 문의 수
         model.addAttribute("todayCnt", questionService.getTodayCnt());
-        return "question/list";
+        return "question/answerList";
+    }
+
+    // 모임글 문의 등록
+    @GetMapping("/write")
+    public String write(QuestionDto dto) {
+        //questionService.register(dto);
+        return "meetup/admin/moquestion1";
     }
     
     // 모임글 문의 등록
     @PostMapping("/write")
-    public String write(QuestionDto dto, RedirectAttributes rttr) {
-
+    public String writePost(QuestionDto dto, RedirectAttributes rttr) {
+    	
         questionService.register(dto);
         rttr.addFlashAttribute("msg", "문의가 등록되었습니다.");
         return "redirect:/questions/myQuestion";
     }
+    
+    // 관리자 문의 등록
+    @GetMapping("/adminWrite")
+    public String adminWrite(QuestionDto dto) {
+        //questionService.register(dto);
+        return "meetup/admin/adquestion1";
+    }
+    
+    // 관리자 문의 등록
+    @PostMapping("/adminWrite")
+    public String adminWritePost(QuestionDto dto, RedirectAttributes rttr) {
+    	
+        questionService.register(dto);
+        rttr.addFlashAttribute("msg", "문의가 등록되었습니다.");
+        return "redirect:/questions/adquestion2";
+    }   
     
     // 문의 상세 화면 + 답변 조회
     @GetMapping("/{id}")

@@ -399,7 +399,7 @@ textarea.form-input{
     <form action="${empty meetup ? pageContext.request.contextPath.concat('/meetup/user/write.do') : pageContext.request.contextPath.concat('/meetup/mypage/update.do')}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
         	<div class="detail-wrap">
-    		<input type="hidden" name="meetupId" value="${!empty meetup ? meetup.meetupId:''}" />
+    		<input type="hidden" name="meetupId" value="${!empty meetup ? meetup.meetupId:'0'}" />
                 <div class="left-panel">
     
                     <div class="image-box">

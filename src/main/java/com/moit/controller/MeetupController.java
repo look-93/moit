@@ -12,9 +12,8 @@ public class MeetupController {
 	 * "redirect:/meetup/admin/list.do"; }
 	 */
 	
-	@RequestMapping("/meetup/admin/list.do")
-	public String list(Model model) {
-		model.addAttribute("menu", "meetup");
-		return  "meetup/admin/list";   
-	} 
+	/*
+	 * @RequestMapping("/meetup/admin/list.do") public String list(Model model) {
+	 * model.addAttribute("menu", "meetup"); return "meetup/admin/list"; }
+	 */
 }

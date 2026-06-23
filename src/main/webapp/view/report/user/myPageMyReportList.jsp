@@ -1,6 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="../../inc/userHeader.jsp" %>
+
+<jsp:include page="../../inc/userHeader.jsp" />
+
 <style>
 
 :root{
@@ -481,47 +484,48 @@ td:nth-child(1){
 
 			<div class="main">
 
-			<%@ include file="../../inc/myPageSubHeader.jsp" %>
-
 				<div class="section">
 					<h2>내 모집글</h2>
 					<div class="table-responsive">
 						<table>
 							<colgroup>
-							    <col style="width:8%">
-							    <col style="width:30%">
-							    <col style="width:20%">
-							    <col style="width:15%">
-							    <col style="width:15%">
+							    <col style="auto">
+							    
 							</colgroup>
 							<thead>
 								<tr>
 									<th>번호</th>
-									<th>모집명</th>
-									<th>모집일</th>
-									<th>모집 상태</th>
-									<th>후기</th>
-						        </tr>
+									<th>대상</th>
+									<th>대상ID</th>
+									<th>신고사유</th>
+									<th>상태</th>
+									<th>신고일</th>
+									<th>관리</th>
+								</tr>
 						    </thead>
 							<tbody>
-							    <c:forEach var="apply" items="${applyList}" varStatus="status">
-							        <tr>
-							        	<td>${paging.listtotal - paging.pstartno - status.index}</td>
-				                        <td>코딩 스터디</td>
-				                        <td>2026.06.10</td>
-				
-				                        <td><span class="status status-end">종료</span></td>
-				
-				                        <td><button class="review-btn">후기 작성</button></td>
-							        </tr>
-							    </c:forEach>
-							    
-							    <c:if test="${empty applyList}">
-							        <tr>
-							            <td colspan="5" style="padding: 40px 0; color: #94a3b8;">신청한 모집글이 존재하지 않습니다.</td>
-							        </tr>
-							    </c:if>
+								<c:forEach var="dto" items="${list}" varStatus="status">
+									<tr>
+										<td>${status.count}</td>
+										<td>${dto.targetType}</td>
+										<td>${dto.targetId}</td>
+										<td>${dto.reasonCode}</td>
+										<td>
+											<c:choose>
+												<c:when test="${dto.status == 'PENDING'}">
+													<span class="status status-progress">${dto.status}</span>
+												</c:when>
+												<c:otherwise>
+													<span class="status status-end">${dto.status}</span>
+												</c:otherwise>
+											</c:choose>
+										</td>
+										<td>${dto.createdAt}</td>																	
+										<td><button class="review-btn" onClick="gotoReportDetail('${dto.reportId}')">상세</button></td>
+									</tr>
+								</c:forEach>
 							</tbody>
+
 						</table>
 						
 						<ul class="pagination justify-content-center">
@@ -552,3 +556,9 @@ td:nth-child(1){
 </div>
 
 <%@ include file="../../inc/userFooter.jsp" %>
+
+<script>
+function gotoReportDetail(reportId){
+	location.href= "${pageContext.request.contextPath}/report/user/detail.do?reportId="+reportId
+}
+</script>

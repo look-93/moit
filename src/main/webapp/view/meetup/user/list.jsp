@@ -216,16 +216,10 @@ nav{
 .sidebar-ad{
     margin-top:25px;
     height:320px;
-
-    background:linear-gradient(
-        180deg,
-        var(--c4),
-        var(--c3)
-    );
-
     border-radius:20px;
     padding:25px;
-
+	overflow:hidden; /* 중요 */
+    padding:0;       /* 중요 */
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -235,25 +229,6 @@ nav{
     color:white;
 
     box-shadow:var(--shadow);
-}
-
-.sidebar-ad .ad-tag{
-    background:rgba(255,255,255,.2);
-    padding:5px 12px;
-    border-radius:20px;
-    margin-bottom:15px;
-    font-size:12px;
-}
-
-.sidebar-ad h3{
-    font-size:24px;
-    margin-bottom:15px;
-    line-height:1.4;
-}
-
-.sidebar-ad p{
-    margin-bottom:20px;
-    line-height:1.6;
 }
 
 .sidebar-ad a{
@@ -271,30 +246,26 @@ nav{
 /* TOP AD */
 
 .top-ad{
-    background:linear-gradient(
-        135deg,
-        var(--c1),
-        var(--c2)
-    );
     border-radius:20px;
-    padding:25px;
     box-shadow:var(--shadow);
-
+    overflow:hidden; /* 중요 */
+    padding:0;       /* 중요 */
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    
+    /* 💡 배너의 높이를 고정하고 싶다면 아래와 같이 
+          원하는 높이를 명시적으로 지정해주는 것이 좋습니다. */
+    height: 120px; 
 }
-
-.top-ad-left h3{
-    margin-bottom:10px;
+.top-ad a {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
-
-.top-ad-btn{
-    background:var(--c4);
-    color:white;
-    padding:12px 20px;
-    border-radius:12px;
-    text-decoration:none;
+.top-ad img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 💡 이미지가 일그러지지 않고 비율을 유지하며 꽉 차게 채웁니다 */
 }
 a {
 	text-decoration: none;
@@ -328,6 +299,8 @@ a {
     box-shadow:0 8px 20px rgba(104,126,255,.25);
 }
 
+.btn-primary1{background:var(--c4);color:white;width:100%;}
+
 </style>
 <div class="main-content">
 	<div class="container">
@@ -352,17 +325,11 @@ a {
 
 				<div class="sidebar-ad">
 
-					<div class="ad-tag">ADVERTISEMENT</div>
-
-					<h3>
-						신규 회원<br> 특별 혜택
-					</h3>
-
-					<p>
-						가입만 해도<br> 할인 쿠폰 지급
-					</p>
-
-					<a href="#"> 지금 확인하기 </a>
+					<a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
+				        <%-- <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"> --%>
+			        	 <img src="${pageContext.request.contextPath}${ad.imageUrl}">
+				    </a>
 
 				</div>
 
@@ -376,12 +343,11 @@ a {
 
 				<div class="top-ad">
 
-					<div class="top-ad-left">
-						<h3>🔥 신규 제휴업체 오픈</h3>
-						<p>가입 회원 대상 20% 할인 쿠폰 지급</p>
-					</div>
-
-					<a href="#" class="top-ad-btn"> 바로가기 </a>
+					<a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
+				       <%--  <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"> --%>
+	        	      <img src="${pageContext.request.contextPath}${ad.imageUrl}">
+				    </a>
 
 				</div>
 				<form action="${pageContext.request.contextPath}/meetup/user/list.do" method="get">
@@ -403,7 +369,7 @@ a {
 						</select>
 
 						<div class="col-md-2">
-							<button type="submit" class="btn btn-primary">검색</button>
+							<button type="submit" class="btn btn-primary1">검색</button>
 						</div>
 
 						<!-- 여기 추가 -->

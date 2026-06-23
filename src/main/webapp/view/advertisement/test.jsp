@@ -17,7 +17,7 @@
 
     <a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
         <img src="${pageContext.request.contextPath}${ad.imageUrl}"
-        	 onerror="this.src='${pageContext.request.contextPath}/upload/ad/test.png'"
+        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"
              style="width:500px;">
     </a>
 

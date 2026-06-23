@@ -180,7 +180,7 @@ body{
     font-weight:bold;
 }
 
-.tab-content{padding:25px;}
+.tab-content-meetup-detail{padding:25px;}
 
 .tab-panel{display:none;}
 .tab-panel.active{display:block}
@@ -376,7 +376,8 @@ body{
 			    <div class="content-box">
 			        <div class="content-top">
 			            <div class="detail-badge">모집중</div>
-			            <button class="report-btn">🚨 모임 신고</button>
+			             <a	href="${pageContext.request.contextPath}/report/user/write.do?targetType=MEETUP&amp;targetId=${detail.meetupId}"
+							class="report-btn"> 모임 신고</a>
 			        </div>
 			        <h1 class="title">${detail.title}</h1>
 			    </div>
@@ -386,10 +387,10 @@ body{
 			            <div class="tab-btn active" onclick="showTab(0)">상세정보</div>
 			            <div class="tab-btn" onclick="showTab(1)">신청자</div>
 			            <div class="tab-btn" onclick="showTab(2)">후기</div>
-			            <div class="tab-btn" onclick="showTab(3)">Q&A</div>
+			            <div class="tab-btn" onclick="showTab(3)">Q&amp;A</div>
 			        </div>
 			
-			        <div class="tab-content">
+			        <div class="tab-content-meetup-detail">
 			            <div class="tab-panel active">
 			                <h3>모임 안내</h3>
 			                <div class="description">${detail.content}</div>
@@ -472,9 +473,9 @@ body{
 			                    <p>네 초보도 환영입니다!</p>
 			                </div>
 			            </div>
-			        </div>
-			    </div>
-			
+			            
+			        </div>			        
+			    </div>			
 			</div>
 			
 			<div>
@@ -503,8 +504,8 @@ body{
 			
 			    <div class="side-box">
 			        <h3>작성자</h3>
-			        <p>${detail.nickname}</p>
-			        <button class="detail-inquiry-btn">
+			        <p>${detail.nickname}</p>			        
+			        <button class="detail-inquiry-btn" onClick="gotoQna()">
 			            💬 모임글 문의하기
 			        </button>
 			    </div>
@@ -564,6 +565,10 @@ body{
     	}	
     }
     
+    function gotoQna(){
+    	location.href ="${pageContext.request.contextPath}/questions/write?category=MEETUP"
+    }
+    
     	
 	function cancelApplyMeetup() {
 		if(applyInfo != null){
@@ -597,6 +602,7 @@ body{
 		}
 	    
 	}
+
 </script>
 
 

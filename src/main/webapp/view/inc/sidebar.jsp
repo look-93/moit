@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -16,12 +17,11 @@
 			<a href="/moit/admin/member/list.do">회원관리</a> <a
 				href="/moit/admin/admin/list.do">관리자관리</a> <a
 				href="${pageContext.request.contextPath}/meetup/admin/list.do"
-				class="<c:if test='${menu eq \"meetup\"}'>active</c:if>"> 모임관리</a>
-			<a href="/moit/admin/region/list.do">지역관리</a> <a
-				href="/moit/admin/category/list.do">카테고리관리</a> <a
-				href="/moit/admin/notice/list.do">공지사항</a> <a
-				href="/moit/admin/event/list.do">행사관리</a> <a
+				class="<c:if test='${menu eq \"meetup\"}'>active</c:if>">모집관리</a> <a
 				href="${pageContext.request.contextPath}/advertisement/admin/adList.do">광고관리</a>
+			<a
+				href="${pageContext.request.contextPath}/report/admin/adminList.do"
+				class="<c:if test='${menu eq \"report\"}'>active</c:if>">신고관리</a>
 		</div>
 	</div>
 </body>

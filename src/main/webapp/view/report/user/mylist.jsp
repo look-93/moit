@@ -48,10 +48,9 @@
 									<c:when test="${dto.status == 'PENDING'}">
 										<span class="mylist-status pending">${dto.status}</span>
 									</c:when>
-									
-									<c:when test="${dto.status == 'APPROVED'}">
+									<c:otherwise>
 										<span class="mylist-status approved">${dto.status}</span>
-									</c:when>
+									</c:otherwise>
 								</c:choose>
 							</td>
 							<td>${dto.createdAt}</td>

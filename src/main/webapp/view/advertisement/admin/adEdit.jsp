@@ -110,6 +110,7 @@
                 <div class="preview-box">
 			    <img id="previewImg"
 			    	 src="${ctx}${dto.imageUrl}"
+			    	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"
 			         style="max-width:100%;
 			                max-height:100%;">
 				</div>

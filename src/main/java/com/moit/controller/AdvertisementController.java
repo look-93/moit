@@ -96,7 +96,7 @@ public class AdvertisementController {
 
         	// 테스트용
         	if (loginUserId == null) {
-        	    loginUserId = 1;
+        	    loginUserId = 22;
         	}
 
         	dto.setAuthorId(loginUserId);
@@ -182,7 +182,7 @@ public class AdvertisementController {
 
             // 테스트용
             if(loginUserId == null) {
-                loginUserId = 1;
+                loginUserId = 22;
             }
 
             dto.setAuthorId(loginUserId);
@@ -251,7 +251,7 @@ public class AdvertisementController {
             (Integer) session.getAttribute("loginUserId");
         
         if(loginUserId == null){
-            loginUserId = 1;
+            loginUserId = 22;
         }
 
         AdvertisementDto dto = new AdvertisementDto();
