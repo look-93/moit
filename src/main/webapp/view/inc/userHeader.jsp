@@ -1,22 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<<<<<<< HEAD
-=======
 <%@ taglib  prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %> 
 
->>>>>>> f731dd0135d56e4b9713e9d5d6f3425152d15e84
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-<title>MOIT | 모집글 상세</title>
-
-=======
 <title>MOIT</title>
->>>>>>> f731dd0135d56e4b9713e9d5d6f3425152d15e84
 <style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
@@ -41,12 +33,6 @@
     box-sizing:border-box;
 }
 
-<<<<<<< HEAD
-body{
-    background:var(--bg);
-    font-family: 'Pretendard', sans-serif;
-    color: var(--text);
-=======
 
 body {
     min-height: 100vh;
@@ -54,7 +40,6 @@ body {
     flex-direction: column;
     background: var(--bg);
     margin: 0; /* 기본 마진 제거 */
->>>>>>> f731dd0135d56e4b9713e9d5d6f3425152d15e84
 }
 
 .container{
@@ -65,10 +50,7 @@ body {
 
 /* ================= HEADER (로고+메뉴 좌측 밀집 버전) ================= */
 
-<<<<<<< HEAD
-=======
 
->>>>>>> f731dd0135d56e4b9713e9d5d6f3425152d15e84
 header{
     background:white;
     height:80px;
@@ -93,15 +75,6 @@ header{
 }
 
 .logo {
-<<<<<<< HEAD
-	font-size: 24px;
-	font-weight: bold;
-	color: #4a7dff;
-	padding: 25px;
-	text-align: center;
-	border-bottom: 1px solid #eee;
-	text-decoration: none;
-=======
    font-size: 24px;
    font-weight: bold;
    color: #4a7dff;
@@ -109,7 +82,6 @@ header{
    text-align: center;
    border-bottom: 1px solid #eee;
    text-decoration: none;
->>>>>>> f731dd0135d56e4b9713e9d5d6f3425152d15e84
 }
 
 nav{
@@ -250,12 +222,6 @@ nav a:hover::after, nav a.active::after {
 
 /* ==================
 <<<<<<< HEAD
-FOOTER
-================== */
-footer{
-    margin-top: 50px;
-=======
-<<<<<<< HEAD
 HERO
 ================== */
 
@@ -299,6 +265,7 @@ HERO
     padding:14px 28px;
     border-radius:50px;
     cursor:pointer;
+    font-size:16px;
 }
 
 .btn-primary{
@@ -347,31 +314,17 @@ AD
     margin-top:25px;
     background:white;
 
-    /* border:2px dashed var(--c3); */
+    border:2px dashed var(--c3);
 
     border-radius:20px;
 
-    /* padding:25px; */
+    padding:25px;
 
     display:flex;
     justify-content:space-between;
     align-items:center;
-	
-    box-shadow:var(--shadow);
-    
-    padding: 0;
-    overflow: hidden;
-    
-}
-.ad-banner a {
-    width: 100%;
-    height: 200px;
-}
 
-.ad-banner img {
-    width: 100%;
-    height: auto;
-    display: block;
+    box-shadow:var(--shadow);
 }
 
 .ad-left h3{
@@ -501,16 +454,10 @@ FOOTER
 
 footer {
     margin-top: auto; /* 💡 flex 구조에서 자동으로 최하단에 배치됨 */ 
->>>>>>> f731dd0135d56e4b9713e9d5d6f3425152d15e84
     background: white;
     padding: 30px;
     text-align: center;
     color: var(--gray);
-<<<<<<< HEAD
-    border-top: 1px solid #edf2f7;
-}
-</style>
-=======
     border-top: 1px solid #edf2f7; 
 }
 
@@ -623,8 +570,7 @@ LOGIN
   border-top:1px solid #eee;
   margin:15px 0;
 }
-.btn{border:none;padding:16px 28px;border-radius:50px;cursor:pointer;font-size:16px;}
-.btn-primary{background:var(--c4);color:white;}
+
 .btn.full{width:100%;margin-top:20px;}
 .member-type{
   display:flex;
@@ -643,8 +589,6 @@ h2{text-align:center;color:var(--c4);margin-bottom:30px;}
 .form-group input{width:100%;padding:14px;border:1px solid #ddd;border-radius:10px;font-size:15px;}
 .form-group-inline{display:flex;gap:10px;margin-bottom:20px;}
 .form-group-inline input{flex:1;padding:14px;border:1px solid #ddd;border-radius:10px;}
-.btn{border:none;padding:14px 28px;border-radius:50px;cursor:pointer;font-size:16px;}
-.btn-primary{background:var(--c4);color:white;width:100%;margin-top:20px;}
 .form-options{margin:20px 0;}
 .member-type{display:flex;gap:30px;margin-top:10px;font-size:15px;}
 .member-type input{margin-right:8px;}
@@ -709,48 +653,12 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
 }
 </style>
 
->>>>>>> f731dd0135d56e4b9713e9d5d6f3425152d15e84
 </head>
 
 <body>
 
 <header>
 <div class="container header-inner">
-<<<<<<< HEAD
-
-    <div class="left-group">
-       	<a href="${pageContext.request.contextPath}/" class="logo">
-       		MOIT
-   		</a>
-		<nav>
-		    <a href="${pageContext.request.contextPath}/meetup/user/list.do"
-		       class="<c:if test='${menu eq "meetup"}'>active</c:if>">모집찾기</a>
-		       
-		    <a href="/inquiry/list" class="inquiry-btn">💬 관리자 1:1 문의 </a>
-		     
-		</nav>
-    </div>
-
-    <div class="right-group">
-        <div class="header-slogan">
-            <span>우리들의 취향 맞춤 소모임 플랫폼</span>
-        </div>
-        
-        <div class="user-box">
-            <div class="alarm">🔔</div>
-            <div class="profile">
-                <div class="profile-img">J</div>
-                <div class="profile-info">
-                    <strong>예진님</strong>
-                    <span>일반회원</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-</header>
-=======
     <!-- 좌측 로고 + 메뉴 -->
     <div class="left-group">
         <a href="${pageContext.request.contextPath}/" class="logo">
@@ -818,4 +726,3 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
 
 </div>
 </header> 
->>>>>>> f731dd0135d56e4b9713e9d5d6f3425152d15e84

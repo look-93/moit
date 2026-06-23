@@ -431,8 +431,11 @@ body{
 			                        </div>
 			                    </div>
 			                </div>
-			
+			                
+							
+							<!-- 여기 후기 -->
 			                <div class="comment">
+			                
 			                    <div class="comment-top">
 			                        <div>
 			                            <div class="comment-name">김모잇</div>
@@ -447,18 +450,9 @@ body{
 			                    </div>
 			                    <p>분위기 너무 좋았어요!</p>
 			                </div>
-			
-			                <div class="comment">
-			                    <div class="comment-top">
-			                        <div>
-			                            <div class="comment-name">이모임</div>
-			                            <div class="comment-date">2026.06.12</div>
-			                        </div>
-			                        <button class="report-btn">신고</button>
-			                    </div>
-			                    <p>초보도 부담 없이 참여 가능</p>
-			                </div>
+		
 			            </div>
+			
 			
 			            <div class="tab-panel">
 			                <h3>Q&A</h3>
