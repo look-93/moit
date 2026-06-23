@@ -58,24 +58,22 @@ padding:12px 28px;border-radius:8px;border:1px solid #d9dfea;cursor:pointer;
 		    </div>
 		
 		</form>
-		<script>
-			document.getElementById("privateChk")
-			    .addEventListener("change", function(){
-			
-			    document.getElementById("isPublic").value =
-			        this.checked ? "N" : "Y";
-			});
-			function ck() {
-			    let title = document.getElementById("title").value.trim();
-			    let content = document.getElementById("content").value.trim();
 
-			    if (title === "") { alert("제목을 입력해주세요."); document.getElementById("title").focus(); return false; }
-			    if (content === "") { alert("문의 내용을 입력해주세요."); document.getElementById("content").focus(); return false; }
-			    if (!confirm("문의를 등록하시겠습니까?")) { return false; }
-			    return true;
-			}
-		</script>
     </div>
 </div>
+<script>
+	document.getElementById("privateChk")
+	    .addEventListener("change", function(){
+	
+	    document.getElementById("isPublic").value = this.checked ? "N" : "Y";
+	});
+	function ck() {
+	    let title = document.getElementById("title").value.trim();
+	    let content = document.getElementById("content").value.trim();
 
+	    if (title === "") { alert("제목을 입력해주세요."); document.getElementById("title").focus(); return false; }
+	    if (content === "") { alert("문의 내용을 입력해주세요."); document.getElementById("content").focus(); return false; }
+	    return confirm("문의를 등록하시겠습니까?");
+	}
+</script>
 <%@ include file="../../inc/userFooter.jsp" %>
