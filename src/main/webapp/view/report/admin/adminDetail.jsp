@@ -12,16 +12,6 @@
 
 <div class="admin-detail-page">
 
-	<section class="admin-detail-title-row">
-		<div class="admin-detail-title">
-			<h1>관리자 신고 상세</h1>
-			<p>관리자 신고목록에서 상세 보기를 클릭했을 때 나오는 화면</p>
-		</div>
-		<div class="admin-detail-url-chip">
-			/admin/report/detail?report_id=${dto.reportId}
-		</div>
-	</section>
-
 	<section class="admin-detail-card">
 		<div class="admin-detail-card-head">
 			<div class="admin-detail-card-title">
@@ -64,9 +54,7 @@
 			<div class="admin-detail-grid">
 				<div class="admin-detail-row">
 					<div class="admin-detail-label">신고 대상</div>
-					<div class="admin-detail-value">
-						<span class="admin-detail-badge">${dto.targetType}</span>
-					</div>
+					<div class="admin-detail-value">${dto.targetType}</div>
 				</div>
 
 				<div class="admin-detail-row">
@@ -95,9 +83,19 @@
 			<a href="${pageContext.request.contextPath}/report/admin/adminList.do"
 			   class="admin-detail-btn admin-detail-btn-white">목록</a>
 
-			<button type="button"
-					class="admin-detail-btn admin-detail-btn-soft-blue"
-					onclick="openAdminReviewModal()">해당 글 보기</button>
+			<c:choose>
+			    <%-- 1. targetType이 meetup인 경우 --%>
+			    <c:when test="${dto.targetType == 'MEETUP'}">
+			        <a href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${dto.targetId}" 
+			           class="detail-btn detail-btn-soft-blue">해당 글 보기</a>
+			    </c:when>
+			    
+			    <%-- 2. targetType이 후기(review 등)인 경우 --%>
+			    <c:when test="${dto.targetType == 'REVIEW'}">
+			        <a href="${pageContext.request.contextPath}/review/user/#" 
+			           class="detail-btn detail-btn-soft-blue">해당 글 보기</a>
+			    </c:when>
+			</c:choose>
 
 			<form action="${pageContext.request.contextPath}/report/admin/update.do" method="post">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -136,12 +134,7 @@
 			<div class="modal-content admin-detail-delete-modal-box">
 
 				<div class="modal-body admin-detail-delete-modal-body">
-					<div class="admin-detail-delete-modal-icon">!</div>
 					<h2 class="admin-detail-delete-modal-title">삭제하시겠습니까?</h2>
-					<p class="admin-detail-delete-modal-text">
-						선택한 신고 내역이 삭제 처리됩니다.<br>
-						삭제 후에는 목록에서 보이지 않습니다.
-					</p>
 
 					<form action="${pageContext.request.contextPath}/report/admin/delete.do" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -163,15 +156,5 @@
 	</div>
 
 </div>
-
-<script>
-function openAdminReviewModal() {
-	document.getElementById('adminReviewModal').style.display = 'flex';
-}
-
-function closeAdminReviewModal() {
-	document.getElementById('adminReviewModal').style.display = 'none';
-}
-</script>
 
 <%@ include file="../../inc/userFooter.jsp" %>

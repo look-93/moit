@@ -117,17 +117,6 @@ body {
 			<!-- 신고목록 -->
 			<div class="admin-list-page">
 
-		<!-- 		<section class="admin-list-title-row">
-					<div class="admin-list-title">
-						<h1>관리자 신고목록</h1>
-						<p>관리자가 전체 신고 내역을 조회하고 상세 처리하는 화면</p>
-					</div>
-
-					<div class="admin-list-url-chip">
-						/report/admin/adminList.do
-					</div>
-				</section> -->
-
 				<section class="admin-list-card">
 
 					<div class="admin-list-card-head">

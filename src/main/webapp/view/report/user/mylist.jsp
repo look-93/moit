@@ -8,13 +8,6 @@
 
 <div class="mylist-page">
 
-	<section class="mylist-title-row">
-		<div class="mylist-title">
-			<h1>내 신고내역</h1>
-			<p>사용자 본인이 작성한 신고 내역 확인</p>
-		</div>
-	</section>
-
 	<section class="mylist-card">
 		<div class="mylist-card-head">
 			<div class="mylist-card-title">
