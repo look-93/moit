@@ -23,5 +23,6 @@
 	    <typeAlias type="com.moit.dto.AdvertiserDto" alias="AdvertiserDto" />
 		<typeAlias type="com.moit.dto.QuestionDto"  alias="QuestionDto" />
 		<typeAlias type="com.moit.dto.AnswerDto"    alias="AnswerDto" />
+		<typeAlias type="com.moit.dto.ReviewDto"     alias="ReviewDto" />
 	</typeAliases>
 </configuration>

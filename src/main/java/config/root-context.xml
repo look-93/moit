@@ -20,12 +20,14 @@
       <property name="mapperLocations">
          <list> 
          	<value>classpath:config/user-mapper.xml</value>
+         	<value>classpath:config/reviewMapper.xml</value>
          	<value>classpath:config/answer-mapper.xml</value>
          	<value>classpath:config/question-mapper.xml</value>
          	<value>classpath:config/advertisementMapper.xml</value>
          	<value>classpath:config/advertiserMapper.xml</value>
          	<value>classpath:config/reportsMapper.xml</value>
          	<value>classpath:config/meetupMapper.xml</value>
+
          </list>
       </property>
    </bean>
