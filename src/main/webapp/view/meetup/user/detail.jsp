@@ -544,20 +544,21 @@ body{
 			    <div class="tabs">
 			        <div class="tab-header">
 			            <div class="tab-btn active" onclick="showTab(0)">상세정보</div>
-			            <div class="tab-btn" onclick="showTab(1)">신청자</div>
-			            <div class="tab-btn" onclick="showTab(2)">후기</div>
-			            <div class="tab-btn" onclick="showTab(3)">Q&amp;A</div>
+			            <!-- <div class="tab-btn" onclick="showTab(1)">신청자</div> -->
+			            <div class="tab-btn" onclick="showTab(1)">후기</div>
+			            <div class="tab-btn" onclick="showTab(2)">Q&amp;A</div>
 			        </div>
 			
 			        <div class="tab-content-meetup-detail">
+			        
 			            <div class="tab-panel active">
 			                <h3>모임 안내</h3>
 			                <div class="description">${detail.content}</div>
 			            </div>
 			
-			            <div class="tab-panel">
+<!-- 			            <div class="tab-panel">
 			                <p>홍길동 외 7명</p>
-			            </div>
+			            </div> -->
 			            
 			
 			            <div class="tab-panel">
