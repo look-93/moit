@@ -153,7 +153,7 @@ public class UserMeetupController {
 		int memberId = userMeetupService.findByMamberId(user.getUsername());		
 		meetupApplicationsDto.setMemberId(memberId);
 		
-		meetupApplicationsDto.setStatusList(Arrays.asList("CANCELED"));
+		//meetupApplicationsDto.setStatusList(Arrays.asList("CANCELED"));
 		boolean result = userMeetupService.insertApplication(meetupApplicationsDto ) > 0;
 		rttr.addFlashAttribute("result", result);		
 		return "redirect:/meetup/user/detail.do?meetupId=" + meetupApplicationsDto.getMeetupId();

@@ -88,6 +88,7 @@ public class UserMeetupServiceImpl implements UserMeetupService{
 	@Override
 	public int insertApplication(MeetupApplicationsDto meetupApplicationsDto) {
 		MeetupApplicationsDto find = this.findApplyInfo(meetupApplicationsDto);
+		System.out.println(find);
 		if(find != null) {
 			return meetupMapper.updateApplication(find);	
 		}else {

@@ -314,19 +314,35 @@ AD
     margin-top:25px;
     background:white;
 
-    border:2px dashed var(--c3);
+    /* border:2px dashed var(--c3); */
 
     border-radius:20px;
 
-    padding:25px;
+    /* padding:25px; */
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
     box-shadow:var(--shadow);
+    
+    height: 250px;
+    padding: 0;
+    overflow: hidden;
+    
+    
 }
 
+.ad-banner a {
+    display: block;
+    width: 100%;
+}
+.ad-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
 .ad-left h3{
     margin-bottom:10px;
 }

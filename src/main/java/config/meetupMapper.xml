@@ -344,7 +344,7 @@
 			   DATE_FORMAT(A.meetup_At, '%Y.%m.%d') as fomatMeetupAt, <!-- 모집일 -->
                A.*
 		  FROM meetup_applications  AS B
-          JOIN meetups  			AS A ON B.meetup_id = B.meetup_id and A.member_id = B.member_id
+          JOIN meetups  			AS A ON A.meetup_id = B.meetup_id
           JOIN members 			    AS C ON C.member_id = B.member_id
 		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
 	       AND A.status != 'DELETED' <!-- 삭제 제외 -->

@@ -507,8 +507,8 @@ td:nth-child(1){
 							    <c:forEach var="apply" items="${applyList}" varStatus="status">
 							        <tr>
 							        	<td>${paging.listtotal - paging.pstartno - status.index}</td>
-				                        <td>코딩 스터디</td>
-				                        <td>2026.06.10</td>
+				                        <td>${apply.title }</td>
+				                        <td>${apply.fomatMeetupAt}</td>
 				
 				                        <td><span class="status status-end">종료</span></td>
 				
@@ -551,4 +551,8 @@ td:nth-child(1){
 	</div>
 </div>
 
+<script>
+
+console.log("${applyList}");
+</script>
 <%@ include file="../../inc/userFooter.jsp" %>
