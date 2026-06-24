@@ -625,24 +625,6 @@ body{
 			                    
 			                </div>
 			                
-							
-<!-- 							여기 후기
-			                <div class="comment">
-			                
-			                    <div class="comment-top">
-			                        <div>
-			                            <div class="comment-name">김모잇</div>
-			                            <div class="comment-date">2026.06.15</div>
-			                        </div>
-			                        <button class="report-btn">신고</button>
-			                    </div>
-			                    <div class="comment-images">
-			                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
-			                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
-			                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=150&q=80">
-			                    </div>
-			                    <p>분위기 너무 좋았어요!</p>
-			                </div> -->
 		
 			            </div>
 			

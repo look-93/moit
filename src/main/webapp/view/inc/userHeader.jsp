@@ -327,6 +327,7 @@ AD
     box-shadow:var(--shadow);
 }
 
+
 .ad-left h3{
     margin-bottom:10px;
 }
