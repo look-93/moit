@@ -67,6 +67,7 @@
     display:flex;
     flex-direction:column;
     gap:20px;
+    min-height:770px;
 }
 
 .filter-box{
