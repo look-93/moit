@@ -23,12 +23,31 @@ public class ReviewController {
 	
 	// 후기작성 처리 후 (마이페이지 또는 일반 모달에서 후기작성 처리)
 	@RequestMapping(value="/review/test", method=RequestMethod.POST)
-	public String insertUserReview_post(ReviewDto dto, RedirectAttributes rttr) {
-		reviewservice.insertUserReview(dto);
-		rttr.addAttribute("meetupId", dto.getMeetupId());
-		return "redirect:/review/mypageReview";
+	@ResponseBody
+	public Map<String, Object> insertUserReview_post(ReviewDto dto) {
+		Map<String, Object> response = new HashMap<>();
+		response.put( "success" ,   reviewservice.insertUserReview(dto) == 1 );
+		return response;
+	}  // http://localhost:8080/moit/meetup/user/detail.do?meetupId=22
+	
+	//내 해당모임의 후기
+	// 특정모임의 후기목록 조회
+	@RequestMapping(value="/review/testList", method=RequestMethod.GET)
+	@ResponseBody
+	public  List<ReviewDto> testList  (@RequestParam("meetupId") int meetupId) {
+		return  reviewservice.selectUserReview(meetupId);
 	}
 	
+	
+	
+	
+//	@RequestMapping(value="/review/test", method=RequestMethod.POST)
+//	public String insertUserReview_post(ReviewDto dto, RedirectAttributes rttr) {
+//		reviewservice.insertUserReview(dto);
+//		rttr.addAttribute("meetupId", dto.getMeetupId());
+//		return "redirect:/meetup/user/detail.do?meetupId=" + dto.getMeetupId();
+//	}  // http://localhost:8080/moit/meetup/user/detail.do?meetupId=22
+//	
 	// 특정모임의 후기목록 조회
 	@RequestMapping(value="/review/test", method=RequestMethod.GET)
 	public String selectUserReview(@RequestParam("meetupId") int meetupId, Model model) {
@@ -70,6 +89,13 @@ public class ReviewController {
 		model.addAttribute("selectUserReview", searchList); 
 		return "review/test";
 	}
+	
+//	@RequestMapping(value="/review/update", method=RequestMethod.GET)
+//	public String updateUserReview_GET(ReviewDto dto) {
+//        return "redirect:/review/test?meetupId=" + dto.getMeetupId();
+//	}
+	
+	
 	
 	// 후기 수정 처리 (마이페이지/테스트페이지 동선 구분 리다이렉트)
 	@RequestMapping(value="/review/update", method=RequestMethod.POST)

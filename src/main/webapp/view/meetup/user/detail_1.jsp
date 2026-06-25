@@ -515,7 +515,7 @@ body{
 
 <div class="main-content">
 	<div class="container detail-container">
-	    <input type="hidden" name="meetupId" value="${param.meetupId}" id="meetupIdb">
+	
 		<div class="detail-wrap">
 		
 			<div class="left-panel">
@@ -562,9 +562,9 @@ body{
 			            
 			
 			            <div class="tab-panel">
-					
+
 						<div class="rv-toolbar row g-3 my-2 align-items-center">
-						<div id="reviewListabc"></div>
+						
 						    <div class="col-md-3">
 						        <button type="button"
 						                class="rv-write-btn"
@@ -578,7 +578,7 @@ body{
 						    <div class="col-md-4">
 						        <form action="${pageContext.request.contextPath}/review/test" method="GET">
 						
-						            <input type="hidden" name="meetupId" value="${meetupId}" id="meetupIda">
+						            <input type="hidden" name="meetupId" value="${meetupId}">
 						
 						            <select class="rv-sort-select"
 						                    name="sortType"
@@ -717,10 +717,10 @@ body{
         <h5 class="modal-title fw-bold" style="color: var(--c4);">후기 작성</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="${pageContext.request.contextPath}/review/test" method="POST" enctype="multipart/form-data"   id="reviewForm" >
+      <form action="${pageContext.request.contextPath}/review/test" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();">
         <div class="modal-body" style="padding: 25px;">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> 
-            <input type="hidden" name="meetupId" value="${param.meetupId}"> 
+            <input type="hidden" name="meetupId" value="${meetupId != null ? meetupId : 1}"> 
             <input type="hidden" name="memberId" value="10"> 
             <input type="hidden" name="rating" id="reviewRating" value="0">
 
@@ -773,7 +773,7 @@ body{
         </div>
         <div class="modal-footer" style="border-top: 1px solid #f1f5f9; background: #fafafa;">
           <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal" style="border-radius: 8px; color:#64748b;">취소</button>
-          <button type="button" class="btn btn-primary fw-bold" style="background-color: var(--c4); border: none; border-radius: 8px;"   onclick="validateForm()">후기 등록</button>
+          <button type="submit" class="btn btn-primary fw-bold" style="background-color: var(--c4); border: none; border-radius: 8px;">후기 등록</button>
         </div>
       </form>
     </div>
@@ -782,230 +782,152 @@ body{
 
 
 <script>
-    // [공통 변수 설정]
-    const csrfHeader = "${_csrf.headerName}";
-    const csrfToken = "${_csrf.token}";
-    const applyInfo = "${applyInfo}";
-    const meetupIdb = document.getElementById("meetupIdb");
-
-    // [탭 전환 기능]
-    function showTab(i) {
-        const tabs = document.querySelectorAll(".tab-btn");
-        const panels = document.querySelectorAll(".tab-panel");
-        tabs.forEach(t => t.classList.remove("active"));
-        panels.forEach(p => p.classList.remove("active"));
-        tabs[i].classList.add("active");
-        panels[i].classList.add("active");
+	const csrfHeader = "${_csrf.headerName}";
+	const csrfToken = "${_csrf.token}";
+	const applyInfo = "${applyInfo}";
+	function showTab(i){
+		const tabs=document.querySelectorAll(".tab-btn");
+		const panels=document.querySelectorAll(".tab-panel");
+		
+		tabs.forEach(t=>t.classList.remove("active"));
+		panels.forEach(p=>p.classList.remove("active"));
+		
+		tabs[i].classList.add("active");
+		panels[i].classList.add("active");
+	}
+    
+    window.onload = function(){
+    	const result = "${result}";
+    	if(result == "true"){
+    		alert("처리 되었습니다.");
+    	}else if(result == "false") {
+    		alert("관리자에게 문의하세요");	
+    	}	
     }
-
-    // [페이지 로드 완료 시 알림 처리]
-    window.onload = function() {
-    	 loadReviewTestt( meetupIdb.value);
-        const result = "${result}";
-        if (result === "true") {
-            alert("처리 되었습니다.");
-        } else if (result === "false") {
-            alert("관리자에게 문의하세요");    
-        }    
+    
+    function gotoQna(){
+    	location.href ="${pageContext.request.contextPath}/questions/write?category=MEETUP"
     }
-
-    // [Q&A 이동 기능]
-    function gotoQna() {
-        location.href = "${pageContext.request.contextPath}/questions/write?category=MEETUP";
-    }
-
-    // [모임 신청 취소 처리 (비동기)]
-    function cancelApplyMeetup() {
-        // EL 변수가 null이거나 빈 문자열이 아닌지 자바스크립트 측에서 한 번 더 검증
-        if (applyInfo && applyInfo !== "" && applyInfo !== "null") {
-            const data = {
-                applicationId: "${empty applyInfo ? '' : applyInfo.applicationId}"
-            };
-
-            fetch("${pageContext.request.contextPath}/meetup/user/cancelApplyMeetup.do", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    [csrfHeader]: csrfToken
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("서버 오류");
-                }
-                return response.json();
-            })
-            .then(result => {
-                console.log(result);
-                alert("취소 완료 되었습니다.");
-                location.reload(); // 상태 반영을 위한 새로고침 (필요에 따라 선택)
-            })
-            .catch(error => {
-                console.error(error);
-                alert("취소 실패");
-            });
-        }
-    }
-
-    // [DOM 로드 완료 후 이벤트 바인딩]
-    document.addEventListener("DOMContentLoaded", function() {
-        
-        // 1. 신규 등록 모달 별점 제어 (인덱스 기반 클래스 토글 보완 적용)
-        document.querySelectorAll('.star').forEach(star => {
-            star.addEventListener('click', function() {
-                const score = parseInt(this.getAttribute('data-value'));
-                document.getElementById('reviewRating').value = score;
-                
-                document.querySelectorAll('.star').forEach(s => {
-                    const targetValue = parseInt(s.getAttribute('data-value'));
-                    s.classList.toggle('active', targetValue <= score);
-                });
-            });
-        });
-
-        // 2. 개별 수정 모달 전용 별점 제어 (tiqrut bo 오타 완벽 제거 및 보완 적용)
-        document.querySelectorAll('.edit-star').forEach(star => {
-            star.addEventListener('click', function() {
-                const score = parseInt(this.getAttribute('data-value'));
-                const parentStars = this.parentElement;
-                const reviewId = parentStars.getAttribute('data-review-id');
-                
-                document.getElementById('editRating-' + reviewId).value = score;
-                
-                parentStars.querySelectorAll('.edit-star').forEach(s => {
-                    const targetValue = parseInt(s.getAttribute('data-value'));
-                    s.classList.toggle('active', targetValue <= score);
-                });
-            });
-        });
-        
-    });
-
-    // [3. 신규 등록 유효성 검사 및 AJAX 제출]
-    function validateForm() {
-        const reviewForm = document.getElementById('reviewForm');
-        const formData = new FormData(reviewForm);
-        
-        const rating = document.getElementById('reviewRating').value;
-        if (rating === "0" || rating === "") {
-            alert("모임 만족도 별점을 최소 1점 이상 선택해 주세요!");
-            return;
-        } 
-        
-        fetch('${pageContext.request.contextPath}/review/test', {
-            method: 'POST',
-            headers: { 
-                [csrfHeader]: csrfToken 
-            },
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('네트워크 응답 에러');
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                alert("후기 등록 완료");
-                
-                localStorage.setItem("activeTab", "1");
-                
-                // 부트스트랩 모달이 열려있는 상태라면 닫아주고 새로고침
-                const modalEl = document.getElementById('myModal');
-                if (modalEl && typeof bootstrap !== 'undefined') {
-                    const modal = bootstrap.Modal.getInstance(modalEl);
-                    if (modal) modal.hide();
-                }
-                
-                /* location.reload(); */
-                loadReviewTestt( meetupIdb.value);
-            } else {
-                alert('등록 중 오류가 발생했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('서버와의 네트워크 연결에 실패했습니다.');
-        }); 
-    }
-
-    function  loadReviewTestt( a){
-    	console.log(a);
-    	// /review/testList
-        fetch('${pageContext.request.contextPath}/review/testList?meetupId=' + a)
-       .then(response => {
-            if (!response.ok) throw new Error('네트워크 응답 에러');
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-        	const reviewListabc = document.getElementById("reviewListabc");
-            reviewListabc.innerHTML = '';
-            
-            if(data && data.length >0 ){
-            	data.forEach(r =>{
-            		const reviewr = `
-            			<p>\${r.content}</p>
-            		`;
-            		 reviewListabc.innerHTML += reviewr;
-            	});
-            	
-            	//reviewListabc.innerHTML += reviewr;
-            	
-            }else{ reviewListabc.innerHTML = '<p>후기 없음</p>' ;  }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('서버와의 네트워크 연결에 실패했습니다.');
-        }); 
+    
     	
-    }
-    
-    
-    
-    
-    // [4. 수정 처리 유효성 검사]
-    function validateEditForm(id) {
-        const rating = document.getElementById('editRating-' + id).value;
-        if (rating === "0" || rating === "") {
-            alert("수정할 별점을 최소 1점 이상 선택해 주세요!");
-            return false;
-        }
-        return true;
-    }
+	function cancelApplyMeetup() {
+		if(applyInfo != null){
+			const data = {
+				applicationId:"${empty applyInfo? '':applyInfo.applicationId}"
+		    };
+		
+		    fetch("${pageContext.request.contextPath}/meetup/user/cancelApplyMeetup.do", {
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/json",
+		            [csrfHeader]: csrfToken
+		        },
+		        body: JSON.stringify(data)
+		    })
+		    .then(response => {
+		    	console.log()
+		        if (!response.ok) {
+		            throw new Error("서버 오류");
+		        }
+		        return response.json();
+		    })
+		    .then(result => {
+		        console.log(result);
+		        alert("취소 완료 되었습니다.");
+		    })
+		    .catch(error => {
+		        console.error(error);
+		        alert("취소 실패");
+		    });
+		}
+	    
+	}
+	
+	// 1. 신규 등록 모달 별점 제어 스크립트
+	document.querySelectorAll('.star').forEach(star => {
+	    star.addEventListener('click', function() {
+	        const score = this.getAttribute('data-value');
+	        document.getElementById('reviewRating').value = score;
+	        
+	        document.querySelectorAll('.star').forEach(s => {
+	            if (parseInt(s.getAttribute('data-value')) <= parseInt(score)) {
+	                s.classList.add('active');
+	            } else {
+	                s.classList.remove('active');
+	            }
+	        });
+	    });
+	});
 
-    // [5. 좋아요 실시간 비동기(Fetch API) 처리]
-    function toggleLike(reviewId) {
-        const token = document.querySelector('input[name="_csrf"]')?.value || csrfToken;
-        const header = "X-CSRF-TOKEN";
-        
-        fetch('${pageContext.request.contextPath}/review/like', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                [header]: token
-            },
-            body: 'id=' + reviewId
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('네트워크 응답 에러');
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 'success') {
-                const likeCountEl = document.getElementById('like-count-' + reviewId);
-                if (likeCountEl) {
-                    likeCountEl.innerText = data.latestLikes;
-                }
-            } else {
-                alert('좋아요 처리 중 문제가 발생했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('서버와의 네트워크 연결에 실패했습니다.');
-        });
-    }
+	// 2. 개별 수정 모달 전용 별점 제어 스크립트
+	document.querySelectorAll('.edit-star').forEach(star => {
+	    star.addEventListener('click', function() {
+	        const score = this.getAttribute('data-value');
+	        const parentStars = this.parentElement;
+	        const reviewId = parentStars.getAttribute('data-review-id');
+	        
+	        document.getElementById('editRating-' + reviewId).value = score;
+	        
+	        parentStars.querySelectorAll('.edit-star').forEach(s => {
+	            if (parseInt(s.getAttribute('data-value')) <= parseInt(score)) {
+	                s.classList.add('active');
+	            } else {
+	                s.classList.remove('active');
+	            }
+	        });
+	    });
+	});
+
+	// 3. 신규 등록 유효성 검사
+	function validateForm() {
+	    const rating = document.getElementById('reviewRating').value;
+	    if (rating === "0" || rating === "") {
+	        alert("모임 만족도 별점을 최소 1점 이상 선택해 주세요!");
+	        return false;
+	    }
+	    return true;
+	}
+
+	// 4. 수정 처리 유효성 검사
+	function validateEditForm(id) {
+	    const rating = document.getElementById('editRating-' + id).value;
+	    if (rating === "0" || rating === "") {
+	        alert("수정할 별점을 최소 1점 이상 선택해 주세요!");
+	        return false;
+	    }
+	    return true;
+	}
+
+	// 5. 좋아요 실시간 비동기(Fetch API) 스크립트
+	function toggleLike(reviewId) {
+	    const token = document.querySelector('input[name="_csrf"]')?.value;
+	    const header = "X-CSRF-TOKEN";
+	    
+	    fetch('${pageContext.request.contextPath}/review/like', {
+	        method: 'POST',
+	        headers: {
+	            'Content-Type': 'application/x-www-form-urlencoded',
+	            [header]: token
+	        },
+	        body: 'id=' + reviewId
+	    })
+	    .then(response => {
+	        if (!response.ok) throw new Error('네트워크 응답 에러');
+	        return response.json();
+	    })
+	    .then(data => {
+	        if(data.status === 'success') {
+	            document.getElementById('like-count-' + reviewId).innerText = data.latestLikes;
+	        } else {
+	            alert('좋아요 처리 중 문제가 발생했습니다.');
+	        }
+	    })
+	    .catch(error => {
+	        console.error('Error:', error);
+	        alert('서버와의 네트워크 연결에 실패했습니다.');
+	    });
+	}
+
 </script>
 
 
