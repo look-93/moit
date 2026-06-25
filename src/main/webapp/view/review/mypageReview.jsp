@@ -31,6 +31,7 @@ body {
     width: 100%;
     display: block;
     overflow: hidden; /* 내부 요소가 튀어나가 전체 스크롤을 만드는 것 방지 */
+    min-height: 1050px;
 }
 
 /* 마이페이지 전체 감싸는 영역 */
