@@ -5,7 +5,7 @@
 	<!-- 관리자측 페이징 -->
 	<select id="findAll" resultType="QuestionDto"
 		parameterType="java.util.HashMap">
-		SELECT * FROM questions ORDER BY question_id DESC limit #{start} , #{end}
+		SELECT * FROM questions WHERE delete_yn = 'N' ORDER BY question_id DESC limit #{start} , #{end}
 	</select>
 
 	<!-- 전체 문의 수 -->
@@ -49,7 +49,7 @@
 
 	<!-- 상세보기 -->
 	<select id="findById" resultType="QuestionDto">
-		SELECT * FROM questions WHERE question_id = #{questionId}
+		SELECT * FROM questions WHERE question_id = #{questionId} AND delete_yn = 'N'
 	</select>
 
 	<!-- 제목, 내용, 등록일 검색 -->
@@ -120,6 +120,24 @@
 		  AND delete_yn = 'N'
 		ORDER BY question_id DESC
 		LIMIT #{start}, #{end}
+	</select>
+	
+	<!--  -->
+	<update id="updateStatusPending">
+	    UPDATE questions
+	    SET status = 'PENDING'
+	    WHERE question_id = #{questionId}
+	</update>
+	
+	<!--  -->
+	<select id="selectByParentId" parameterType="int" resultType="com.moit.dto.QuestionDto">
+	    SELECT *
+	    FROM questions
+	    WHERE parent_id = #{parentId}
+	      AND category = 'MEETUP'
+	      AND delete_yn = 'N'
+	      AND is_public = 'Y'
+	    ORDER BY question_id DESC
 	</select>
 </mapper>
 

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../../inc/userHeader.jsp" %>
 
 <style>
@@ -117,35 +118,47 @@
 </style>
 
 <div class="inquiry-wrap">
-	<h1 class="page-title">모임 1:1 문의글 수정</h1>
-	<div class="breadcrumb">1:1 문의 &gt; 문의 수정</div>
-	<div class="page-desc">작성한 문의 내용을 수정 후 저장해 주세요.</div>
-
-	<div class="form-card">
-	    <div class="form-group">
-	        <label class="form-label"> 제목 <span class="required">*</span> </label>
-	        <input type="text" class="form-input" value="이벤트 참여 방법이 궁금합니다.">
-	    </div>
+    <h1 class="page-title">모임 1:1 문의글 수정</h1>
+    <div class="breadcrumb">1:1 문의 &gt; 문의 수정</div>
+    <div class="page-desc">작성한 문의 내용을 수정 후 저장해 주세요.</div>
+	    <form action="${pageContext.request.contextPath}/questions/edit" method="post"  onsubmit="return confirm('저장하시겠습니까?');">
+	        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+	        <!-- 수정할 게시글 PK -->
+	        <input type="hidden" name="questionId" value="${data.questionId}">
+	        <div class="form-card">
 	
-	    <div class="form-group">
-	        <label class="form-label"> 문의 공개 여부 </label>
-	        <div class="radio-group">
-	            <label class="radio-item"> <input type="radio" name="secret" checked> 공개 </label>
-	            <label class="radio-item"> <input type="radio" name="secret"> 비공개 </label>
+	            <div class="form-group">
+	                <label class="form-label"> 제목 <span class="required">*</span> </label>
+	                <input type="text" name="title" class="form-input" value="${data.title}">
+	            </div>
+	            
+	            <div class="form-group">
+	                <label class="form-label">문의 공개 여부</label>
+	                <div class="radio-group">
+	                    <label class="radio-item">
+	                        <input type="radio" name="isPublic" value="Y"
+	                               <c:if test="${data.isPublic eq 'Y'}">checked</c:if>> 공개 </label>
+	
+	                    <label class="radio-item">
+	                        <input type="radio" name="isPublic" value="N"
+	                               <c:if test="${data.isPublic eq 'N'}">checked</c:if>> 비공개 </label>
+	                </div>
+	                <div class="guide-text"> 비공개로 설정 시, 관리자만 확인할 수 있습니다. </div>
+	            </div>
+	
+	            <div class="form-group">
+	                <label class="form-label"> 문의 내용 <span class="required">*</span> </label>
+	                <textarea name="content" class="form-textarea">${data.content}</textarea>
+	            </div>
+	
+	            <div class="btn-area">
+	                <button type="submit" class="btn btn-save"> 저장 </button>
+	                <button type="button" class="btn btn-cancel" onclick="history.back()"> 취소
+	                </button>
+	            </div>
 	        </div>
-	        <div class="guide-text"> 비공개로 설정 시, 관리자만 확인할 수 있습니다. </div>
-	    </div>
-	
-	    <div class="form-group">
-	        <label class="form-label"> 문의 내용 <span class="required">*</span> </label>
-	        <textarea class="form-textarea">이벤트 참여 방법이 궁금합니다.</textarea>
-	    </div>
-	    <div class="btn-area">
-	        <button type="submit" class="btn btn-save" onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moquestion2.jsp'"> 저장 </button>
-	        <button type="button" class="btn btn-cancel" onclick="history.back()"> 취소 </button>
-	    </div>
-	</div>
-
+	    </form>
 </div>
 
 <%@ include file="../../inc/userFooter.jsp" %>
+```

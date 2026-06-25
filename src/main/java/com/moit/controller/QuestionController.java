@@ -50,7 +50,7 @@ public class QuestionController {
         model.addAttribute("answeredCnt", questionService.getAnsweredCnt());
         // 오늘 등록된 문의 수
         model.addAttribute("todayCnt", questionService.getTodayCnt());
-        return "question/answerList";
+        return "qna/admin/answerList";
     }
 
     // 모임글 문의 등록
@@ -96,7 +96,7 @@ public class QuestionController {
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable int id, Model model) {
         model.addAttribute("data", questionService.getDetail(id));
-        return "question/edit";
+        return "qna/admin/moquestion3";
     }
 
     // 문의 수정 처리
@@ -119,6 +119,35 @@ public class QuestionController {
     	// 답변 등록 + 문의 상태 변경
         answerService.register(dto);
         return "redirect:/questions/" + dto.getQuestionId();
+    }
+    
+    //
+    @GetMapping("/answer/write/{id}")
+    public String answerForm(@PathVariable int id, Model model) {
+        model.addAttribute("data", questionService.getDetail(id));
+        return "qna/admin/moanswer1";
+    }
+    
+    // 답변 수정 화면
+    @GetMapping("/answer/edit/{questionId}")
+    public String answerEditForm(@PathVariable int questionId, Model model) {
+    	 model.addAttribute("data", questionService.getDetail(questionId));
+    	 model.addAttribute("answer", answerService.getAnswer(questionId));
+        return "qna/admin/moanswer2";
+    }
+
+    // 답변 수정 처리
+    @PostMapping("/answer/edit")
+    public String answerEdit(AnswerDto dto) {
+        answerService.update(dto);
+        return "redirect:/questions/" + dto.getQuestionId();
+    }
+
+    // 답변 삭제
+    @GetMapping("/answer/delete/{answerId}/{questionId}")
+    public String answerDelete(@PathVariable int answerId, @PathVariable int questionId) {
+    	answerService.delete(answerId, questionId);
+        return "redirect:/questions/" + questionId;
     }
     
     // 사용자측 페이징

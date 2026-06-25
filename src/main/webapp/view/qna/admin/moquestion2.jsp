@@ -155,11 +155,11 @@
 
     <div class="top-btn-area">
         <button class="btn btn-answer"
-        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moanswer1.jsp'">답변등록</button>
+        		onclick="location.href='${pageContext.request.contextPath}/questions/answer/write/${data.questionId}'">답변등록</button>
         <button class="btn btn-edit"
-        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moquestion3.jsp'">수정</button>
-        <button class="btn btn-delete"
-        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/list.jsp'">삭제</button>
+   				onclick="location.href='${pageContext.request.contextPath}/questions/edit/${data.questionId}'"> 수정 </button>
+		<button class="btn btn-delete"
+        		onclick="deleteQuestion(${data.questionId})"> 삭제 </button>
     </div>
 
     <div class="card">
@@ -217,22 +217,31 @@
 	    <div class="card">
 	        <div class="answer-header">
 	        <div class="card-title">답변 내용</div>
-	            <div class="card-title" style="margin-bottom:0;">${data.answer.content}</div>
+	        
 	            <div class="answer-btns">
 	                <button class="btn btn-answer-edit"
-	                onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/moanswer2.jsp'">답변수정</button>
-	                <button class="btn btn-answer-delete">답변삭제</button>
+						onclick="location.href='${pageContext.request.contextPath}/questions/answer/edit/${data.questionId}'"> 답변수정 </button>
+	                <button class="btn btn-answer-delete"
+						onclick="deleteAnswer(${data.answer.answerId}, ${data.questionId})"> 답변삭제 </button>
 	            </div>
 	        </div>
-	        <div class="answer-content">
-	            ${data.answer.content}
-	        </div>
+	        <div class="answer-content"> ${data.answer.content} </div>
 	        <div class="answer-date">답변일 ${data.answer.createdAt}</div>
 	    </div>
-	    <div class="list-btn-area" onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/answerList.jsp'">
+	    <div class="list-btn-area" onclick="location.href='${pageContext.request.contextPath}/questions'">
 	        <button class="btn btn-list">목록으로</button>
 	    </div>
 	</c:if>
+	<script>
+		function deleteQuestion(questionId){
+		    if(confirm("정말 삭제하시겠습니까?")){
+		        location.href = "${pageContext.request.contextPath}/questions/delete/" + questionId; }
+		}
+		function deleteAnswer(answerId, questionId){
+		    if(confirm("답변을 삭제하시겠습니까?")){
+		        location.href = "${pageContext.request.contextPath}/questions/answer/delete/" + answerId + "/" + questionId; }
+		}
+	</script>
 </div>
 
 <%@ include file="../../inc/userFooter.jsp" %>

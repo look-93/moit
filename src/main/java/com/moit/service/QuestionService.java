@@ -98,4 +98,9 @@ public class QuestionService {
     public int getMyQuestionCnt(int memberId) {
         return questionMapper.findMyQuestionCnt(memberId);
     }
+    
+    //
+    public List<QuestionDto> selectByParentId(int parentId){
+        return questionMapper.selectByParentId(parentId);
+    }
 }

@@ -680,18 +680,30 @@ body{
          
          
                      <div class="tab-panel">
-                         <h3>Q&A</h3>
-                         <div class="comment">
-                             <div class="comment-name">익명</div>
-                             <div class="comment-date">2026.06.18</div>
-                             <p>초보인데 참여 가능할까요?</p>
-                         </div>
-                         <div class="comment">
-                             <div class="comment-name">작성자</div>
-                             <div class="comment-date">2026.06.18</div>
-                             <p>네 초보도 환영입니다!</p>
-                         </div>
-                     </div>
+					    <h3>Q&A</h3>
+					    <c:choose>
+					        <c:when test="${not empty qnaList}">
+					            <c:forEach var="qna" items="${qnaList}">
+					                <div class="comment">
+					                    <div class="comment-name"> ${qna.memberName} </div>
+					                    <div class="comment-date"> ${qna.createdAt} </div>
+					                    <p> Q. ${qna.content} </p>
+					                </div>
+					
+					                <c:if test="${not empty qna.answer}">
+					                    <div class="comment">
+					                        <div class="comment-name"> 관리자 </div>
+					                        <div class="comment-date"> ${qna.answer.createdAt} </div>
+					                        <p> A. ${qna.answer.content} </p>
+					                    </div>
+					                </c:if>
+					            </c:forEach>
+					        </c:when>
+					        <c:otherwise>
+					            <p>등록된 문의가 없습니다.</p>
+					        </c:otherwise>
+					    </c:choose>
+					</div>
                      
                  </div>                 
              </div>         

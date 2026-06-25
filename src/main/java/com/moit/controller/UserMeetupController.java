@@ -20,13 +20,14 @@ import com.moit.dto.MeetupDto;
 import com.moit.dto.MeetupLikeDto;
 import com.moit.dto.MeetupSearchDto;
 import com.moit.security.CustomUser;
+import com.moit.service.QuestionService;
 import com.moit.service.UserMeetupService;
 import com.moit.util.PagingUtil;
 
 @Controller
 public class UserMeetupController {
 	@Autowired UserMeetupService userMeetupService;
-	
+	@Autowired QuestionService questionService;
 	@RequestMapping("/meetup/user/list.do")
 	public String serchByUser(Model model, MeetupSearchDto meetupSerchDto,Authentication authentication, @RequestParam(value="pstartno", defaultValue="1") int pstartno) {
 		CustomUser user = (CustomUser) authentication.getPrincipal();
@@ -49,6 +50,7 @@ public class UserMeetupController {
 		meetupApplicationsDto.setStatusList(Arrays.asList("PENDING", "APPROVED"));
 		model.addAttribute("applyInfo", userMeetupService.findApplyInfo(meetupApplicationsDto));
 		model.addAttribute("detail", userMeetupService.selectMeetupDetail(meetupApplicationsDto.getMeetupId()));
+		model.addAttribute( "qnaList", questionService.selectByParentId(meetupApplicationsDto.getMeetupId()) );
 		return "meetup/user/detail";
 	}
 	
