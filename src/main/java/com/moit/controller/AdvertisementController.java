@@ -319,6 +319,10 @@ public class AdvertisementController {
 
             AdvertisementDto ad =
                     advertisementService.selectTopAdvertisement();
+            
+            if (ad != null) {
+                advertisementService.updateImpressions(ad.getAdId());
+            }
 
             model.addAttribute("ad", ad);
         }
