@@ -112,22 +112,6 @@
 		</div>
 	</section>
 
-	<div class="admin-detail-review-modal-bg" id="adminReviewModal">
-		<div class="admin-detail-review-modal-box">
-			<div class="admin-detail-review-modal-icon">💬</div>
-
-			<div class="admin-detail-review-content-box">
-				${dto.reasonDetail} - 나중에 수정
-			</div>
-
-			<div class="admin-detail-review-modal-actions">
-				<button type="button"
-						class="admin-detail-btn admin-detail-btn-blue"
-						onclick="closeAdminReviewModal()">확인</button>
-			</div>
-		</div>
-	</div>
-
 	<!-- 삭제 확인 모달 -->
 	<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">

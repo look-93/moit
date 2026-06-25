@@ -329,7 +329,6 @@ a {
 					<a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
 				         <img src="${pageContext.request.contextPath}${ad.imageUrl}"
 				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'">
-			        	 <img src="${pageContext.request.contextPath}${ad.imageUrl}">
 				    </a>
 
 				</div>

@@ -97,4 +97,8 @@
     </section>
 
 </div>
+<!-- <script>
+console.log("${pageContext.request.contextPath}${ad.imageUrl}" + "ddddd" )
+
+</script> -->
 <%@include file="./inc/userFooter.jsp" %>

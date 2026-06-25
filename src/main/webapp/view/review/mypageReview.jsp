@@ -607,7 +607,8 @@ td:nth-child(1){
                                         </c:choose>
                                     </td>
                                     <td style="text-align: center;">
-                                        <button class="btn-action btn-edit" onclick="location.href='${pageContext.request.contextPath}/review/update?id=${review.id}'">수정</button>
+                                        <button class="btn-action btn-edit" 
+                                        	onclick="location.href='${pageContext.request.contextPath}/review/update?id=${review.id}'">수정</button>
                                         <button class="btn-action btn-delete" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='${pageContext.request.contextPath}/review/delete?id=${review.id}'; }">삭제</button>
                                     </td>
                                 </tr>
