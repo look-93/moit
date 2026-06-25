@@ -564,7 +564,7 @@ body{
 			            <div class="tab-panel">
 					
 						<div class="rv-toolbar row g-3 my-2 align-items-center">
-						<div id="reviewListabc"></div>
+						
 						    <div class="col-md-3">
 						        <button type="button"
 						                class="rv-write-btn"
@@ -625,8 +625,8 @@ body{
 			                    </div>
 			                    
 			                </div>
-			                
-		
+			                <hr>
+		<div id="reviewListabc"></div>
 			            </div>
 			
 			
