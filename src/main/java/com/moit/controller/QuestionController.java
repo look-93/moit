@@ -66,7 +66,7 @@ public class QuestionController {
     	
         questionService.register(dto);
         rttr.addFlashAttribute("msg", "문의가 등록되었습니다.");
-        return "redirect:/questions/myQuestion";
+        return "redirect:/questions/" + dto.getQuestionId();
     }
     
     // 관리자 문의 등록
@@ -89,7 +89,7 @@ public class QuestionController {
     @GetMapping("/{id}")
     public String detail(@PathVariable int id, Model model) {
         model.addAttribute("data", questionService.getDetail(id));
-        return "question/detail";
+        return "qna/admin/moquestion2";
     }
 
     // 문의 수정 화면 이동

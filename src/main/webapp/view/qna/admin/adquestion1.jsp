@@ -37,22 +37,7 @@ padding:12px 28px;border-radius:8px;border:1px solid #d9dfea;cursor:pointer;
             <!-- 임시값 -->
             <input type="hidden" name="memberId" value="1">
             <input type="hidden" name="parentId" value="0">
-
-            <div class="form-group">
-                <label>문의 내용 <span class="required">*</span></label>
-                <textarea placeholder="문의 내용을 입력하세요."></textarea>
-            </div>
-
-            <div class="form-group">
-			    <label class="checkbox-label"> <input type="checkbox"> 비공개 문의 </label>
-			</div>
-
-            <div class="btn-area">
-                <button class="btn-primary"
-        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/adquestion2.jsp'">등록하기</button>
-                <button class="btn-cancel" onclick="history.back()">취소</button>
-            </div>
-        </div>
+      
         
             <!-- 관리자 문의 -->
             <input type="hidden" name="category" value="ADMIN">
@@ -78,7 +63,7 @@ padding:12px 28px;border-radius:8px;border:1px solid #d9dfea;cursor:pointer;
 	
 	            <div class="btn-area">
 	                <button class="btn-primary"
-	        		onclick="location.href='${pageContext.request.contextPath}/view/meetup/admin/adquestion2.jsp'">등록하기</button>
+	        		onclick="location.href='${pageContext.request.contextPath}/view/qna/admin/adquestion2.jsp'">등록하기</button>
 	                <button class="btn-cancel" onclick="history.back()">취소</button>
 	            </div>
 	        </div>

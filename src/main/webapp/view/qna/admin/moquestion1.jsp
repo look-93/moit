@@ -41,11 +41,17 @@ padding:12px 28px;border-radius:8px;border:1px solid #d9dfea;cursor:pointer;
 		
 		    <div class="form-group">
 		        <label> 제목 <span class="required">*</span> </label>
-		        <input type="text" name="title" placeholder="제목을 입력하세요" id="title">
+		        <input type="text"
+					   name="title"
+					   id="title"
+					   value="${param.title}"
+					   placeholder="제목을 입력하세요">
 		    </div>
 		    <div class="form-group">
 		        <label> 문의 내용 <span class="required">*</span> </label>
-		        <textarea name="content" placeholder="문의 내용을 입력하세요." id="content"></textarea>
+		        <textarea name="content"
+						  id="content"
+						  placeholder="문의 내용을 입력하세요.">${param.content}</textarea>
 		    </div>
 		    <div class="form-group">
 		        <label class="checkbox-label">

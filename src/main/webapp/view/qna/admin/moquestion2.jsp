@@ -175,7 +175,7 @@
             </tr>
             <tr>
                 <th>등록일</th>
-                <td>${data.createAt}</td>
+                <td>${data.createdAt}</td>
             </tr>
             <tr>
                 <th>답변상태</th>
