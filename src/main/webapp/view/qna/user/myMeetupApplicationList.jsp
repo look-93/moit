@@ -31,6 +31,7 @@ body {
     width: 100%;
     display: block;
     overflow: hidden; /* 내부 요소가 튀어나가 전체 스크롤을 만드는 것 방지 */
+    min-height: 1050px;       
 }
 
 /* 마이페이지 전체 감싸는 영역 */
@@ -484,7 +485,7 @@ td:nth-child(1){
 			<%@ include file="../../inc/myPageSubHeader.jsp" %>
 
 				<div class="section">
-					<h2>내 모집글</h2>
+					<h2>내 신청글</h2>
 					<div class="table-responsive">
 						<table>
 							<colgroup>
@@ -507,8 +508,8 @@ td:nth-child(1){
 							    <c:forEach var="apply" items="${applyList}" varStatus="status">
 							        <tr>
 							        	<td>${paging.listtotal - paging.pstartno - status.index}</td>
-				                        <td>코딩 스터디</td>
-				                        <td>2026.06.10</td>
+				                        <td>${apply.title }</td>
+				                        <td>${apply.fomatMeetupAt}</td>
 				
 				                        <td><span class="status status-end">종료</span></td>
 				
@@ -551,4 +552,8 @@ td:nth-child(1){
 	</div>
 </div>
 
+<script>
+
+console.log("${applyList}");
+</script>
 <%@ include file="../../inc/userFooter.jsp" %>

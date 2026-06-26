@@ -67,6 +67,7 @@
     display:flex;
     flex-direction:column;
     gap:20px;
+    min-height:770px;
 }
 
 .filter-box{
@@ -326,9 +327,8 @@ a {
 				<div class="sidebar-ad">
 
 					<a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
-				        <%-- <img src="${pageContext.request.contextPath}${ad.imageUrl}"
-				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"> --%>
-			        	 <img src="${pageContext.request.contextPath}${ad.imageUrl}">
+				         <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'">
 				    </a>
 
 				</div>
@@ -344,8 +344,8 @@ a {
 				<div class="top-ad">
 
 					<a href="${pageContext.request.contextPath}/advertisement/admin/click.do?adId=${ad.adId}">
-				       <%--  <img src="${pageContext.request.contextPath}${ad.imageUrl}"
-				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'"> --%>
+				      <img src="${pageContext.request.contextPath}${ad.imageUrl}"
+				        	 onerror="this.src='${pageContext.request.contextPath}/upload/no-image.png'">
 	        	      <img src="${pageContext.request.contextPath}${ad.imageUrl}">
 				    </a>
 
@@ -386,7 +386,8 @@ a {
 					<!-- CARD -->
 					<c:forEach var="meetup" items="${serchList}" varStatus="status">
 							<div class="card">
-								<div class="card-img"></div>
+								<!-- 수정 이미지 추가 -->
+								<!-- <div class="card-img"></div> -->
 								<div class="card-body">
 									<a href="${pageContext.request.contextPath}/meetup/user/detail.do?meetupId=${meetup.meetupId}">
 									<span class="badge"> 
@@ -402,8 +403,7 @@ a {
 
 									<h4>${meetup.title}</h4>
 
-									<p>${meetup.categoryName}</p>
-									<!-- 수정 카테고리추가 -->
+									<p>${meetup.categoryName}</p>									
 									<p>${meetup.sigunguName}</p>
 									<p>👥 ${meetup.participant} /
 										${meetup.maxParticipants}명</p>

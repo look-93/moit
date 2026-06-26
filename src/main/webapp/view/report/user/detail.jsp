@@ -11,13 +11,6 @@
 
 <div class="detail-page">
 
-	<section class="detail-title-row">
-		<div class="detail-title">
-			<h1>내 신고 상세</h1>
-			<p>내 신고내역에서 상세를 클릭했을 때 나오는 화면</p>
-		</div>
-	</section>
-
 	<section class="detail-card">
 		<div class="detail-card-head">
 			<div class="detail-card-title">
@@ -34,9 +27,7 @@
 
 				<div class="detail-row">
 					<div class="detail-label">신고 대상</div>
-					<div class="detail-value">
-						<span class="detail-badge">${dto.targetType}</span>
-					</div>
+					<div class="detail-value">${dto.targetType}</div>
 				</div>
 
 				<div class="detail-row">
@@ -102,12 +93,7 @@
 			<div class="modal-content detail-delete-modal-box">
 
 				<div class="modal-body detail-delete-modal-body">
-					<div class="detail-delete-modal-icon">!</div>
 					<h2 class="detail-delete-modal-title">삭제하시겠습니까?</h2>
-					<p class="detail-delete-modal-text">
-						선택한 신고 내역이 삭제 처리됩니다.<br>
-						삭제 후에는 목록에서 보이지 않습니다.
-					</p>
 
 					<form action="${pageContext.request.contextPath}/report/user/delete.do" method="post">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

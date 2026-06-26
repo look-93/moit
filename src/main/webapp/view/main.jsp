@@ -61,7 +61,7 @@
         <div class="card-wrap">
 
             <div class="card">
-                <div class="card-img"></div>
+                <!-- <div class="card-img"></div> -->
                 <div class="card-body">
                     <h4>러닝 크루 모집</h4>
                     <div class="card-info">정원 8/10 · 서울</div>
@@ -69,7 +69,7 @@
             </div>
 
             <div class="card">
-                <div class="card-img"></div>
+                <!-- <div class="card-img"></div> -->
                 <div class="card-body">
                     <h4>독서 스터디</h4>
                     <div class="card-info">정원 6/8 · 인천</div>
@@ -77,7 +77,7 @@
             </div>
 
             <div class="card">
-                <div class="card-img"></div>
+               <!--  <div class="card-img"></div> -->
                 <div class="card-body">
                     <h4>보드게임 모임</h4>
                     <div class="card-info">정원 7/10 · 경기</div>
@@ -85,7 +85,7 @@
             </div>
 
             <div class="card">
-                <div class="card-img"></div>
+                <!-- <div class="card-img"></div> -->
                 <div class="card-body">
                     <h4>영화 같이 볼 사람</h4>
                     <div class="card-info">정원 5/10 · 서울</div>
@@ -97,4 +97,8 @@
     </section>
 
 </div>
+<!-- <script>
+console.log("${pageContext.request.contextPath}${ad.imageUrl}" + "ddddd" )
+
+</script> -->
 <%@include file="./inc/userFooter.jsp" %>

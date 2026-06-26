@@ -235,7 +235,7 @@
 		SELECT COUNT(meetup_id)
 		FROM meetup_likes 
 		WHERE meetup_id = #{meetupId}
-		GROUP BY meetup_id 	 
+		<!-- GROUP BY meetup_id --> 	 
  	</select>  		
 
  
@@ -344,24 +344,24 @@
 			   DATE_FORMAT(A.meetup_At, '%Y.%m.%d') as fomatMeetupAt, <!-- 모집일 -->
                A.*
 		  FROM meetup_applications  AS B
-          JOIN meetups  			AS A ON B.meetup_id = B.meetup_id and A.member_id = B.member_id
+          JOIN meetups  			AS A ON A.meetup_id = B.meetup_id
           JOIN members 			    AS C ON C.member_id = B.member_id
 		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
 	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		   AND B.status != 'CANCELED' <!-- 취소 제외 -->
-	       AND B.member_id = #{memberId} -- 모임 신청자 아이디; 
+	       AND B.member_id = #{memberId}  <!-- 모임 신청자 아이디; --> 
 	     ORDER BY A.created_at DESC
 		 LIMIT #{start}, #{end}	
 	</select>
   	<select id="selectMyMeetupApplyTotalCnt" resultType="int" parameterType="MeetupDto">
 		SELECT COUNT(*)
 		  FROM meetup_applications  AS B
-          JOIN meetups  			AS A ON B.meetup_id = B.meetup_id and A.member_id = B.member_id
+          JOIN meetups  			AS A ON A.meetup_id = B.meetup_id
           JOIN members 			    AS C ON C.member_id = B.member_id
 		 WHERE A.delete_yn = 'N' <!-- 삭제 제외 -->
 	       AND A.status != 'DELETED' <!-- 삭제 제외 -->
 		   AND B.status != 'CANCELED'
-	       AND B.member_id = #{memberId} -- 모임 신청자 아이디; 
+	       AND B.member_id = #{memberId} <!-- 모임 신청자 아이디; --> 
 	     ORDER BY A.created_at DESC
  	</select> 	
  	

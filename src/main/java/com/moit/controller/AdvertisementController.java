@@ -11,7 +11,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,8 @@ import com.moit.dao.AdvertisementMapper;
 import com.moit.dto.AdvertisementDto;
 import com.moit.dto.AdvertisementSearchDto;
 import com.moit.service.AdvertisementService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/advertisement/admin")
@@ -217,7 +221,7 @@ public class AdvertisementController {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-
+        System.out.println("imageUrl = " + dto.getImageUrl());
         return "redirect:/advertisement/admin/adDetail.do?adId=" + dto.getAdId();
     }
     
@@ -301,7 +305,27 @@ public class AdvertisementController {
 
         model.addAttribute("ad", ad);
 
-        return "advertisement/test";
+        return "main";
+    }
+    
+    @ControllerAdvice
+    @RequiredArgsConstructor
+    public class GlobalModelAttribute {
+
+        private final AdvertisementService advertisementService;
+
+        @ModelAttribute("ad")
+        public void addAd(Model model) {
+
+            AdvertisementDto ad =
+                    advertisementService.selectTopAdvertisement();
+            
+            if (ad != null) {
+                advertisementService.updateImpressions(ad.getAdId());
+            }
+
+            model.addAttribute("ad", ad);
+        }
     }
     
 }

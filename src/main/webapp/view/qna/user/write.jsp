@@ -402,7 +402,7 @@ textarea.form-input{
     		<input type="hidden" name="meetupId" value="${!empty meetup ? meetup.meetupId:'0'}" />
                 <div class="left-panel">
     
-                    <div class="image-box">
+                    <!-- <div class="image-box">
                         <div class="main-image" style="display:flex;align-items:center;justify-content:center;">
                             <span style="color:#999;">대표 이미지를 등록해주세요</span>
                         </div>
@@ -410,7 +410,7 @@ textarea.form-input{
                         <div class="thumb-list">
                             <input type="file" name="images" multiple style="width:100%;">
                         </div>
-                    </div>
+                    </div> -->
     
                     <div class="content-box">
                         <div class="content-top">

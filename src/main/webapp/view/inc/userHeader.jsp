@@ -265,6 +265,7 @@ HERO
     padding:14px 28px;
     border-radius:50px;
     cursor:pointer;
+    font-size:16px;
 }
 
 .btn-primary{
@@ -313,19 +314,35 @@ AD
     margin-top:25px;
     background:white;
 
-    border:2px dashed var(--c3);
+    /* border:2px dashed var(--c3); */
 
     border-radius:20px;
 
-    padding:25px;
+    /* padding:25px; */
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
     box-shadow:var(--shadow);
+    
+    height: 250px;
+    padding: 0;
+    overflow: hidden;
+    
+    
 }
 
+.ad-banner a {
+    display: block;
+    width: 100%;
+}
+.ad-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
 .ad-left h3{
     margin-bottom:10px;
 }
@@ -569,8 +586,7 @@ LOGIN
   border-top:1px solid #eee;
   margin:15px 0;
 }
-.btn{border:none;padding:16px 28px;border-radius:50px;cursor:pointer;font-size:16px;}
-.btn-primary{background:var(--c4);color:white;}
+
 .btn.full{width:100%;margin-top:20px;}
 .member-type{
   display:flex;
@@ -589,8 +605,6 @@ h2{text-align:center;color:var(--c4);margin-bottom:30px;}
 .form-group input{width:100%;padding:14px;border:1px solid #ddd;border-radius:10px;font-size:15px;}
 .form-group-inline{display:flex;gap:10px;margin-bottom:20px;}
 .form-group-inline input{flex:1;padding:14px;border:1px solid #ddd;border-radius:10px;}
-.btn{border:none;padding:14px 28px;border-radius:50px;cursor:pointer;font-size:16px;}
-.btn-primary{background:var(--c4);color:white;width:100%;margin-top:20px;}
 .form-options{margin:20px 0;}
 .member-type{display:flex;gap:30px;margin-top:10px;font-size:15px;}
 .member-type input{margin-right:8px;}

@@ -11,6 +11,12 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <link href="./css/board.css" rel="stylesheet">
+    <style>
+        html::-webkit-scrollbar, 
+        body::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <!--  header  -->
