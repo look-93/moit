@@ -77,7 +77,7 @@
 			    
 			    <%-- 2. targetType이 후기(review 등)인 경우 --%>
 			    <c:when test="${dto.targetType == 'REVIEW'}">
-			        <a href="${pageContext.request.contextPath}/review/user/#" 
+			        <a href="${pageContext.request.contextPath}/meetup/user/detail.do?" 
 			           class="detail-btn detail-btn-soft-blue">해당 글 보기</a>
 			    </c:when>
 			</c:choose>
