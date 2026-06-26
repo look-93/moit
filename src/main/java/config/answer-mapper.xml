@@ -28,6 +28,22 @@
         set delete_yn = 'Y', updated_at = now()
         where answer_id = #{answerId}
     </update>
+    
+    <!-- 삭제된 답변 찾기 -->
+    <select id="findByQuestionIdAll" resultType="AnswerDto">
+	    select *
+	    from answers
+	    where question_id = #{questionId}
+	</select>
+	
+	<!-- 삭제된 답변 복구용 -->
+	<update id="restoreAnswer">
+	    update answers
+	    set content = #{content},
+	        delete_yn = 'N',
+	        updated_at = now()
+	    where question_id = #{questionId}
+	</update>
 
 </mapper>
 

@@ -46,4 +46,10 @@ public interface QuestionMapper {
     
     // 내 문의 총 개수 조회
     int findMyQuestionCnt(int memberId);
+    
+    // 답변 삭제 시 문의 상태 변경
+    void updateStatusPending(int questionId);
+    
+    //
+    List<QuestionDto> selectByParentId(int parentId);
 }

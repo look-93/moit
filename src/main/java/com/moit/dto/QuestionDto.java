@@ -23,4 +23,5 @@ public class QuestionDto {
     // JOIN
     private String memberName;
     private AnswerDto answer;
+    
 }

@@ -18,10 +18,32 @@ public class AnswerService {
  // 답변 등록 + 문의 상태 업데이트
     public void register(AnswerDto dto) {
 
-        // 1. 답변 등록
-        answerMapper.insertAnswer(dto);
+        AnswerDto oldAnswer =
+                answerMapper.findByQuestionIdAll(dto.getQuestionId());
 
-        // 2. 문의 상태를 답변완료로 변경
+        if(oldAnswer == null) {
+
+            answerMapper.insertAnswer(dto);
+
+        } else {
+
+            dto.setAnswerId(oldAnswer.getAnswerId());
+
+            answerMapper.restoreAnswer(dto);
+        }
+
         questionMapper.updateStatusAnswered(dto.getQuestionId());
+    }
+    // 답변 수정
+    public void update(AnswerDto dto) { answerMapper.updateAnswer(dto); }
+    // 답변 삭제
+    public void delete(int answerId, int questionId) {
+        answerMapper.deleteAnswer(answerId);
+        questionMapper.updateStatusPending(questionId);
+    }
+    
+    // 답변 조회
+    public AnswerDto getAnswer(int questionId) {
+        return answerMapper.findByQuestionId(questionId);
     }
 }

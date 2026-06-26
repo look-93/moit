@@ -16,4 +16,10 @@ public interface AnswerMapper {
 
     // 답변 삭제
     void deleteAnswer(int answerId);
+    
+    // 삭제된 답변 조회
+    AnswerDto findByQuestionIdAll(int questionId);
+    
+    // 삭제된 답변 복구용
+    void restoreAnswer(AnswerDto dto);
 }

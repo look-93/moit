@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../../inc/userHeader.jsp" %>
 
 <style>
@@ -88,6 +89,7 @@
     font-size:16px;
     line-height:1.8;
     outline:none;
+    box-sizing:border-box;
 }
 
 .answer-textarea:focus{
@@ -123,38 +125,72 @@
 </style>
 
 <div class="answer-wrap">
-    <h1 class="page-title">모임글 답변 수정</h1>
-    <div class="breadcrumb">1:1 문의&nbsp;&gt;&nbsp;답변 수정</div>
-    <div class="page-desc"> 작성한 답변 내용을 수정 후 저장해 주세요. </div>
 
-    <div class="form-card">
-        <div class="info-box">
-            <div class="info-title">문의 정보</div>
-            <div class="info-row">
-                <div class="info-label">제목</div>
-                <div class="info-value">이벤트 참여 방법이 궁금합니다.</div>
-            </div>
 
-            <div class="info-row">
-                <div class="info-label">작성자</div>
-                <div class="info-value">user01&nbsp;&nbsp; | &nbsp;&nbsp;2026-06-01</div>
-            </div>
+<h1 class="page-title">모임글 답변 수정</h1>
+<div class="breadcrumb">1:1 문의 &gt; 답변 수정</div>
+<div class="page-desc">작성한 답변 내용을 수정 후 저장해 주세요.</div>
 
+<div class="form-card">
+
+    <div class="info-box">
+        <div class="info-title">문의 정보</div>
+
+        <div class="info-row">
+            <div class="info-label">제목</div>
+            <div class="info-value">${data.title}</div>
         </div>
+
+        <div class="info-row">
+            <div class="info-label">작성자</div>
+            <div class="info-value">
+                ${data.memberId}
+                &nbsp; | &nbsp;
+                ${data.createdAt}
+            </div>
+        </div>
+
+    </div>
+
+    <form action="${pageContext.request.contextPath}/questions/answer/edit"
+          method="post">
+
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}">
+
+        <input type="hidden"
+               name="answerId"
+               value="${answer.answerId}">
+
+        <input type="hidden"
+               name="questionId"
+               value="${data.questionId}">
 
         <label class="answer-label">
             답변 내용 <span class="required">*</span>
         </label>
-        <textarea class="answer-textarea">
-안녕하세요. 관리자입니다.
 
-감사합니다.
-        </textarea>
+        <textarea class="answer-textarea"
+                  name="content"
+                  required>${answer.content}</textarea>
+
         <div class="btn-area">
-            <button type="button" class="btn btn-save">저장</button>
-            <button type="button" class="btn btn-cancel" onclick="history.back()">취소</button>
+            <button type="submit" class="btn btn-save">
+                저장
+            </button>
+
+            <button type="button"
+                    class="btn btn-cancel"
+                    onclick="history.back()">
+                취소
+            </button>
         </div>
-    </div>
+
+    </form>
+
+</div>
+
 
 </div>
 

@@ -191,21 +191,42 @@ textarea{
     </div>
 
     <!-- 답변 입력 -->
-    <div class="card">
-        <div class="card-title">답변 정보 입력</div>
-        <div class="form-group">
-            <label> 답변 내용 <span class="required">*</span> </label>
-            <textarea placeholder="답변 내용을 입력하세요."></textarea>
-            <div class="text-count"> 0 / 1000 </div>
-        </div>
-
-        <div class="btn-area">
-            <button type="button" class="btn btn-submit"> 등록하기 </button>
-            <button type="button" class="btn btn-cancel" onclick="history.back()"> 취소 </button>
-        </div>
-
-    </div>
-
+	<div class="card">
+	    <div class="card-title">답변 정보 입력</div>
+	    
+	    <form action="${pageContext.request.contextPath}/questions/answer"
+	          method="post" onsubmit="return checkAnswer();">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+	        <input type="hidden" name="questionId" value="${data.questionId}">
+	        <!-- 임시 -->
+	        <input type="hidden" name="memberId" value="1">
+	        <div class="form-group">
+	            <label> 답변 내용 <span class="required">*</span> </label>
+	            <textarea id="content" name="content" placeholder="답변 내용을 입력하세요."></textarea>
+	            <div class="text-count"> <span id="count">0</span> / 1000 </div>
+	        </div>
+	
+	        <div class="btn-area">
+	            <button type="submit" class="btn btn-submit"> 등록하기 </button>
+	            <button type="button" class="btn btn-cancel" onclick="history.back()"> 취소
+	            </button>
+	        </div>
+	    </form>
+	</div>
 </div>
-
+	<script>
+	const textarea = document.getElementById("content");
+	textarea.addEventListener("input", function(){
+ 	document.getElementById("count").innerText = this.value.length; 
+	});
+	
+	function checkAnswer(){
+	    let content = document.getElementById("content").value.trim();
+	    if(content === ""){
+ 			alert("답변 내용을 입력해주세요."); document.getElementById("content").focus(); 
+	        return false;
+	    }
+	    return confirm("답변을 등록하시겠습니까?");
+	}
+	</script>
 <%@ include file="../../inc/userFooter.jsp" %>
