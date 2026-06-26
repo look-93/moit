@@ -138,6 +138,6 @@
 
 ## 🎥 프로젝트 시연
 
-[![MOIT Demo](https://img.youtube.com/vi/영상ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=pyTIHHSDAqs)
+[![MOIT Demo](https://www.youtube.com/watch?v=pyTIHHSDAqs)
 
 > 이미지를 클릭하면 시연 영상으로 이동합니다.
