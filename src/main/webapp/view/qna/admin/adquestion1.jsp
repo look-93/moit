@@ -24,6 +24,7 @@ padding:12px 28px;border-radius:8px;border:1px solid #d9dfea;cursor:pointer;
 .required{ color:#ef4444; }
 </style>
 
+
 <div class="inquiry-wrap">
     <div class="page-card">
         <h1 class="page-title">관리자 1:1 문의 등록</h1>
