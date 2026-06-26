@@ -591,10 +591,28 @@ body{
 						
 						        </form>
 						    </div>
-						
+						    
+							<div style="border-radius:15px;">
+							
+							    <div class="table-responsive">
+							        <table class="table table-hover align-middle mb-0">
+							            <thead style="background-color:#f8f9fa;">
+							                <tr>
+							                    <th width="35%">평점</th>
+							                    <th width="35%">후기 내용</th>
+							                    <th width="35%">작성일</th>
+							                </tr>
+							            </thead>
+							            <tbody id="reviewListabc">
+							            </tbody>
+							        </table>
+							    </div>
+							</div>
+							<!-- <div id="reviewListabc"></div> -->
+							
 						</div>
 			            
-			                <div class="rating-box">
+<!-- 			                <div class="rating-box">
 			                    <div class="rating-score">
 			                        <h1>4.8</h1>
 			                        <div class="stars">★★★★★</div>
@@ -624,9 +642,10 @@ body{
 			                        </div>
 			                    </div>
 			                    
-			                </div>
-			                <hr>
-		<div id="reviewListabc"></div>
+
+			                </div> -->
+			                
+		
 			            </div>
 			
 			
@@ -939,20 +958,28 @@ body{
         })
         .then(data => {
             console.log(data);
+            console.log(document.getElementById("reviewListabc"));
         	const reviewListabc = document.getElementById("reviewListabc");
             reviewListabc.innerHTML = '';
             
             if(data && data.length >0 ){
-            	data.forEach(r =>{
-            		const reviewr = `
-            			<p>\${r.content}</p>
-            		`;
-            		 reviewListabc.innerHTML += reviewr;
-            	});
             	
+            	data.forEach(r => {
+            		const stars = '⭐'.repeat(r.rating);
+            	    reviewListabc.innerHTML += `
+            	        <tr>
+            	            <td>\${stars}</td>
+            	            <td>\${r.content}</td>
+            	            <td>\${r.createdAt}</td>
+            	        </tr>
+            	    `;
+            	});
+            	//console.log(reviewListabc.innerHTML);
             	//reviewListabc.innerHTML += reviewr;
             	
-            }else{ reviewListabc.innerHTML = '<p>후기 없음</p>' ;  }
+            }else{ reviewListabc.innerHTML = ' ' ;  
+            
+            }
         })
         .catch(error => {
             console.error('Error:', error);
@@ -961,9 +988,7 @@ body{
     	
     }
     
-    
-    
-    
+
     // [4. 수정 처리 유효성 검사]
     function validateEditForm(id) {
         const rating = document.getElementById('editRating-' + id).value;
