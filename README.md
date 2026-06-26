@@ -135,3 +135,9 @@
 **Meet + It = MOIT**
 
 같은 관심사와 목표를 가진 사람들이 모여 함께 성장하는 목적형 커뮤니티 플랫폼
+
+## 🎥 프로젝트 시연
+
+[![MOIT Demo](https://img.youtube.com/vi/영상ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=pyTIHHSDAqs)
+
+> 이미지를 클릭하면 시연 영상으로 이동합니다.
