@@ -987,9 +987,7 @@ body{
     	
     }
     
-    
-    
-    
+
     // [4. 수정 처리 유효성 검사]
     function validateEditForm(id) {
         const rating = document.getElementById('editRating-' + id).value;
