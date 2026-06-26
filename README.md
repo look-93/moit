@@ -137,7 +137,15 @@
 같은 관심사와 목표를 가진 사람들이 모여 함께 성장하는 목적형 커뮤니티 플랫폼
 
 ## 🎥 프로젝트 시연
-
-[![MOIT Demo](https://www.youtube.com/watch?v=pyTIHHSDAqs)
-
-> 이미지를 클릭하면 시연 영상으로 이동합니다.
+- 회원가입 및 로그인
+🔗 https://www.youtube.com/watch?v=qlZsblUcrpQ
+- 모임 생성 및 신청
+🔗 https://youtu.be/W8uqEza0bNc
+- 문의
+🔗https://www.youtube.com/watch?v=PCCIJsmrKG8
+- 후기
+🔗 https://www.youtube.com/watch?v=pyTIHHSDAqs&feature=youtu.be
+- 신고
+🔗 https://youtu.be/영상ID
+- 광고
+🔗 https://www.youtube.com/watch?v=NZkUY0mHTUU&feature=youtu.be
