@@ -146,6 +146,6 @@
 - 후기
 🔗 https://www.youtube.com/watch?v=pyTIHHSDAqs&feature=youtu.be
 - 신고
-🔗 https://youtu.be/영상ID
+🔗 https://www.youtube.com/watch?v=QSb3lZ5VrFA&feature=youtu.be
 - 광고
 🔗 https://www.youtube.com/watch?v=NZkUY0mHTUU&feature=youtu.be
