@@ -139,13 +139,13 @@
 ## 🎥 프로젝트 시연
 - 회원가입 및 로그인
 🔗 https://www.youtube.com/watch?v=qlZsblUcrpQ
-- 모임 생성 및 신청
+- 모임 등록 및 신청
 🔗 https://youtu.be/W8uqEza0bNc
-- 문의
+- 문의 등록
 🔗https://www.youtube.com/watch?v=PCCIJsmrKG8
-- 후기
+- 후기 등록
 🔗 https://www.youtube.com/watch?v=pyTIHHSDAqs&feature=youtu.be
-- 신고
+- 신고 등록
 🔗 https://www.youtube.com/watch?v=QSb3lZ5VrFA&feature=youtu.be
 - 광고
 🔗 https://www.youtube.com/watch?v=NZkUY0mHTUU&feature=youtu.be
