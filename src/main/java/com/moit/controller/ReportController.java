@@ -1,11 +1,11 @@
 package com.moit.controller;
 
-
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,10 +37,24 @@ public class ReportController { // test lcy
 //		model.addAttribute("paging", new PagingUtil( service.selectUserCnt(dto.getMemberId()), pstartno ));
 		model.addAttribute("paging", new PagingUtil( service.selectUserCnt(memberId), pstartno ));
 		model.addAttribute("list", service.selectUserReport(pstartno, memberId));
-
+		model.addAttribute("menu", "myReport");
 		return "report/user/mylist";
 	}
 	
+	
+	// br등록
+	@RequestMapping("/report/user/myPageMyReportList.do")
+	public String myPageMyReport( @RequestParam(value="pstartno", defaultValue="1") int pstartno,
+								Model model,
+								Authentication authentication) {
+		
+		int memberId = 1;
+		
+		model.addAttribute("paging", new PagingUtil( service.selectUserCnt(memberId), pstartno ));
+		model.addAttribute("list", service.selectUserReport(pstartno, memberId));
+		model.addAttribute("menu", "myReport");
+		return "report/user/myPageMyReportList";
+	}
 	// 신고 작성 화면 write
 	@RequestMapping( value="/report/user/write.do", method = RequestMethod.GET  )
 	public String reportWrite(	@RequestParam("targetType") String targetType,
@@ -142,16 +156,19 @@ public class ReportController { // test lcy
 	public String adminList(@RequestParam(value="pstartno", defaultValue="1") int pstartno,
 							@RequestParam(value="targetType", required=false) String targetType,
 							@RequestParam(value="status", required=false) String status,
+							@RequestParam(value="deleteYn", required=false) String deleteYn,
 							Model model) {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("targetType", targetType);
 		map.put("status", status);
+		map.put("deleteYn", deleteYn);
 		
 		map.put("start", (pstartno-1)*10);
 		map.put("end", 10);
-	
+		
+		model.addAttribute("menu", "report");
 		model.addAttribute("paging", new PagingUtil( service.selectAdminReportsCnt(map), pstartno));
 		model.addAttribute("list", service.selectAdminReports(map));
 

@@ -76,7 +76,7 @@
 	    from reports
 	    
 	    <where>
-	    	<if test="delete_yn != null and delete_yn != ''">
+	    	<if test="deleteYn != null and deleteYn != ''">
 	    		and delete_yn = #{deleteYn}
 	    	</if>
 	        <if test="reportId != null">
@@ -111,7 +111,7 @@
 	    from reports
 	    
 	    <where>
-		    <if test="delete_yn != null and delete_yn != ''">
+		    <if test="deleteYn != null and deleteYn != ''">
 		    	and delete_yn = #{deleteYn}
 		    </if>
 	        <if test="status != null and status != ''">

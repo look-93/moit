@@ -75,13 +75,13 @@ header{
 }
 
 .logo {
-	font-size: 24px;
-	font-weight: bold;
-	color: #4a7dff;
-	padding: 25px;
-	text-align: center;
-	border-bottom: 1px solid #eee;
-	text-decoration: none;
+   font-size: 24px;
+   font-weight: bold;
+   color: #4a7dff;
+   padding: 25px;
+   text-align: center;
+   border-bottom: 1px solid #eee;
+   text-decoration: none;
 }
 
 nav{
@@ -265,6 +265,7 @@ HERO
     padding:14px 28px;
     border-radius:50px;
     cursor:pointer;
+    font-size:16px;
 }
 
 .btn-primary{
@@ -313,19 +314,35 @@ AD
     margin-top:25px;
     background:white;
 
-    border:2px dashed var(--c3);
+    /* border:2px dashed var(--c3); */
 
     border-radius:20px;
 
-    padding:25px;
+    /* padding:25px; */
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
     box-shadow:var(--shadow);
+    
+    height: 250px;
+    padding: 0;
+    overflow: hidden;
+    
+    
 }
 
+.ad-banner a {
+    display: block;
+    width: 100%;
+}
+.ad-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
 .ad-left h3{
     margin-bottom:10px;
 }
@@ -579,8 +596,7 @@ LOGIN
   border-top:1px solid #eee;
   margin:15px 0;
 }
-.btn{border:none;padding:16px 28px;border-radius:50px;cursor:pointer;font-size:16px;}
-.btn-primary{background:var(--c4);color:white;}
+
 .btn.full{width:100%;margin-top:20px;}
 .member-type{
   display:flex;
@@ -599,8 +615,6 @@ h2{text-align:center;color:var(--c4);margin-bottom:30px;}
 .form-group input{width:100%;padding:14px;border:1px solid #ddd;border-radius:10px;font-size:15px;}
 .form-group-inline{display:flex;gap:10px;margin-bottom:20px;}
 .form-group-inline input{flex:1;padding:14px;border:1px solid #ddd;border-radius:10px;}
-.btn{border:none;padding:14px 28px;border-radius:50px;cursor:pointer;font-size:16px;}
-.btn-primary{background:var(--c4);color:white;width:100%;margin-top:20px;}
 .form-options{margin:20px 0;}
 .member-type{display:flex;gap:30px;margin-top:10px;font-size:15px;}
 .member-type input{margin-right:8px;}
@@ -664,13 +678,13 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
     }
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
 <div class="container header-inner">
-
     <!-- 좌측 로고 + 메뉴 -->
     <div class="left-group">
         <a href="${pageContext.request.contextPath}/" class="logo">
@@ -679,7 +693,9 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
         <nav>
             <a href="${pageContext.request.contextPath}/meetup/user/list.do"
                class="<c:if test='${menu eq "meetup"}'>active</c:if>">모집찾기</a>
-            <a href="/inquiry/list" class="inquiry-btn">💬 관리자 1:1 문의 </a>
+			<a class="inquiry-btn" href="${pageContext.request.contextPath}/questions/adminWrite?category=ADMIN">
+			  💬 관리자 1:1 문의
+			</a>
         </nav>
     </div>
 
@@ -699,29 +715,31 @@ footer{margin-top:50px;background:white;padding:30px;text-align:center;}
         <!-- 로그인한 상태 -->
         <sec:authorize access="isAuthenticated()"> 
                 <sec:authentication property="principal.dto" var="loginUser"/>
-     
-                <div class="profile">
-                    <div class="profile-img">${loginUser.nickname.substring(0,1)}</div>
-                    <div class="profile-info">
-                        <strong>${loginUser.nickname}님</strong>
-                        <span>
-                            <c:choose>
-                                <c:when test="${loginUser.typeName eq 'ROLE_MEMBER'}">  
-                                    일반회원
-                                </c:when>
-                                <c:when test="${loginUser.typeName eq 'ROLE_PARTNER'}">
-                                    제휴업체
-                                </c:when>
-                                <c:when test="${loginUser.typeName eq 'ROLE_ADMIN'}">
-                                    관리자
-                                </c:when>
-                                <c:otherwise>
-                                    ${loginUser.typeName}
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
-                    </div>
-                </div>
+     			<a href="${pageContext.request.contextPath}/meetup/mypage/meetup.do">
+	     			<div class="profile">
+	                    <div class="profile-img">${loginUser.nickname.substring(0,1)}</div>
+	                    <div class="profile-info">
+	                        <strong>${loginUser.nickname}님</strong>
+	                        <span>
+	                            <c:choose>
+	                                <c:when test="${loginUser.typeName eq 'ROLE_MEMBER'}">  
+	                                    일반회원
+	                                </c:when>
+	                                <c:when test="${loginUser.typeName eq 'ROLE_PARTNER'}">
+	                                    제휴업체
+	                                </c:when>
+	                                <c:when test="${loginUser.typeName eq 'ROLE_ADMIN'}">
+	                                    관리자
+	                                </c:when>
+	                                <c:otherwise>
+	                                    ${loginUser.typeName}
+	                                </c:otherwise>
+	                            </c:choose>
+	                        </span>
+	                    </div>
+	                </div>
+     			</a>
+                
                 
                 <!-- 로그아웃 버튼 -->
                 <form action="${pageContext.request.contextPath}/users/logout" method="post">

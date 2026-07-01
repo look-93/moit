@@ -8,13 +8,6 @@
 
 <main class="write-page">
 
-	<section class="write-hero">
-		<div>
-			<h1 class="write-title">신고 작성</h1>
-			<p class="write-subtitle">신고 대상과 사유를 입력해주세요.</p>
-		</div>
-	</section>
-
 	<section class="write-layout">
 		<form class="write-card write-form-card"
 			  action="${pageContext.request.contextPath}/report/user/write.do"

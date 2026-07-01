@@ -8,17 +8,6 @@
 
 <div class="update-page">
 
-	<section class="update-title-row">
-		<div class="update-title">
-			<h1>신고 수정</h1>
-			<p>기존 신고 사유와 상세 내용을 수정하는 화면</p>
-		</div>
-
-		<div class="update-url-chip">
-			/report/update?report_id=${dto.reportId}&amp;target_type=${dto.targetType}
-		</div>
-	</section>
-
 	<section class="update-card">
 		<div class="update-card-head">
 			<div class="update-card-title">
