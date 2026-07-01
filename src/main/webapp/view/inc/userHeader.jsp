@@ -505,6 +505,16 @@ nav{
 
 }
 
+.signup-box{
+    background:white;
+    padding:50px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    width:100%;
+    max-width:600px;
+    margin:60px auto;
+}
+
 /* ==================
 LOGIN
 ================== */
